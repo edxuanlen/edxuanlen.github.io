@@ -19,9 +19,9 @@ menu:
   - page: about
     directory: about/
     icon: fa-user
-  - page: rss
-    directory: atom.xml
-    icon: fa-rss
+  # - page: rss
+  #   directory: atom.xml
+  #   icon: fa-rss
 
 # Sidebar
 widgets:
@@ -125,17 +125,24 @@ busuanzi: true ## If you want to use Busuanzi page views please set the value to
 
 # About page
 about:
-  photo_url: ## Your photo e.g. http://cdn.chaooo.top/blog/themeauthor.jpg
+  photo_url: https://ws1.sinaimg.cn/large/005xm8nggy1fptlt72i23j308a08b77j.jpg
+  ## Your photo e.g. http://cdn.chaooo.top/blog/themeauthor.jpg
   items:
   - label: email
-    url: ## Your email with mailto: e.g.  mailto:zhenggchaoo@gmail.com
-    title: ## Your email e.g.  zhenggchaoo@gmail.com
+    url: mailto:edxuanlen@gmail.com ## Your email with mailto: e.g.  mailto:zhenggchaoo@gmail.com
+    title: edxuanlen@gmail.com ## Your email e.g.  zhenggchaoo@gmail.com
   - label: github
-    url: ## Your github'url e.g.  https://github.com/chaooo
-    title: ## Your github'name e.g.  chaooo
-  - label: weibo
-    url: ## Your weibo's url e.g.  http://weibo.com/zhengchaooo
-    title: ## Your weibo's name e.g.  秋过冬漫长
+    url: https://github.com/edxuanlen  ## Your github'url e.g.  https://github.com/chaooo
+    title: edxuanlen ## Your github'name e.g.  chaooo
+  - label: QQ
+    url:  https://ws1.sinaimg.cn/large/005xm8nggy1fptlxew6f3j30oy0w9whh.jpg
+    title: 476795884
+  - label: WeChat
+    url: https://ws1.sinaimg.cn/large/005xm8nggy1fptly5fwtdj30pr0t676k.jpg
+    title: dmr476795884
+  # - label: weibo
+  #   url: ## Your weibo's url e.g.  http://weibo.com/zhengchaooo
+  #   title: ## Your weibo's name e.g.  秋过冬漫长
 # - label: twitter
 #   url: 
 #   title:
@@ -145,9 +152,5 @@ about:
 
 # Links widget. Empty links will hide widget.
 links:
-  - title: site-name1
-    url: http://www.example1.com/
-  - title: site-name2
-    url: http://www.example2.com/
-  - title: site-name3
-    url: http://www.example3.com/
+  - title: CSDN博客
+    url: http://blog.csdn.net/edxuanlen
