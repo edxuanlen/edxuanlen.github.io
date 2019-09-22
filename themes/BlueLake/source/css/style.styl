@@ -143,6 +143,7 @@ body
   padding: 0 50px
   max-width: 1200px
   margin: 0 auto
+  overflow: hidden
 .content_container
   padding-right: 40px
 
@@ -440,7 +441,7 @@ body
     padding-top: 15px
     text-align: justify
     text-justify: distribute
-    word-break: normal
+    word-break: break-all
     h2
       font-size: 18px
     h3
@@ -460,6 +461,7 @@ body
         color: #4d4d4c
         background: #eee
         font-size: .95em
+        word-break: break-all
       a
         color: #40759b
         padding-bottom: 2px
@@ -489,6 +491,10 @@ body
     ul,ol
       margin: 0
       padding: 0 0 0 2em
+      margin: 0 0 1.234em
+      li
+        ul,ol,p
+          margin: 0
       code
         margin 0 5px
         padding: 0 5px
@@ -496,12 +502,22 @@ body
         color: #4d4d4c
         background: #eee
         font-size: .95em
+        word-break: break-all
       a 
         color: #40759b
         padding-bottom: 2px
         word-break: break-all
         &:hover
           text-decoration: underline
+  .post-copyright blockquote
+    margin: 3em 0 1rem
+    padding: 18px 15px
+    border: 1px solid #40759b
+    border-left: 12px solid #40759b
+    border-right: 12px solid #40759b
+    border-radius: 20px 0 20px
+    word-wrap: break-word
+    word-break: break-all
   .tags
     padding-bottom: .5em
     text-align: right
@@ -967,6 +983,8 @@ table
   .content_container
     padding-right: 0
   .body_container
+    padding: 0
+  #search-form
     padding: 0 20px
   .post-archive
     padding: .6em 0
