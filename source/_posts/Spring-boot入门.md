@@ -8,7 +8,7 @@ categories:
     - JAVA
 
 description: Sprint_boot入门的一些简述和安装以及简单的例子。
-top: 
+top: true
 ---
 
 ## 是什么
@@ -65,3 +65,6 @@ $ spring run app.groovy
 使用你最喜欢的浏览器打开[localhost:8080](localhost:8080)，然后就可以看到如下输出：
 
 Hello World!
+
+
+下一篇 : [第一个应用的开发](https://edxuanlen.gitee.io/2019/10/02/Spring-boot%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8%E7%9A%84%E5%BC%80%E5%8F%91/)
