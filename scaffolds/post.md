@@ -1,8 +1,17 @@
 ---
 title: {{ title }}
 date: {{ date }}
-tags:
-categories: 
-description: 
-top: 
+author: edxuanlen
+img: 
+coverImg: 
+top: false
+cover: false
+toc: true
+mathjax: false
+password: 
+summary: 
+tags: 
+
+categories:
+
 ---

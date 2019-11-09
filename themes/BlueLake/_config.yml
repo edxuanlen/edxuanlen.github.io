@@ -50,10 +50,10 @@ date_formats:
   tag: "YYYY/MM/DD"
 
 # Extensions
-# Plugins:
-#   hexo-generator-feed
-#   hexo-generator-sitemap
-#   hexo-generator-baidu-sitemap
+Plugins:
+  hexo-generator-feed
+  hexo-generator-sitemap
+  hexo-generator-baidu-sitemap
 
 # #Feed Atom
 # feed:
@@ -62,10 +62,10 @@ date_formats:
 #   limit: 20
 
 # #sitemap
-# sitemap:
-#   path: sitemap.xml
-# baidusitemap:
-#   path: baidusitemap.xml
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
 
 #Local search
 local_search: true ## Use a javascript-based local search engine, true/false.
