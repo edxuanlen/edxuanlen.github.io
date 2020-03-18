@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><meta name="keywords" content="edxuanlen, ICPC, Ubuntu, 蓝桥杯"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script src="js/jquery-3.3.1.min.js"></script><script src="js/click.js"></script><title>hexo+github搭建个人博客 | edxuanlen's BLOG</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">hexo+github搭建个人博客</h1><a id="logo" href="/.">edxuanlen's BLOG</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">hexo+github搭建个人博客</h1><div class="post-meta"><a href="/2018/01/24/hexo-github搭建个人博客/#comments" class="comment-count"></a><p><span class="date">Jan 24, 2018</span><span><a href="/categories/网站/" class="category">网站</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>#hexo +  GitHub + git 搭建个人博客</p>
+<h2 id="安装配置node-js"><a href="#安装配置node-js" class="headerlink" title="** 安装配置node.js**"></a>** 安装配置node.js**</h2><pre><code>安装配置node.js (http://www.runoob.com/nodejs/nodejs-install-setup.html)</code></pre><h2 id="安装配置git："><a href="#安装配置git：" class="headerlink" title="安装配置git："></a><strong>安装配置git：</strong></h2><pre><code>安装配置git：（(https://git-scm.com)）(https://jingyan.baidu.com/article/9f7e7ec0b17cac6f2815548d.html)）</code></pre><h2 id="在GitHub上注册一个仓库："><a href="#在GitHub上注册一个仓库：" class="headerlink" title="在GitHub上注册一个仓库："></a><strong>在GitHub上注册一个仓库：</strong></h2><pre><code>新建一个名为 你的用户名.github.io 的仓库，比如说，如果你的github用户名是test，那么你就新建test.github.io的仓库（必须是你的用户名，其它名称无效），将来你的网站访问地址就是 http://test.github.io 了，是不是很方便？
+由此可见，每一个github账户最多只能创建一个这样可以直接使用域名访问的仓库。
+几个注意的地方：
+注册的邮箱一定要验证，否则不会成功；
+仓库名字必须是：username.github.io，其中username是你的用户名；
+仓库创建成功不会立即生效，需要过一段时间，大概10-30分钟，或者更久；
+创建成功后，默认会在你这个仓库里生成一些示例页面，以后你的网站所有代码都是放在这个仓库里啦。</code></pre><h2 id="如果要绑定域名："><a href="#如果要绑定域名：" class="headerlink" title="如果要绑定域名："></a><strong>如果要绑定域名：</strong></h2><pre><code>域名配置最常见有2种方式，CNAME和A记录，CNAME填写域名，A记录填写IP，由于不带www方式只能采用A记录，所以必须先ping一下你的用户名.github.io的IP，然后到你的域名DNS设置页，将A记录指向你ping出来的IP，将CNAME指向你的用户名.github.io，这样可以保证无论是否添加www都可以访问，如下：
+
+然后到你的github项目根目录新建一个名为CNAME的文件（无后缀），里面填写你的域名可以不加www。比如edxuanlen.io
+另外说一句，在你绑定了新域名之后，原来的你的用户名.github.io并没有失效，而是会自动跳转到你的新域名。
+
+过程中可能需要到购买域名的地方修改一下它的DNS：
+Nameserver 1
+ns2.alidns.com
+Nameserver 1
+ns1.alidns.com</code></pre><h2 id="hexo的下载和安装："><a href="#hexo的下载和安装：" class="headerlink" title="hexo的下载和安装："></a><strong>hexo的下载和安装：</strong></h2><pre><code>1、利用 npm 命令即可安装。在任意位置点击鼠标右键，选择Git Bash输入命令：npm install -g hexo
+2、创建文件夹（我的是在E盘创建的Hexo），然后在Hexo文件下，右键运行Git Bash，输入命令：hexo init在_config.yml,进行基础配置
+3、 hexo new &quot;postName&quot; #新建文章
+    hexo new page &quot;pageName&quot; #新建页面
+    hexo generate #生成静态页面至public目录
+    hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）
+    hexo deploy #部署到GitHub
+    hexo help  # 查看帮助
+    hexo version  #查看Hexo的版本
+
+** 部分报错 **
+1.找不到git部署 ERROR Deployer not found: git
+解决方法
+    npm install hexo-deployer-git --save
+3.部署类型设置git
+hexo 3.0 部署类型不再是github，_config.yml 中修改
+# Deployment
+## Docs: http://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repository: git@***.github.com:***/***.github.io.git
+  branch: master
+4. xcodebuild
+xcode-select: error: tool &apos;xcodebuild&apos; requires Xcode, but active developer directory &apos;/Library/Developer/CommandLineTools&apos; is a command line tools instance
+npm install bcrypt
+5. RSS不显示
+安装RSS插件
+npm install hexo-generator-feed --save
+开启RSS功能
+编辑hexo/_config.yml，添加如下代码：</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rss: /atom.xml #rss地址  默认即可</span><br></pre></td></tr></table></figure>
+
+<h2 id="hexo-d-没办法用："><a href="#hexo-d-没办法用：" class="headerlink" title="** hexo d 没办法用：**"></a>** hexo d 没办法用：**</h2><pre><code>正常来说只要安装了就能用了
+一开始卡在死活用不了hexo d 最后发现== 我在config.yml 里面把原来我写的repository：改成repo就行了==</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br><span class="line">INFO  Deploying: git</span><br><span class="line">You have to configure the deployment settings in _config.yml first!</span><br><span class="line">For more help, you can check the docs: http://hexo.io/docs/deployment.html</span><br><span class="line">INFO  Deploy done: git</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line">  deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: &lt;repository url&gt;</span><br><span class="line">    branch: [branch]</span><br><span class="line">    message: [message]</span><br><span class="line"></span><br><span class="line">    extend_dirs: [extend directory]</span><br></pre></td></tr></table></figure>
+
+<h2 id="warning-“warning-LF-will-be-replacee-by-CRLF”："><a href="#warning-“warning-LF-will-be-replacee-by-CRLF”：" class="headerlink" title="warning: “warning:LF will be replacee by CRLF”："></a>warning: “warning:LF will be replacee by CRLF”：</h2><pre><code>在Windows环境下使用git进行add的时候，会提示如下warning: “warning:LF will be replacee by CRLF”。
+这是因为在Windows中的换行符为CRLF，而在Linux中的换行符为LF。在git创建的项目中换行符为LF，而执行git add时，系统会提示LF将被转换为CRLF。解决的办法很简单，禁止git的自动转换即可。
+$ git config --global core.autocrlf false //禁用自动转换然后再进行git操作即可。如果项目已经创建，则需要先删除之前创建的.git 文件后添加上面的设置。</code></pre><p><code>$ rm -rf .git
+$ git config --globalcore.autocrlf false
+**完成后再重新执行git操作**
+$ git init
+$ git add .
+$ git remote add</code></p>
+<p>P.S.</p>
+<p>CRLF : Carriage-Return Line-Feed 回车换行。即回车(CR,ASCII 13, \r)换行(LF, ASCII 10, \n).</p>
+<p>在windows中使用回车换行标识一行的结束，而Linux中则只有换行符。</p>
+<h2 id="主题使用主题："><a href="#主题使用主题：" class="headerlink" title="** 主题使用主题：**"></a>** 主题使用主题：**</h2><pre><code>我用了bluelake ,详情转至bluelake主题配置介绍：http://blog.csdn.net/edxuanlen/article/details/79149778</code></pre><h2 id="文章编辑器的使用方法："><a href="#文章编辑器的使用方法：" class="headerlink" title="** 文章编辑器的使用方法：**"></a>** 文章编辑器的使用方法：**</h2><pre><code>markdown：https://coding.net/help/doc/project/markdown.html#i-5
+注意
+
+所有markdown标志后面要有一个空格
+如果标题上一行是列表，则必须在标题和列表之间空一行
+    “`代码注释上下都空一行。（github是没问题，csdn如果不空行界面会不好看）</code></pre><p>###标题</p>
+<pre><code># 一级标题
+## 二级标题
+### 三级标题
+列表
+
+- 无序列表1
+- 无序列表2
+- 无序列表3
+1. 有序列表1 //注意1.后面有空格
+2. 有序列表2
+3. 有序列表3
+引用
+
+&gt;这个是引用
+粗体
+
+**这个是粗体**
+*这个是斜体*
+***这个是粗体加斜体***
+链接和图片
+
+[link text](http://example.com/ “optional title”)
+![图片描述](链接)
+代码
+
+`    `
+```   ```
+分割线
+
+*************
+————————————
+_____________________
+markdown文档转为word,pdf
+
+    使用Pandoc https://www.zhihu.com/question/22972843/answer/30096928
+    安装Pandoc,使用Typora http://blog.csdn.net/u012814856/article/details/69258511</code></pre><h2 id="图标设置："><a href="#图标设置：" class="headerlink" title="** 图标设置：**"></a>** 图标设置：**</h2><pre><code>在设置图标的时候一直没办法替换点原来的  后来发现  改名后的ico要放在所用主题的 source 下才行 而不是 根目录下的source（值得一提，解析24小时候 域名自带的logo才会消失）</code></pre></div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2018/01/24/hexo-github搭建个人博客/">https://edxuanlen.tk/2018/01/24/hexo-github搭建个人博客/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/hexo/">hexo</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2018/01/24/hexo-Bluelake主题/" class="pre">hexo_Bluelake主题</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装配置node-js"><span class="toc-text">** 安装配置node.js**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装配置git："><span class="toc-text">安装配置git：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在GitHub上注册一个仓库："><span class="toc-text">在GitHub上注册一个仓库：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如果要绑定域名："><span class="toc-text">如果要绑定域名：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo的下载和安装："><span class="toc-text">hexo的下载和安装：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-d-没办法用："><span class="toc-text">** hexo d 没办法用：**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#warning-“warning-LF-will-be-replacee-by-CRLF”："><span class="toc-text">warning: “warning:LF will be replacee by CRLF”：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主题使用主题："><span class="toc-text">** 主题使用主题：**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文章编辑器的使用方法："><span class="toc-text">** 文章编辑器的使用方法：**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图标设置："><span class="toc-text">** 图标设置：**</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/JVM/">JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/09/Spring-IOC/">Spring-IOC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/08/Spring-AOP/">Spring-AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/自建SS服务/">自建SS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/Spring-boot第一个应用的开发/">Spring_boot第一个应用的开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Spring-boot入门/">Spring_boot入门</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":250,"height":600},"mobile":{"show":true},"log":false});</script></body></html><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.styl">
