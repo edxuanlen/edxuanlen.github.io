@@ -78,7 +78,8 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: BlueLake
 
-
+encrypt:
+  enable: true
 
 live2d:
   enable: true

@@ -21,6 +21,23 @@ description: docker容器技术，换源和dockerfile的简介，包括一些自
 > 阿里云容器 : <https://cr.console.aliyun.com/>
 ( 首页点击“创建我的容器镜像”  得到一个专属的镜像加速地址，类似于“<https://1234abcd.mirror.aliyuncs.com”)>
 
+```json
+{
+  "registry-mirrors": [
+    "http://xxxxx.mirror.aliyuncs.com",
+    "http://registry.docker-cn.com",
+    "http://docker.mirrors.ustc.edu.cn",
+    "http://hub-mirror.c.163.com"
+  ],
+  "insecure-registries": [
+    "registry.docker-cn.com",
+    "docker.mirrors.ustc.edu.cn"
+  ],
+  "debug": true,
+  "experimental": true
+}
+```
+
 ## Dockerfile
 
 how to write a dockerfile?
@@ -67,6 +84,24 @@ CMD ["python", "app.py"]
 
 ## 常用镜像
 
+### mysql
+
+```shell
+docker run --name some-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+
+```
+
+官方文档:[官方文档](https://hub.docker.com/_/mysql)
+
+外界访问权限
+
+```sql
+use mysql;
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+grant all privileges on *.* to 'root'@'%';
+flush privileges;
+```
+
 ### Mysql:5.7
 
 ```markdown
@@ -82,3 +117,8 @@ docker exec -it mysql  env LANG=C.UTF-8 bash
 ```bash
 docker run -it -e "NODE_ENV=production" -u "node"  -m "300M" --memory-swap "1G" -w "/home/node/app" -v D:\coding\web\nodejs:/home/node/app --name "node" -d node
 ```
+
+## 检查容器设置
+
+docker inspect
+

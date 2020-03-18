@@ -50,3 +50,8 @@ block pageOnly
   else 
     script(type='text/javascript', src=url_for(theme.js) + '/totop.js' + '?v=' + theme.version, async)
   include _partial/comments_js
+
+if theme.fancybox.enabled
+      script(type='text/javascript', src=url_for(theme.js) + '/jquery-3.3.1.min.js' + '?v=' + theme.version, async)
+      script(type='text/javascript', src=url_for(theme.js) + '/jquery.fancybox.mini.js' + '?v=' + theme.version, async)
+      script(type='text/javascript', src=url_for(theme.js) + '/wrapImage.js' + '?v=' + theme.version, async)

@@ -73,3 +73,6 @@ html(lang='#{config.language}')
       include _partial/footer
     include _partial/after_footer
     block pageOnly
+
+if theme.fancybox.enabled
+      link(rel='stylesheet', type='text/css', href=url_for(theme.css) + '/jquery.fancybox.styl')

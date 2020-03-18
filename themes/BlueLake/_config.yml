@@ -155,3 +155,5 @@ links:
   - title: CSDN博客
     url: http://blog.csdn.net/edxuanlen
 
+fancybox: 
+  enabled: true
