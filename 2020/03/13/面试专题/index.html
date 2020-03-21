@@ -59,7 +59,544 @@
 <p>先自上(应用层)而下添加数据头，后自下而上处理数据头部</p>
 <p><img src="TCP_IP1.png" alt="TCP/IP">  </p>
 <h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><p>基于字节流，将应用层的数据流分割成报文段并发送给目标节点的TCP层<br>数据包都有序号，对方收到则发送确认ACK确认，未收到则重传。<br>使用校验和来校验的数据在传输过程中是否有误。  </p>
-<h3 id="类加载机制和双亲委派模型"><a href="#类加载机制和双亲委派模型" class="headerlink" title="类加载机制和双亲委派模型"></a>类加载机制和双亲委派模型</h3><p>类的生命周期<br><img src="%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F.png" alt="类的生命周期"></p>
+<p><img src="%E9%9D%A2%E8%AF%95%E4%B8%93%E9%A2%98/TCP%E6%8A%A5%E6%96%87.png" alt="TCP报文"></p>
+<p>TCP Flags:</p>
+<ul>
+<li>URG: 紧急指针标志 urgent</li>
+<li>ACK: 确认序号标志 acknowledgment</li>
+<li>PSH: push 标志</li>
+<li>RST: 重置连接标志 Reset</li>
+<li>SYN: 同步序号，用于建立连接过程</li>
+<li>FIN: finish标志，释放连接</li>
+</ul>
+<p>SYN = 1， ACK = 0 请求链接</p>
+<h4 id="A-gt-B-通信过程"><a href="#A-gt-B-通信过程" class="headerlink" title="A =&gt; B 通信过程"></a>A =&gt; B 通信过程</h4><p>A 打开 发送SYN = 1, seq = x,进入SYN_SEND状态，等待服务器确认</p>
+<p>B 被动打开 发送 SYN = 1, ACK = 1, seq = y, ack = x + 1，此时服务器进入SYN_RECV状态</p>
+<p>A 接收后发送 ACK = 1, seq = x + 1, ack = y + 1 ，双方进入ESTABLISHED状态</p>
+<p><img src="%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="三次握手"></p>
+<h4 id="为什么需要三次握手"><a href="#为什么需要三次握手" class="headerlink" title="为什么需要三次握手"></a>为什么需要三次握手</h4><p>为了初始化Sequence Number 的初始值</p>
+<p>起因:</p>
+<blockquote>
+<p>Server接收到Client的SYN，回复SYN-ACK的时候未收到ACK<br>Server不断充实直至超时，Linux默认等待63秒才断开连接</p>
+</blockquote>
+<p>针对SYN Flood的防护措施</p>
+<h3 id="TCP的四次挥手"><a href="#TCP的四次挥手" class="headerlink" title="TCP的四次挥手"></a>TCP的四次挥手</h3><h4 id="A-gt-B-四次挥手"><a href="#A-gt-B-四次挥手" class="headerlink" title="A =&gt; B 四次挥手"></a>A =&gt; B 四次挥手</h4><p>A: FIN = 1, seq = u, FIN_WAIT_1<br>B: ACK = 1, seq = v, ack = u + 1  ,进入CLOSE_WAIT状态(半关闭状态)， 客户端进入 FIN_WAIT_2<br>B: FIN = 1, ACK = 1, seq = w, ack = u + 1, LAST_ACK<br>A: ACK = 1, seq = u + 1m, ack = w + 1, TIMEWAIT (2 * MSL)</p>
+<p><img src="%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="四次挥手"></p>
+<h4 id="为什么又TIME-WAIT状态"><a href="#为什么又TIME-WAIT状态" class="headerlink" title="为什么又TIME_WAIT状态"></a>为什么又TIME_WAIT状态</h4><p>原因:</p>
+<ul>
+<li>确保有足够的时间让对方收到ACK包  </li>
+<li>避免新旧连接混淆</li>
+</ul>
+<h4 id="为什么需要四次握手才能断开连接"><a href="#为什么需要四次握手才能断开连接" class="headerlink" title="为什么需要四次握手才能断开连接"></a>为什么需要四次握手才能断开连接</h4><p>因为全双工，发送方和接收方都需要FIN报文和ACK报文</p>
+<h4 id="服务器出现大量CLOSE-WAIT状态的原因"><a href="#服务器出现大量CLOSE-WAIT状态的原因" class="headerlink" title="服务器出现大量CLOSE_WAIT状态的原因"></a>服务器出现大量CLOSE_WAIT状态的原因</h4><p>对方关闭socket连接，我方忙于读写，没有及时关闭连接</p>
+<ul>
+<li>检查代码，特别是释放资源的代码</li>
+<li>检查配置，特别是处理请求的线程配置  </li>
+</ul>
+<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><h4 id="UDP-特点"><a href="#UDP-特点" class="headerlink" title="UDP 特点"></a>UDP 特点</h4><ul>
+<li>面向非连接</li>
+<li>不维护连接状态。支持同时向多个客户端传输相同的消息</li>
+<li>数据包报头只有8字节，额外开销小</li>
+<li>吞吐量只受限于数据生成速率、传输速率以及机器性能</li>
+<li>尽量交付，不需要维护复杂的状态表</li>
+</ul>
+<h4 id="TCP-和-UDP-的区别"><a href="#TCP-和-UDP-的区别" class="headerlink" title="TCP 和 UDP 的区别"></a>TCP 和 UDP 的区别</h4><ul>
+<li>面向链接 vs 无连接</li>
+<li>可靠 vs 不可靠</li>
+<li>有序性 vs 无序性</li>
+<li>速度慢 vs 速度快</li>
+<li>重量级(20) vs 轻量级(8)</li>
+</ul>
+<h4 id="TCP-滑动窗口"><a href="#TCP-滑动窗口" class="headerlink" title="TCP 滑动窗口"></a>TCP 滑动窗口</h4><ul>
+<li>RTT: 发送数据包到收到对应ACK</li>
+<li>RTO: 重传时间间隔</li>
+</ul>
+<p>RTO 由 RTT 计算</p>
+<p>滑动窗口: 流量控制和乱序重排</p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>超文本传输协议</p>
+<ul>
+<li>支持客户/服务器模式 (Client - Server)</li>
+<li>简单快速 (get/post)</li>
+<li>灵活</li>
+</ul>
+<p>HTTP 请求步骤</p>
+<ul>
+<li>客户端连接到web服务器</li>
+<li>发送HTTP请求</li>
+<li>服务器接受并返回HTTP响应</li>
+<li>释放连接TCP连接</li>
+<li>客户端浏览器解析HTML内容</li>
+</ul>
+<h5 id="在浏览器地址栏键入一个URL，按下回车之后经历的流程"><a href="#在浏览器地址栏键入一个URL，按下回车之后经历的流程" class="headerlink" title="在浏览器地址栏键入一个URL，按下回车之后经历的流程"></a>在浏览器地址栏键入一个URL，按下回车之后经历的流程</h5><ul>
+<li>逐层DNS解析</li>
+<li>TCP连接(3次)</li>
+<li>发送HTTP请求</li>
+<li>服务器处理请求并返回HTTP报文</li>
+<li>浏览器解析渲染</li>
+<li>连接结束(4次挥手)</li>
+</ul>
+<h4 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h4><p>五种可能的取值</p>
+<ul>
+<li>1XX: 指示信息–表示请求已经接收，继续处理</li>
+<li>2xx: 成功– 表示请求已被成功接收、理解、接受</li>
+<li>3xx: 重定向–要完成请求必须进行进一步操作</li>
+<li>4xx: 客户端错误–请求有语法错误或请求无法实现</li>
+<li>5xx: 服务器端错误–服务器未能实现合法的请求</li>
+</ul>
+<p>常见状态码</p>
+<ul>
+<li>200 OK: 正常返回</li>
+<li>400 Bad Request:客户端请求有语法错误，无法被服务器理解</li>
+<li>401 Unauthorized: 请求未经授权，这个状态代码必须和WWW-Authenticate 报头域一起使用</li>
+<li>403 Forbidden: 服务器收到请求，但是拒绝提供服务</li>
+<li>404 Not Found: 请求资源不存在 (例如输入了错误的URL)</li>
+<li>500 Internal Server Error: 服务器发生了不可预期的错误</li>
+<li>503 Server Unavailable: 服务器当前不能处理客户端的请求，一段时间后可能恢复正常。  </li>
+</ul>
+<h4 id="GET-和-POST-请求的区别"><a href="#GET-和-POST-请求的区别" class="headerlink" title="GET 和 POST 请求的区别"></a>GET 和 POST 请求的区别</h4><p>从三个层面来解答</p>
+<ul>
+<li>HTTP报文层面，GET将请求信息放在URL，POST放在报文体中</li>
+<li>数据库层次: GET符合幂等性和安全性，POST不符合</li>
+<li>其他层面: GET可以被缓存、被存储，而POST不行</li>
+</ul>
+<h4 id="Cookie-和-Session的区别"><a href="#Cookie-和-Session的区别" class="headerlink" title="Cookie 和 Session的区别"></a>Cookie 和 Session的区别</h4><h5 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h5><ul>
+<li>是由服务器发给客户端的特殊信息，以文本的形式存放在客户端</li>
+<li>客户端再次请求的时候，会把Cookie回发 </li>
+<li>服务器接收到后，会解析Cookie生成与客户端相对应的内容</li>
+</ul>
+<p>发送过程</p>
+<ul>
+<li>Client =&gt; HTTP req Server</li>
+<li>Client &lt;= HTTP resp + set-Cookie Server</li>
+<li>Client =&gt; HTTP req + Cookie Server</li>
+<li>Client &lt;= HTTP resp Server</li>
+</ul>
+<h5 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h5><ul>
+<li>服务器端的机制，在服务器上保存的信息</li>
+<li>解析客户端请求并操作session id ，按需保存状态信息</li>
+</ul>
+<p>实现方式</p>
+<ol>
+<li>Cookie 来实现</li>
+<li>URL来回写实现(如果Cookie被禁用)</li>
+</ol>
+<ul>
+<li>Client =&gt; req Server</li>
+<li>Client &lt;= resp + set-Cookie:JSESSIONID=xxx Server</li>
+<li>Client =&gt; req + Cookie:JSESSIONID=xxx Server</li>
+<li>Client &lt;= resp server</li>
+</ul>
+<h5 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h5><ol>
+<li>Cookie 数据存放在客户的浏览器，Session数据存放在服务器上</li>
+<li>Session相对于Cookie 更安全</li>
+<li>若考虑减轻服务器负担，应当使用Cookie</li>
+</ol>
+<h3 id="HTTP-和-HTTPS"><a href="#HTTP-和-HTTPS" class="headerlink" title="HTTP 和 HTTPS"></a>HTTP 和 HTTPS</h3><p>HTTP TCP IP<br>HTTPS SSL/TLS TCP IP</p>
+<p>保护交换数据隐私，安全版的HTTP</p>
+<h4 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h4><p>(security sockets layer, 安全套接层)</p>
+<ul>
+<li>为网络通信提供安全及数据完整性的一种安全协议</li>
+<li>是操作系统对外的API，SSL3.0后更名为TLS</li>
+<li>采用身份验证和数据加密保证网络通信的安全和数据的完整性</li>
+</ul>
+<p>HTTPS 数据传输流程</p>
+<ul>
+<li>浏览器将支持的加密算法信息发送给服务器</li>
+<li>服务器选择一套浏览器支持的加密算法，以证书的形式发回给浏览器(CA机构，有效期，公钥，所有者)</li>
+<li>浏览器验证证书的合法性，并结合证书公钥加密信息发送给服务器</li>
+<li>服务器使用私钥解密信息，验证哈希，加密相应信息回发浏览器</li>
+<li>浏览器解密响应消息，并对消息进行验证，之后进行加密交互数据</li>
+</ul>
+<h4 id="HTTP和HTTPS的区别"><a href="#HTTP和HTTPS的区别" class="headerlink" title="HTTP和HTTPS的区别"></a>HTTP和HTTPS的区别</h4><ul>
+<li>HTTPS需要到CA申请证书，HTTP不需要</li>
+<li>HTTPS密文传输，HTTP明文传输</li>
+<li>连接方式不同，HTTPS默认使用443端口，HTTP使用80端口</li>
+<li>HTTPS= HTTP+加密+认证+完整新保护，比HTTP更安全</li>
+</ul>
+<p>HTTP =&gt; HTTPS 301跳转也可能被劫持，因此要用HSTS优化</p>
+<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><p>Socket是对TOC/IP的抽象，是操作系统对外开放的接口</p>
+<h4 id="Socket通信流程"><a href="#Socket通信流程" class="headerlink" title="Socket通信流程"></a>Socket通信流程</h4><p><img src="socket.jpg" alt="Socket"></p>
+<p>编写一个网络应用程序,有客户端与服务器端,客户端向服务器发送一个字符串,服务器收到该字符串后将其打印到命令行上,<br>然后向客户端返回该字符串的长度,最后,客户端输出服务器端返回的该字符串的长度,分别用TCP和UDP两种方式去实现  </p>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="如何设计一个关系型数据库-RDBMS"><a href="#如何设计一个关系型数据库-RDBMS" class="headerlink" title="如何设计一个关系型数据库(RDBMS)"></a>如何设计一个关系型数据库(RDBMS)</h3><ol>
+<li><p>程序实例  </p>
+<ul>
+<li>存储管理</li>
+<li>缓存机制</li>
+<li>SQL 解析</li>
+<li>日志管理</li>
+<li>权限划分</li>
+<li>容灾机制</li>
+<li>索引管理</li>
+<li>锁管理</li>
+</ul>
+</li>
+<li><p>存储(文件系统)</p>
+</li>
+</ol>
+<h3 id="索引模块"><a href="#索引模块" class="headerlink" title="索引模块"></a>索引模块</h3><h4 id="为什么要使用索引"><a href="#为什么要使用索引" class="headerlink" title="为什么要使用索引"></a>为什么要使用索引</h4><p>快速查询数据</p>
+<h4 id="什么信息能成为索引"><a href="#什么信息能成为索引" class="headerlink" title="什么信息能成为索引"></a>什么信息能成为索引</h4><p>主键，唯一键以及普通键</p>
+<h4 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h4><p>生成索引，建立二叉查找树进行二分查找<br>生成索引，建立B-Tree 结构进行查找<br>生成索引，建立B+Tree 结构进行查找<br>生成索引，建立Hash结构进行查找</p>
+<p><img src="%E4%BA%8C%E5%8F%89%E6%A0%91.png" alt="二叉树"></p>
+<h4 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B Tree"></a>B Tree</h4><p>定义</p>
+<ul>
+<li>根节点至少包括两个孩子</li>
+<li>书中每个节点最多含有m铬孩子( m&gt;= 2)</li>
+<li>除根节点和叶节点外，其他每个节点至少有ceil(m/2)个孩子</li>
+<li>所有叶子节点都位于同一层</li>
+<li>假设每个非终端节点中包含有n个关键字信息，其中：<ol>
+<li>Ki(i=1…n)为关键字，且关键字按顺序升序排序K(i-1) &lt; Ki</li>
+<li>关键是个数满足: [ceil(m / 2) - 1] &lt;= n &lt;= m - 1</li>
+<li>非叶子节点的指针:P[1],P[2],… P[M], P[1]指向的关键字小于K[1]的子树，<br> P[M]指向关键字大于P[M -1] 的子树，其他P[i]指向关键字属于(K[i-1], K[i])的子树</li>
+</ol>
+</li>
+</ul>
+<h4 id="B-Tree-1"><a href="#B-Tree-1" class="headerlink" title="B+ Tree"></a>B+ Tree</h4><p>B+ 树是B树的变体，其定义基本与B树相同，除了：<br>    - 非叶子节点的子树指针与关键字个数相同<br>    - 非叶子节点的子树指针P[i],指向关键字值([K[i],K[i+1])<br>    - 非叶子节点仅用来索引，数据都保存在叶子节点中<br>    - 所有叶子节点均有一个链指针指向下一个叶子节点</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>B+ Tree更适合用来做存储索引<br>    - B+ Tree 的磁盘读写代价更低<br>    - B+ Tree 的查询效率更加稳定<br>    - B+ Tree 更加有利于对数据库的扫描</p>
+<h4 id="Hash索引"><a href="#Hash索引" class="headerlink" title="Hash索引"></a>Hash索引</h4><p>优点 查询速度O(1)<br>缺点:</p>
+<ul>
+<li>仅仅能够满足’=’,’IN’, 不能使用范围查询</li>
+<li>无法被用来避免数据的排序操作</li>
+<li>不能利用部分索引键查询</li>
+<li>不能避免表扫描</li>
+<li>遇到大量Hash值相等的情况后性能并不一定会比B Tree索引高</li>
+</ul>
+<h4 id="密集索引和稀疏索引的区别"><a href="#密集索引和稀疏索引的区别" class="headerlink" title="密集索引和稀疏索引的区别"></a>密集索引和稀疏索引的区别</h4><ul>
+<li>密集索引文件中的每个搜索码值都对应一个索引值</li>
+<li>稀疏索引只为某些值建立索引项</li>
+</ul>
+<h5 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h5><ul>
+<li>若一个主键被定义，该主键则作为密集索引</li>
+<li>若没有主键被定义，该表的第一个唯一非空索引则作为密集索引</li>
+<li>若不满足以上条件，innodb内部会生成一个隐藏主键(密集索引)</li>
+<li>非主键索引存储相关键位和其对于的主键值，包含两次查找</li>
+</ul>
+<p>myISAM索引和DB是分开的，InnoDB索引和DB是存放在一起的</p>
+<h3 id="索引问答"><a href="#索引问答" class="headerlink" title="索引问答"></a>索引问答</h3><p>Q: 为什么要用索引<br>A: 避免全表扫描数据，提升检索效率</p>
+<p>Q: 什么样的信息能成为索引<br>A: 主键、唯一键等有区分性的数据</p>
+<p>Q: 索引的数据结构<br>A: 主流是B+ Tree，以及hash结构 ， bitMap 等，mysql不支持bitmap，基于innoDB以及myISAM的mysql不显示支持hash</p>
+<p>Q: 密集索引和稀疏索引的区别<br>A: 密集索引文件中的每个搜索码值都对应一个索引值，稀疏索引只为某些值建立索引项</p>
+<h4 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h4><h5 id="如何定位并优化慢查询sql"><a href="#如何定位并优化慢查询sql" class="headerlink" title="如何定位并优化慢查询sql"></a>如何定位并优化慢查询sql</h5><ul>
+<li><p>根据慢日志定位慢查询sql</p>
+</li>
+<li><p>使用explain等工具分析Sql</p>
+<ul>
+<li>type<ul>
+<li>表示: 找到数据行的方式</li>
+<li>index 索引查询 / ALL 证明是全局查找(需要优化)</li>
+</ul>
+</li>
+<li>extra<ul>
+<li>出现以下两项意味着MYSQL根本不能使用索引，效率会受到重大影响，应尽可能对此进行优化</li>
+<li>Using filesort —— 无法利用索引排序</li>
+<li>Using temporary  —— 使用了临时表，order by 或者分组查询 group by</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>修改sql 或者让sql尽量走索引  </p>
+<ul>
+<li>使用有索引的字段代替</li>
+<li>添加索引 alter table tb_name add index idx_name(name);</li>
+</ul>
+</li>
+</ul>
+<h5 id="联合索引的最左匹配原则"><a href="#联合索引的最左匹配原则" class="headerlink" title="联合索引的最左匹配原则"></a>联合索引的最左匹配原则</h5><h4 id="索引是建的越来越多好吗"><a href="#索引是建的越来越多好吗" class="headerlink" title="索引是建的越来越多好吗"></a>索引是建的越来越多好吗</h4><ul>
+<li>数据量小的表不需要建立索引，建立会增加额外的索引开销</li>
+<li>数据变更需要维护索引，因此更多的索引意味着更大的维护成本</li>
+<li>更多的索引意味着需要更多的空间</li>
+</ul>
+<h4 id="锁模块"><a href="#锁模块" class="headerlink" title="锁模块"></a>锁模块</h4><h5 id="MyISAM与InnoDB关于锁方面的区别是什么"><a href="#MyISAM与InnoDB关于锁方面的区别是什么" class="headerlink" title="MyISAM与InnoDB关于锁方面的区别是什么"></a>MyISAM与InnoDB关于锁方面的区别是什么</h5><ul>
+<li>MyISAM 默认使用的是表级锁，不支持行级锁</li>
+<li>InnoDB 默认用的是行级锁，也支持表级锁</li>
+</ul>
+<p>共享锁和排斥锁的兼容性</p>
+<!-- Share && exclude
+
+|   | X    | S    |
+|---|------|------|
+| X | 冲突 | 冲突 |
+| S | 冲突 | 兼容 | -->
+
+<p>行级锁不一定比表级锁好，锁的粒度越细，带价越高，需要扫描表到对应的对其上锁，代价是比较大的。  </p>
+<p>InnoDB 相比 MyISAM 带来了更大的开销。</p>
+<h5 id="MyISAM适合的场景"><a href="#MyISAM适合的场景" class="headerlink" title="MyISAM适合的场景"></a>MyISAM适合的场景</h5><ul>
+<li>频繁执行全表count 语句</li>
+<li>对数据进行增删改的频率不高，查询非常频繁</li>
+<li>没有事务</li>
+</ul>
+<h5 id="InnoDB适合的场景"><a href="#InnoDB适合的场景" class="headerlink" title="InnoDB适合的场景"></a>InnoDB适合的场景</h5><ul>
+<li>数据增删改查都相当频繁</li>
+<li>可靠性要求比较高，要求支持事务</li>
+</ul>
+<h5 id="数据库锁的分类"><a href="#数据库锁的分类" class="headerlink" title="数据库锁的分类"></a>数据库锁的分类</h5><ul>
+<li>按锁的粒度划分可以分为：表级锁，行级锁，页级锁</li>
+<li>按锁级别划分，可分为共享锁和排他锁</li>
+<li>按加锁方式划分，可分为自动锁，显示锁</li>
+<li>按操作划分可分为DML锁，DDL锁</li>
+<li>按使用方式划分，可分为乐观锁、悲观锁</li>
+</ul>
+<h3 id="数据库事务的四大特性"><a href="#数据库事务的四大特性" class="headerlink" title="数据库事务的四大特性"></a>数据库事务的四大特性</h3><blockquote>
+<ul>
+<li>A:原子性,Atomicity</li>
+<li>C:一致性,Consistency</li>
+<li>I:隔离性,Isolation</li>
+<li>D:持久性,Durability</li>
+</ul>
+</blockquote>
+<h3 id="事务鼓励级别以及各级别下的并发访问问题"><a href="#事务鼓励级别以及各级别下的并发访问问题" class="headerlink" title="事务鼓励级别以及各级别下的并发访问问题"></a>事务鼓励级别以及各级别下的并发访问问题</h3><p>并发访问引起的问题和如何避免</p>
+<ul>
+<li>更新丢失– mysql 所有事务隔离级别在数据库层面上均可避免</li>
+<li>脏读– READ-COMMITTED事务隔离级别以上可避免</li>
+<li>不可重复读– REPEATABLE-READ 事务隔离级别以上可避免</li>
+<li>幻读– SERIABLIZABLE事务隔离级别可避免</li>
+</ul>
+<h4 id="脏读、不可重复读、幻象读概念说明"><a href="#脏读、不可重复读、幻象读概念说明" class="headerlink" title="脏读、不可重复读、幻象读概念说明"></a>脏读、不可重复读、幻象读概念说明</h4><ol>
+<li>脏读：指当一个事务正字访问数据，并且对数据进行了修改，而这种数据还没有提交到数据库中，这时，另外一个事务也访问这个数据，然后使用了这个数据。因为这个数据还没有提交那么另外一个事务读取到的这个数据我们称之为脏数据。依据脏数据所做的操作肯能是不正确的。  </li>
+<li>不可重复读：指在一个事务内，多次读同一数据。在这个事务还没有执行结束，另外一个事务也访问该同一数据，那么在第一个事务中的两次读取数据之间，由于第二个事务的修改第一个事务两次读到的数据可能是不一样的，这样就发生了在一个事物内两次连续读到的数据是不一样的，这种情况被称为是不可重复读。</li>
+<li>幻象读：一个事务先后读取一个范围的记录，但两次读取的纪录数不同，我们称之为幻象读（两次执行同一条 select 语句会出现不同的结果，第二次读会增加一数据行，并没有说这两次执行是在同一个事务中）  </li>
+</ol>
+<h4 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h4><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>更新丢失</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未提交读</td>
+<td>避免</td>
+<td>发生</td>
+<td>发生</td>
+<td>发生</td>
+</tr>
+<tr>
+<td>已提交读</td>
+<td>避免</td>
+<td>避免</td>
+<td>发生</td>
+<td>发生</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td>避免</td>
+<td>避免</td>
+<td>避免</td>
+<td>发生</td>
+</tr>
+<tr>
+<td>串行化</td>
+<td>避免</td>
+<td>避免</td>
+<td>避免</td>
+<td>避免</td>
+</tr>
+</tbody></table>
+<p>在mysql中的innodb引擎,原子性,一致性,隔离性通过redo和undo实现,redo 就是ib_logfile物理文件,而undo默认在共享表空间ibdata里面,通过设置参数可以独立出来.</p>
+<h4 id="数据库操作事务隔离"><a href="#数据库操作事务隔离" class="headerlink" title="数据库操作事务隔离"></a>数据库操作事务隔离</h4><h5 id="读取未提交的事务里面的数据-脏读"><a href="#读取未提交的事务里面的数据-脏读" class="headerlink" title="读取未提交的事务里面的数据(脏读)"></a>读取未提交的事务里面的数据(脏读)</h5><p>设置隔离级别方法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br></pre></td></tr></table></figure>
+
+<p>开始事务</p>
+<!-- show variables like '%tx_isolation%'; -->
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"></span><br><span class="line">begain</span><br><span class="line"><span class="keyword">update</span> propagation <span class="keyword">set</span> <span class="keyword">count</span> = <span class="keyword">count</span> + <span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">rollback</span> (回滚操作)</span><br></pre></td></tr></table></figure>
+
+<p>另外开一个session 进行查询，可看到并不还没有更改数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> propagation</span><br></pre></td></tr></table></figure>
+
+<p>begain中执行的操作  被第二个进程读到了，导致脏读，一但事务回滚，第二个进程保存的是之前的结果。</p>
+<h4 id="InnoDB可重复读隔离级别下如何避免幻读"><a href="#InnoDB可重复读隔离级别下如何避免幻读" class="headerlink" title="InnoDB可重复读隔离级别下如何避免幻读"></a>InnoDB可重复读隔离级别下如何避免幻读</h4><ul>
+<li>表象: 快照读(非阻塞读) – 伪<ul>
+<li>当前读是上了锁的增删改查， update,delete,insert</li>
+<li>快照读: 不加锁的非阻塞读,select </li>
+</ul>
+</li>
+</ul>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>关键语法</p>
+<ul>
+<li>Group By</li>
+<li>Having</li>
+<li>Count, Sum, Max, Min, Avg</li>
+</ul>
+<h4 id="Group-By"><a href="#Group-By" class="headerlink" title="Group By"></a>Group By</h4><ul>
+<li>满足 “select 自居的列名必须为分组列或列函数</li>
+<li>列函数对于 group by 子句定义的每个组各返回一个结果</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询所有同学学号、姓名、选课数、总成绩</span></span><br><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	s.student_id,</span><br><span class="line">	stu.name,</span><br><span class="line">	<span class="keyword">COUNT</span>( course_id ),</span><br><span class="line">	<span class="keyword">SUM</span>( score ) </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">	score s,</span><br><span class="line">	student stu</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	s.student_id = stu.student_id</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">	student_id</span><br></pre></td></tr></table></figure>
+
+<h4 id="Having"><a href="#Having" class="headerlink" title="Having"></a>Having</h4><ul>
+<li>通常与Group By 子句一起使用</li>
+<li>WHERE 过滤行，Having过滤组</li>
+<li>出现在同一sql的顺序: WHERE &gt; GROUP BY &gt; HAVING</li>
+</ul>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="缓存知识考点"><a href="#缓存知识考点" class="headerlink" title="缓存知识考点"></a>缓存知识考点</h3><h4 id="缓存中间件-Memcache-和-Redis-的区别"><a href="#缓存中间件-Memcache-和-Redis-的区别" class="headerlink" title="缓存中间件-Memcache 和 Redis 的区别"></a>缓存中间件-Memcache 和 Redis 的区别</h4><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">Memcache</th>
+<th align="center">Redis</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数据类型</td>
+<td align="center">类似Hash</td>
+<td align="center">丰富</td>
+</tr>
+<tr>
+<td align="center">数据磁盘持久化存储</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">主从</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">分片</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+</tbody></table>
+<p>简单key-value可以选择Memcache  </p>
+<h3 id="为什么Redis能这么快"><a href="#为什么Redis能这么快" class="headerlink" title="为什么Redis能这么快"></a>为什么Redis能这么快</h3><p>10w+ QPS(query per second)</p>
+<ul>
+<li>完全基于内存，绝大部分请求是纯粹的内存操作，执行效率高</li>
+<li>数据结构简单，对数据操作也简单</li>
+<li>采用单线程，单线程也能处理高并发请求，想多核也可以多实例</li>
+<li>多路I/O复用模型，非阻塞IO</li>
+</ul>
+<h4 id="多路I-O复用"><a href="#多路I-O复用" class="headerlink" title="多路I/O复用"></a>多路I/O复用</h4><h5 id="I-O复用模型"><a href="#I-O复用模型" class="headerlink" title="I/O复用模型"></a>I/O复用模型</h5><p>Redis 采用的I/O多路复用函数: epoll/kqueue/evport/select</p>
+<ul>
+<li>因地制宜</li>
+<li>优先选择时间复杂度为O(1)的多路服用函数作为底层实现</li>
+<li>以时间复杂度为O(n)的select作为保底</li>
+<li>基于react设计模式监听I/O事件</li>
+</ul>
+<h4 id="Redis-数据类型"><a href="#Redis-数据类型" class="headerlink" title="Redis 数据类型"></a>Redis 数据类型</h4><p>供用户使用的数据类型</p>
+<ul>
+<li>String : 最基本的数据类型，二进制安全(可以存JPG图片)<ul>
+<li>get (key)</li>
+<li>set (key) (value)</li>
+</ul>
+</li>
+<li>Hash: String元素组成的字典，适合用于存储对象<ul>
+<li>hget (struct) (key)</li>
+<li>hmset (struct) (key1) (value1) (key2) (value2) … </li>
+</ul>
+</li>
+<li>List: 列表，按照String元素插入顺序排序(有点像栈)<ul>
+<li>lrange (list) (min) (max)</li>
+<li>lpush (list) (key)</li>
+</ul>
+</li>
+<li>Set: Sting 元素组成的无序集合，通过哈希表实现，不允许重复<ul>
+<li>smembers (set)</li>
+<li>sadd (set) (key)</li>
+</ul>
+</li>
+<li>Sorted Set: 通过分数来为集合中的成员进行从小到大的排序<ul>
+<li>zrangebyscore (set) (min) (max)</li>
+<li>zadd (set) (score) (key)</li>
+</ul>
+</li>
+<li>HyperLogLog 用于计数</li>
+<li>Geo 存储地理位置</li>
+</ul>
+<h5 id="底层数据类型基础"><a href="#底层数据类型基础" class="headerlink" title="底层数据类型基础"></a>底层数据类型基础</h5><ul>
+<li>简单动态字符串</li>
+<li>链表</li>
+<li>字典</li>
+<li>跳跃表</li>
+<li>整数集合</li>
+<li>压缩列表</li>
+<li>对象</li>
+</ul>
+<h3 id="从海量key里查询出某一固定前缀的key"><a href="#从海量key里查询出某一固定前缀的key" class="headerlink" title="从海量key里查询出某一固定前缀的key"></a>从海量key里查询出某一固定前缀的key</h3><ul>
+<li><p>KEYS pattern: 查找所有符合给定模式pattern的key</p>
+<ul>
+<li>KEYS指令一次性返回所有匹配的KEY</li>
+<li>键的数量过大会使服务卡顿</li>
+</ul>
+</li>
+<li><p>SCAN cursor [MATCH pattern] [COUNT count]</p>
+<ul>
+<li>基于游标的迭代器，需要基于上一次的游标延续之前的迭代过程</li>
+<li>以0作为游标开始一次新的迭代，知道命令返回游标0完成一次便利</li>
+<li>并不保证每次执行都返回某个给定数量的元素，支持模糊查询</li>
+<li>一次返回的数量不可控，只能是大概率符合count参数</li>
+</ul>
+</li>
+</ul>
+<h3 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h3><p>分布式锁需要解决的问题</p>
+<ul>
+<li>互斥性</li>
+<li>安全性</li>
+<li>死锁</li>
+<li>容错</li>
+</ul>
+<h4 id="SET"><a href="#SET" class="headerlink" title="SET"></a>SET</h4><p>SET key value [EX seconds] [PX milliseconds] [NX|XX]</p>
+<ul>
+<li>EX second: 设置键的过期时间为 second 秒</li>
+<li>PX millisecond: 设置键的过期时间为millisecond 毫秒</li>
+<li>NX: 只在键不存在时，才对键进行设置</li>
+<li>XX: 只在键已经存在时，才对键进行设置操作</li>
+<li>SET操作成功完成时，返回OK，否则返回nil</li>
+</ul>
+<h4 id="大量的key同时过期的注意事项"><a href="#大量的key同时过期的注意事项" class="headerlink" title="大量的key同时过期的注意事项"></a>大量的key同时过期的注意事项</h4><p>集中过期，由于清除大量的key很耗时，会出现断站的卡顿现象<br>    - 解决方案: 在设置key 的过期时间时，给每个key加上随机值</p>
+<h3 id="使用Redis做异步队列"><a href="#使用Redis做异步队列" class="headerlink" title="使用Redis做异步队列"></a>使用Redis做异步队列</h3><p>使用List作为队列，RPush生产消息，LPOP消费消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rpush list aaa</span><br><span class="line">rpush list bbb</span><br><span class="line">rpush list ccc</span><br><span class="line">lpop list // aaa</span><br><span class="line">lpop list // bbb</span><br><span class="line">lpop list // ccc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>缺点： 没有等待，队列里有值就直接消费</li>
+<li>弥补： 可以通过在应用层引入Sleep机制去调用LPOP重试</li>
+</ul>
+<p>如果不想用sleep 可以用BLPOP</p>
+<h4 id="BLPOP"><a href="#BLPOP" class="headerlink" title="BLPOP"></a>BLPOP</h4><p>blpop key [key …] timeout: 阻塞直到队列有消息或者超时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">session 1:</span><br><span class="line">    blpop list 30  // 为空进入等待30s</span><br><span class="line"></span><br><span class="line">session 2:</span><br><span class="line">    rpush list a</span><br><span class="line"></span><br><span class="line">session 1:</span><br><span class="line">    1) &quot;a&quot;</span><br></pre></td></tr></table></figure>
+
+<p>缺点是只能共给一个消费者使用</p>
+<h4 id="pub-sub"><a href="#pub-sub" class="headerlink" title="pub/sub"></a>pub/sub</h4><p>主题订阅者模式</p>
+<ul>
+<li>发送者(pub)发送消息，订阅者(sub)接收消息</li>
+<li>订阅者可以订阅任意数量的频道</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">subscribe (channel) 接收广播</span><br><span class="line">publish (channel) (content) 发送广播</span><br></pre></td></tr></table></figure>
+
+<p>缺点： 消息的发布是无状态的，无法保证可达</p>
+<p>kafka 和 MQ</p>
+<h3 id="持久化方法之-RDB"><a href="#持久化方法之-RDB" class="headerlink" title="持久化方法之 RDB"></a>持久化方法之 RDB</h3><p>RDB(快照)持久化：保存某个时间点的全量数据快照</p>
+<p>手动：</p>
+<ul>
+<li>SAVE: 阻塞Redis的服务器进程，直到RDB文件创建完毕</li>
+<li>BGSAVE: Fork出一个子进程来创建RDB文件，不阻塞服务器进程</li>
+</ul>
+<p>自动：</p>
+<ul>
+<li>根据redis.conf配置里面的SAVE m n定时触发(用的是BGSAVE)</li>
+<li>主从复制时，主节点自动触发</li>
+<li>执行Debug Reload</li>
+<li>执行Shutdown且没有开启AOF持久化</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>内存数据的全量同步，数据量大会由于I/O而严重影响性能</li>
+<li>可能会因为Redis 挂掉而丢失从当前至最后一次快照期间的数据</li>
+</ul>
+<h3 id="持久化之-AOF"><a href="#持久化之-AOF" class="headerlink" title="持久化之 AOF"></a>持久化之 AOF</h3><p>AOF (Append-Only-File) 持久化：保存写状态</p>
+<ul>
+<li>记录下除了查询以外的所有变更数据库状态的指令</li>
+<li>以append的形式追加保存到AOF文件中</li>
+</ul>
+<p>日志重写解决AOF文件大小不断增大的问题，原理如下</p>
+<pre><code>- 调用fork(), 创建一个子进程
+- 子进程把新的AOF写道临时文件，不依赖原来的AOF文件
+- 主进程持续把新的变动同时写到内存和原来的AOF里
+- 主进程获取子进程重写AOF的完成信号，往新的AOF同步增量变动
+- 使用新的AOF文件替换掉旧的AOF文件</code></pre><p>手动重写指令: BGREWRITEAOF</p>
+<h3 id="RDB和AOF"><a href="#RDB和AOF" class="headerlink" title="RDB和AOF"></a>RDB和AOF</h3><h4 id="RDB和AOF共存时的恢复流程"><a href="#RDB和AOF共存时的恢复流程" class="headerlink" title="RDB和AOF共存时的恢复流程"></a>RDB和AOF共存时的恢复流程</h4><h2 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h2><h3 id="类加载机制和双亲委派模型"><a href="#类加载机制和双亲委派模型" class="headerlink" title="类加载机制和双亲委派模型"></a>类加载机制和双亲委派模型</h3><p>类的生命周期<br><img src="%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F.png" alt="类的生命周期"></p>
 <p>类加载包括 加载 验证 准备 解析 初始化五个阶段  </p>
 <ul>
 <li>加载: 类加载器(可自己设置)，热部署，加密解密</li>
@@ -68,7 +605,6 @@
 <li>解析: 将常量池的一些引用替换为实际值。</li>
 <li>初始化: 赋值</li>
 <li>使用: 构造过程，构造方法</li>
-<li></li>
 </ul>
 <table>
 <thead>
@@ -159,37 +695,6 @@
 </tr>
 </tbody></table>
 <p>除了default另外四个与JDBC的隔离级别相对应。</p>
-<blockquote>
-<ul>
-<li>数据库ACID原则</li>
-<li>A:原子性,Atomicity</li>
-<li>C:一致性,Consistency</li>
-<li>I:隔离性,Isolation</li>
-<li>D:持久性,Durability</li>
-</ul>
-</blockquote>
-<p>在mysql中的innodb引擎,原子性,一致性,隔离性通过redo和undo实现,redo 就是ib_logfile物理文件,而undo默认在共享表空间ibdata里面,通过设置参数可以独立出来.</p>
-<h4 id="脏读、不可重复读、幻象读概念说明"><a href="#脏读、不可重复读、幻象读概念说明" class="headerlink" title="脏读、不可重复读、幻象读概念说明"></a>脏读、不可重复读、幻象读概念说明</h4><ol>
-<li>脏读：指当一个事务正字访问数据，并且对数据进行了修改，而这种数据还没有提交到数据库中，这时，另外一个事务也访问这个数据，然后使用了这个数据。因为这个数据还没有提交那么另外一个事务读取到的这个数据我们称之为脏数据。依据脏数据所做的操作肯能是不正确的。  </li>
-<li>不可重复读：指在一个事务内，多次读同一数据。在这个事务还没有执行结束，另外一个事务也访问该同一数据，那么在第一个事务中的两次读取数据之间，由于第二个事务的修改第一个事务两次读到的数据可能是不一样的，这样就发生了在一个事物内两次连续读到的数据是不一样的，这种情况被称为是不可重复读。</li>
-<li>幻象读：一个事务先后读取一个范围的记录，但两次读取的纪录数不同，我们称之为幻象读（两次执行同一条 select 语句会出现不同的结果，第二次读会增加一数据行，并没有说这两次执行是在同一个事务中）  </li>
-</ol>
-<h4 id="数据库操作事务隔离"><a href="#数据库操作事务隔离" class="headerlink" title="数据库操作事务隔离"></a>数据库操作事务隔离</h4><h5 id="读取未提交的事务里面的数据-脏读"><a href="#读取未提交的事务里面的数据-脏读" class="headerlink" title="读取未提交的事务里面的数据(脏读)"></a>读取未提交的事务里面的数据(脏读)</h5><p>设置隔离级别方法</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br></pre></td></tr></table></figure>
-
-<p>开始事务</p>
-<!-- show variables like '%tx_isolation%'; -->
-
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"></span><br><span class="line">begain</span><br><span class="line"><span class="keyword">update</span> propagation <span class="keyword">set</span> <span class="keyword">count</span> = <span class="keyword">count</span> + <span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">rollback</span> (回滚操作)</span><br></pre></td></tr></table></figure>
-
-<p>另外开一个session 进行查询，可看到并不还没有更改数据。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> propagation</span><br></pre></td></tr></table></figure>
-
-<p>begain中执行的操作  被第二个进程读到了，导致脏读，一但事务回滚，第二个进程保存的是之前的结果。</p>
-<h5 id="读已提交-不可重复读"><a href="#读已提交-不可重复读" class="headerlink" title="读已提交(不可重复读)"></a>读已提交(不可重复读)</h5><p>read committed</p>
-<h5 id="可重复读"><a href="#可重复读" class="headerlink" title="可重复读"></a>可重复读</h5><p>repeatable read</p>
-<h5 id="可串行化"><a href="#可串行化" class="headerlink" title="可串行化"></a>可串行化</h5><p>serialiable</p>
-<p>锁表效率低</p>
 <h3 id="高并发如何修改同一行数据"><a href="#高并发如何修改同一行数据" class="headerlink" title="高并发如何修改同一行数据"></a>高并发如何修改同一行数据</h3><h4 id="jvm解决"><a href="#jvm解决" class="headerlink" title="jvm解决"></a>jvm解决</h4><ol>
 <li>jvm 下用synchronized锁。</li>
 </ol>
@@ -215,7 +720,7 @@
 <li>Zookeeper 数据结构类似Linux  </li>
 <li>每一个节点都有值  </li>
 </ul>
-</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/03/13/面试专题/">https://edxuanlen.tk/2020/03/13/面试专题/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/Java/">Java</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/03/16/Kubernetes/" class="pre">Kubernetes</a><a href="/2020/03/12/hashmap/" class="next">hashmap</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI七层协议"><span class="toc-text">OSI七层协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI的标准-TCP-IP"><span class="toc-text">OSI的标准:TCP/IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP三次握手"><span class="toc-text">TCP三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类加载机制和双亲委派模型"><span class="toc-text">类加载机制和双亲委派模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七个事务传播属性"><span class="toc-text">七个事务传播属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring中的事务隔离级别"><span class="toc-text">Spring中的事务隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#脏读、不可重复读、幻象读概念说明"><span class="toc-text">脏读、不可重复读、幻象读概念说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库操作事务隔离"><span class="toc-text">数据库操作事务隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读取未提交的事务里面的数据-脏读"><span class="toc-text">读取未提交的事务里面的数据(脏读)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读已提交-不可重复读"><span class="toc-text">读已提交(不可重复读)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可重复读"><span class="toc-text">可重复读</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可串行化"><span class="toc-text">可串行化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高并发如何修改同一行数据"><span class="toc-text">高并发如何修改同一行数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jvm解决"><span class="toc-text">jvm解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式解决"><span class="toc-text">分布式解决</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Zookeerper-数据结构"><span class="toc-text">Zookeerper 数据结构</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/JVM/">JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/09/Spring-IOC/">Spring-IOC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/08/Spring-AOP/">Spring-AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/自建SS服务/">自建SS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/Spring-boot第一个应用的开发/">Spring_boot第一个应用的开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Spring-boot入门/">Spring_boot入门</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/03/13/面试专题/">https://edxuanlen.tk/2020/03/13/面试专题/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/Java/">Java</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/03/16/Kubernetes/" class="pre">Kubernetes</a><a href="/2020/03/12/hashmap/" class="next">hashmap</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI七层协议"><span class="toc-text">OSI七层协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI的标准-TCP-IP"><span class="toc-text">OSI的标准:TCP/IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP三次握手"><span class="toc-text">TCP三次握手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-通信过程"><span class="toc-text">A =&gt; B 通信过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要三次握手"><span class="toc-text">为什么需要三次握手</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP的四次挥手"><span class="toc-text">TCP的四次挥手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-四次挥手"><span class="toc-text">A =&gt; B 四次挥手</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么又TIME-WAIT状态"><span class="toc-text">为什么又TIME_WAIT状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要四次握手才能断开连接"><span class="toc-text">为什么需要四次握手才能断开连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务器出现大量CLOSE-WAIT状态的原因"><span class="toc-text">服务器出现大量CLOSE_WAIT状态的原因</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP"><span class="toc-text">UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#UDP-特点"><span class="toc-text">UDP 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-和-UDP-的区别"><span class="toc-text">TCP 和 UDP 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-滑动窗口"><span class="toc-text">TCP 滑动窗口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#在浏览器地址栏键入一个URL，按下回车之后经历的流程"><span class="toc-text">在浏览器地址栏键入一个URL，按下回车之后经历的流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-状态码"><span class="toc-text">HTTP 状态码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GET-和-POST-请求的区别"><span class="toc-text">GET 和 POST 请求的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cookie-和-Session的区别"><span class="toc-text">Cookie 和 Session的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Cookie"><span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Session"><span class="toc-text">Session</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-和-HTTPS"><span class="toc-text">HTTP 和 HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL"><span class="toc-text">SSL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP和HTTPS的区别"><span class="toc-text">HTTP和HTTPS的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Socket"><span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Socket通信流程"><span class="toc-text">Socket通信流程</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何设计一个关系型数据库-RDBMS"><span class="toc-text">如何设计一个关系型数据库(RDBMS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引模块"><span class="toc-text">索引模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要使用索引"><span class="toc-text">为什么要使用索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么信息能成为索引"><span class="toc-text">什么信息能成为索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的数据结构"><span class="toc-text">索引的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree"><span class="toc-text">B Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree-1"><span class="toc-text">B+ Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash索引"><span class="toc-text">Hash索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#密集索引和稀疏索引的区别"><span class="toc-text">密集索引和稀疏索引的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB"><span class="toc-text">InnoDB</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引问答"><span class="toc-text">索引问答</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql"><span class="toc-text">mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何定位并优化慢查询sql"><span class="toc-text">如何定位并优化慢查询sql</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#联合索引的最左匹配原则"><span class="toc-text">联合索引的最左匹配原则</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引是建的越来越多好吗"><span class="toc-text">索引是建的越来越多好吗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#锁模块"><span class="toc-text">锁模块</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM与InnoDB关于锁方面的区别是什么"><span class="toc-text">MyISAM与InnoDB关于锁方面的区别是什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM适合的场景"><span class="toc-text">MyISAM适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB适合的场景"><span class="toc-text">InnoDB适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库锁的分类"><span class="toc-text">数据库锁的分类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库事务的四大特性"><span class="toc-text">数据库事务的四大特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务鼓励级别以及各级别下的并发访问问题"><span class="toc-text">事务鼓励级别以及各级别下的并发访问问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#脏读、不可重复读、幻象读概念说明"><span class="toc-text">脏读、不可重复读、幻象读概念说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何避免"><span class="toc-text">如何避免</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库操作事务隔离"><span class="toc-text">数据库操作事务隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读取未提交的事务里面的数据-脏读"><span class="toc-text">读取未提交的事务里面的数据(脏读)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB可重复读隔离级别下如何避免幻读"><span class="toc-text">InnoDB可重复读隔离级别下如何避免幻读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Group-By"><span class="toc-text">Group By</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Having"><span class="toc-text">Having</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存知识考点"><span class="toc-text">缓存知识考点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存中间件-Memcache-和-Redis-的区别"><span class="toc-text">缓存中间件-Memcache 和 Redis 的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么Redis能这么快"><span class="toc-text">为什么Redis能这么快</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#多路I-O复用"><span class="toc-text">多路I/O复用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#I-O复用模型"><span class="toc-text">I/O复用模型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-数据类型"><span class="toc-text">Redis 数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#底层数据类型基础"><span class="toc-text">底层数据类型基础</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从海量key里查询出某一固定前缀的key"><span class="toc-text">从海量key里查询出某一固定前缀的key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis实现分布式锁"><span class="toc-text">Redis实现分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SET"><span class="toc-text">SET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#大量的key同时过期的注意事项"><span class="toc-text">大量的key同时过期的注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Redis做异步队列"><span class="toc-text">使用Redis做异步队列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BLPOP"><span class="toc-text">BLPOP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pub-sub"><span class="toc-text">pub/sub</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化方法之-RDB"><span class="toc-text">持久化方法之 RDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化之-AOF"><span class="toc-text">持久化之 AOF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB和AOF"><span class="toc-text">RDB和AOF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB和AOF共存时的恢复流程"><span class="toc-text">RDB和AOF共存时的恢复流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA"><span class="toc-text">JAVA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类加载机制和双亲委派模型"><span class="toc-text">类加载机制和双亲委派模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七个事务传播属性"><span class="toc-text">七个事务传播属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring中的事务隔离级别"><span class="toc-text">Spring中的事务隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高并发如何修改同一行数据"><span class="toc-text">高并发如何修改同一行数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jvm解决"><span class="toc-text">jvm解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式解决"><span class="toc-text">分布式解决</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Zookeerper-数据结构"><span class="toc-text">Zookeerper 数据结构</span></a></li></ol></li></ol></li></ol></li></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/JVM/">JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/09/Spring-IOC/">Spring-IOC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/08/Spring-AOP/">Spring-AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/自建SS服务/">自建SS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/Spring-boot第一个应用的开发/">Spring_boot第一个应用的开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Spring-boot入门/">Spring_boot入门</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
