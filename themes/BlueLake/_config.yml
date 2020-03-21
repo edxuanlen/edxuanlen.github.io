@@ -61,6 +61,15 @@ Plugins:
 #   path: atom.xml
 #   limit: 20
 
+fancybox: 
+  enabled: true
+# Mermaid tag
+mermaid:
+  enable: true
+  # Available themes: default | dark | forest | neutral
+  theme: forest
+
+
 # #sitemap
 sitemap:
   path: sitemap.xml
@@ -155,5 +164,3 @@ links:
   - title: CSDN博客
     url: http://blog.csdn.net/edxuanlen
 
-fancybox: 
-  enabled: true
