@@ -59,7 +59,7 @@
 <p>先自上(应用层)而下添加数据头，后自下而上处理数据头部</p>
 <p><img src="TCP_IP1.png" alt="TCP/IP">  </p>
 <h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><p>基于字节流，将应用层的数据流分割成报文段并发送给目标节点的TCP层<br>数据包都有序号，对方收到则发送确认ACK确认，未收到则重传。<br>使用校验和来校验的数据在传输过程中是否有误。  </p>
-<p><img src="%E9%9D%A2%E8%AF%95%E4%B8%93%E9%A2%98/TCP%E6%8A%A5%E6%96%87.png" alt="TCP报文"></p>
+<p><img src="TCP%E6%8A%A5%E6%96%87.png" alt="TCP报文"></p>
 <p>TCP Flags:</p>
 <ul>
 <li>URG: 紧急指针标志 urgent</li>
@@ -335,7 +335,8 @@
 <li>按操作划分可分为DML锁，DDL锁</li>
 <li>按使用方式划分，可分为乐观锁、悲观锁</li>
 </ul>
-<h3 id="数据库事务的四大特性"><a href="#数据库事务的四大特性" class="headerlink" title="数据库事务的四大特性"></a>数据库事务的四大特性</h3><blockquote>
+<h3 id="数据库事务的四大特性"><a href="#数据库事务的四大特性" class="headerlink" title="数据库事务的四大特性"></a>数据库事务的四大特性</h3><p>ACID</p>
+<blockquote>
 <ul>
 <li>A:原子性,Atomicity</li>
 <li>C:一致性,Consistency</li>
@@ -645,7 +646,7 @@
 </li>
 <li>将缓存中的数据发给Slave</li>
 </ul>
-<h3 id="Redis-Sentinel"><a href="#Redis-Sentinel" class="headerlink" title="Redis Sentinel"></a>Redis Sentinel</h3><p>解决主从同步Master宕机后的主从切换问题：</p>
+<h3 id="Redis-Sentinel-哨兵机制"><a href="#Redis-Sentinel-哨兵机制" class="headerlink" title="Redis Sentinel (哨兵机制)"></a>Redis Sentinel (哨兵机制)</h3><p>解决主从同步Master宕机后的主从切换问题：</p>
 <ul>
 <li>监控： 检查主从服务器是否运行正常</li>
 <li>提醒： 通过API向管理员或者其他应用程序发送故障通知</li>
@@ -668,15 +669,92 @@
 <p><img src="Node_X.png" alt="Node_X"></p>
 <h4 id="Hash环数据倾斜问题"><a href="#Hash环数据倾斜问题" class="headerlink" title="Hash环数据倾斜问题"></a>Hash环数据倾斜问题</h4><p>引入虚拟节点解决数据倾斜问题</p>
 <p><img src="vitual_node.png" alt="vitual_node"></p>
-<h2 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h2><h3 id="类加载机制和双亲委派模型"><a href="#类加载机制和双亲委派模型" class="headerlink" title="类加载机制和双亲委派模型"></a>类加载机制和双亲委派模型</h3><p>类的生命周期<br><img src="%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F.png" alt="类的生命周期"></p>
-<p>类加载包括 加载 验证 准备 解析 初始化五个阶段  </p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><ul>
+<li>体系结构主要分为用户态和内核态(kernel)</li>
+<li>内核: 本质是一段管理计算机硬件设备的程序</li>
+<li>系统调用: 内核的访问接口，是一种能够能再简化的操作</li>
+<li>公用函数库: 系统调用的组合拳</li>
+<li>Shell: 命令解释器，可编程</li>
+</ul>
+<p>man 2(系统调用) 3(公共库函数)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">man 2 syscalls</span><br><span class="line">man 2 acct</span><br></pre></td></tr></table></figure>
+
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>语法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find path [options] params</span><br></pre></td></tr></table></figure>
+
+<p>指定目录下查找文件<br>-iname 可以忽略大小写</p>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep [options] pattern file</span><br><span class="line">grep -o pattern <span class="comment"># 选出满足条件的</span></span><br><span class="line">grep -v pattern <span class="comment"># 过滤包含该pattern的</span></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>加载: 类加载器(可自己设置)，热部署，加密解密</li>
-<li>验证: 字节流包含的信息符不符合虚拟机要求，会不会危害虚拟机  </li>
-<li>准备: 为类变量分配内存，设置初始值。  </li>
-<li>解析: 将常量池的一些引用替换为实际值。</li>
-<li>初始化: 赋值</li>
-<li>使用: 构造过程，构造方法</li>
+<li>全称: Global Regular Expression Print</li>
+<li>作用: 查找文件里符合条件的字符串</li>
+</ul>
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道 |"></a>管道 |</h3><ul>
+<li>可将指令连接起来，前一个指令的输出作为后一个指令的输入</li>
+<li>只能处理前一个指令的正确输出，无法处理错误</li>
+<li>右边的命令必须能够接收标准输入流，否则传递过程中数据会被抛弃<ul>
+<li>如sed, awk, grep, cut, head, top, less, more, wc, join, sort, split</li>
+</ul>
+</li>
+</ul>
+<h3 id="统计"><a href="#统计" class="headerlink" title="统计"></a>统计</h3><h4 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [options] <span class="string">'command'</span> file</span><br></pre></td></tr></table></figure>
+
+<p>awk -f 设置分隔符</p>
+<ul>
+<li>一次读取一行文本，按输入分隔符进行切片，切成多个组合部分</li>
+<li>将切片直接保存在内建的变量中，$1,$2…$0表示行的全部</li>
+<li>支持对单个切片的判断，支持循环判断，默认分隔符为空格</li>
+</ul>
+<h3 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h3><h4 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed [option] <span class="string">'sed command'</span> file</span><br><span class="line">sed -i <span class="string">'s/^Str/String/'</span> replace.java</span><br><span class="line">sed -i <span class="string">'s/\.$/\;'</span> replace.java</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>全名 stream editor 流编辑器</li>
+<li>适合用于对文本的行内容进行处理</li>
+</ul>
+<h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="谈谈你对Java的理解"><a href="#谈谈你对Java的理解" class="headerlink" title="谈谈你对Java的理解"></a>谈谈你对Java的理解</h3><ul>
+<li>平台无关性</li>
+<li>GC</li>
+<li>语言特性(泛型、反射)</li>
+<li>面向对象</li>
+<li>库类</li>
+<li>异常处理</li>
+</ul>
+<h4 id="Compile-Once-Run-Anywhere如何实现"><a href="#Compile-Once-Run-Anywhere如何实现" class="headerlink" title="Compile Once, Run Anywhere如何实现"></a>Compile Once, Run Anywhere如何实现</h4><ul>
+<li>编译时</li>
+<li>运行时</li>
+</ul>
+<p>javac编译，生成字节码</p>
+<p><img src="JAVA%E8%B7%A8%E5%B9%B3%E5%8F%B0.png" alt=" 跨平台"></p>
+<p>Java源码首先被编译为字节码，再由不同平台的JVM进行解析，Java语言在不同平台上运行时不需要进行重新编译，Java虚拟机在执行字节码的时候，把字节码转换成具体平台上的机器指令。</p>
+<h4 id="为什么JVM不直接将源码解析成机器码去执行"><a href="#为什么JVM不直接将源码解析成机器码去执行" class="headerlink" title="为什么JVM不直接将源码解析成机器码去执行"></a>为什么JVM不直接将源码解析成机器码去执行</h4><p>为什么要先编译成字节码再解析成机器码</p>
+<ul>
+<li>准备工作: 每次执行都需要各种检查</li>
+<li>兼容性: 也可以将别的语言解析成字节码</li>
+</ul>
+<h4 id="JVM如何加载-class文件"><a href="#JVM如何加载-class文件" class="headerlink" title="JVM如何加载.class文件"></a>JVM如何加载.class文件</h4><p><img src="JVM.png" alt="JVM"></p>
+<ul>
+<li>Class Loader: 依据特定格式，加载class文件到内存 (本地接口)</li>
+<li>Execution Engine: 对命令进行解析 (解释器)</li>
+<li>Native Interface: 融合不同开发语言的原生库为Java所用</li>
+<li>Runtime Data Area: JVM内存空间结构模型</li>
+</ul>
+<h4 id="谈谈反射"><a href="#谈谈反射" class="headerlink" title="谈谈反射"></a>谈谈反射</h4><h5 id="列举反射的例子"><a href="#列举反射的例子" class="headerlink" title="列举反射的例子"></a>列举反射的例子</h5><p>// TODO 添加代码</p>
+<h4 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h4><p>类从编译到执行的过程</p>
+<ul>
+<li>将源文件编译为字节码文件</li>
+<li>ClassLoader将字节码转换为JVM中的Class&lt; xx &gt;对象</li>
+<li>JVM利用Class&lt; xx &gt; 对象实例化为 xx 对象</li>
+</ul>
+<p>Classloader在Java中有着非常重要的作用,它主要工作在 Class 装载的加载阶段,其主要作用是从系统外部获得 ** Class二进制数据流 **。它是Java的核心组件所有的 Class都是由 Classloader进行加载的Classloader负责通过将 Class文件里的二进制数据流装载进系统,然后交给Java虚拟机进行连接、初始化等操作。</p>
+<h5 id="ClassLoader种类"><a href="#ClassLoader种类" class="headerlink" title="ClassLoader种类"></a>ClassLoader种类</h5><ul>
+<li>BootStrapClassLoader: C++编写，加载核心库java.*</li>
+<li>ExtClassLoader: java编写，加载扩展库 javax.*</li>
+<li>AppClassLoader: java编写，加载程序所在目录</li>
+<li>自定义ClasLoader: java编写，自定义加载<ul>
+<li>findClass</li>
+<li>defineClass<br>// TODO 代码</li>
+</ul>
+</li>
 </ul>
 <table>
 <thead>
@@ -697,9 +775,573 @@
 <td align="center">应用程序加载器 Application ClassLoader</td>
 <td align="center">加载用户类路径上指定的类库，开发者可以直接使用，一般情况下这个就是程序中默认的类加载器</td>
 </tr>
+<tr>
+<td align="center">自定义加载器 Custom ClassLoader</td>
+<td align="center">加载自定义的类</td>
+</tr>
 </tbody></table>
-<p>如何组织类加载器？</p>
-<p>虚拟器引入了双亲委派模型<br>当一个加载器进行类加载的时候，先委派给双亲加载器加载。双亲无法加载的时候再返回自己加载。<br>好处: 保证类有合适的优先级的层次关系，保证程序稳定运行。  </p>
+<h5 id="如何组织类加载器"><a href="#如何组织类加载器" class="headerlink" title="如何组织类加载器"></a>如何组织类加载器</h5><p>虚拟器引入了双亲委派模型<br>当一个加载器进行类加载的时候，先委派给双亲加载器加载。双亲无法加载的时候再返回自己加载。<br>好处: 保证类有合适的优先级的层次关系，保证程序稳定运行。  </p>
+<p><img src="%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE.png" alt="双亲委派"></p>
+<p>// TODO ClassLoader 源码</p>
+<p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/file" target="_blank" rel="noopener">openjdk</a></p>
+<h5 id="为什么使用双亲委派机制去加载类"><a href="#为什么使用双亲委派机制去加载类" class="headerlink" title="为什么使用双亲委派机制去加载类"></a>为什么使用双亲委派机制去加载类</h5><ul>
+<li>避免多份同样字节码的加载</li>
+</ul>
+<h5 id="类的加载方式"><a href="#类的加载方式" class="headerlink" title="类的加载方式"></a>类的加载方式</h5><ul>
+<li>隐式加载: new</li>
+<li>显示加载: loadClass, forName等(不支持反射，需要newInstance()获取实例)</li>
+</ul>
+<h6 id="类的生命周期"><a href="#类的生命周期" class="headerlink" title="类的生命周期"></a>类的生命周期</h6><p><img src="%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F.png" alt="类的生命周期"></p>
+<p>类加载包括 加载 验证 准备 解析 初始化五个阶段  </p>
+<ul>
+<li>加载: 类加载器(可自己设置)，热部署，加密解密</li>
+<li>验证: 字节流包含的信息符不符合虚拟机要求，会不会危害虚拟机  </li>
+<li>准备: 为类变量分配内存，设置初始值 。  </li>
+<li>解析: 将常量池的一些引用替换为实际值。</li>
+<li>初始化: 赋值</li>
+<li>使用: 构造过程，构造方法</li>
+</ul>
+<p><img src="%E7%B1%BB%E5%8A%A0%E8%BD%BD.png" alt="类加载"></p>
+<h6 id="loadClass-和-forNmae-的区别"><a href="#loadClass-和-forNmae-的区别" class="headerlink" title="loadClass 和 forNmae 的区别"></a>loadClass 和 forNmae 的区别</h6><ul>
+<li>Class.forName 得到的class 是已经初始化完成的</li>
+<li>Classloader.loadClass得到的class是还没有链接的</li>
+</ul>
+<p>例如forName用于加载MySQL jdbc Driver，loadclass 不可以</p>
+<p>loadclass 一般用于spring ioc，因为 lazy loading 即懒加载的特性，加快加载速度，等要用到的时候再去初始化</p>
+<h4 id="Java的内存模型"><a href="#Java的内存模型" class="headerlink" title="Java的内存模型"></a>Java的内存模型</h4><ul>
+<li>地址空间划分<ul>
+<li>内核空间  (主要的系统操纵程序和C运行的空间，逻辑和基于C的进程)</li>
+<li>用户空间  (Java实际运行时使用的内存空间)</li>
+</ul>
+</li>
+</ul>
+<p>JVM内存模型–JDK8</p>
+<p><img src="JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="JVM内存模型"></p>
+<h5 id="程序计数器-Program-Counter-Register"><a href="#程序计数器-Program-Counter-Register" class="headerlink" title="程序计数器(Program Counter Register)"></a>程序计数器(Program Counter Register)</h5><ul>
+<li>当前线程执行的字节码行号指示器(逻辑计数器)</li>
+<li>改变计数器的值来选取下一条需要执行的字节码指令</li>
+<li>和线程时一对一的关系即”线程私有”</li>
+<li>对Java方法计数，如果时Native方法，计数器值为Undefined</li>
+<li>不会发生内存泄漏</li>
+</ul>
+<h5 id="Java虚拟机栈-Stack"><a href="#Java虚拟机栈-Stack" class="headerlink" title="Java虚拟机栈(Stack)"></a>Java虚拟机栈(Stack)</h5><ul>
+<li>Java方法执行的内存模型</li>
+<li>包含多个栈帧</li>
+</ul>
+<p>// TODO javap -verbose </p>
+<p><img src="Stack.png" alt="stack"></p>
+<h6 id="递归为什么会引发java-lang-StackOVerflowError异常"><a href="#递归为什么会引发java-lang-StackOVerflowError异常" class="headerlink" title="递归为什么会引发java.lang.StackOVerflowError异常"></a>递归为什么会引发java.lang.StackOVerflowError异常</h6><ul>
+<li>递归过深，栈帧数超出虚拟栈深度</li>
+<li>虚拟机栈过多会引发java.lang.OutOfMemoryError</li>
+</ul>
+<h5 id="本地方法栈-Native-Stack"><a href="#本地方法栈-Native-Stack" class="headerlink" title="本地方法栈(Native Stack)"></a>本地方法栈(Native Stack)</h5><ul>
+<li>与虚拟机栈相似，主要作用于标注了native的方法</li>
+</ul>
+<h5 id="元空间-MetaSpace"><a href="#元空间-MetaSpace" class="headerlink" title="元空间(MetaSpace)"></a>元空间(MetaSpace)</h5><p>元空间(MetaSpace)与永久代(PermGen)的区别</p>
+<ul>
+<li>元空间使用本地内存，而永久代使用的是jvm的内存</li>
+</ul>
+<p>MetaSpace 相比 PermGen的优势</p>
+<ul>
+<li>字符串常量池存在永久代中，容易出现性能问题和内存溢出</li>
+<li>类和方法的信息大小难以确定，给永久代的大小指定带来了困呐</li>
+<li>永久代会为GC带来不必要的复杂性</li>
+<li>方便HotSpot与其他JVM如Jrockit的继承</li>
+</ul>
+<h5 id="Java堆-Heap"><a href="#Java堆-Heap" class="headerlink" title="Java堆(Heap)"></a>Java堆(Heap)</h5><ul>
+<li>对象实例的分配区域</li>
+<li>GC管理的主要区域<ul>
+<li>分代清除算法(新生代，老生代)</li>
+</ul>
+</li>
+</ul>
+<h5 id="常考问题"><a href="#常考问题" class="headerlink" title="常考问题"></a>常考问题</h5><h6 id="JVM-三大性能调优参数-Xms-Xmx-Xss的含义"><a href="#JVM-三大性能调优参数-Xms-Xmx-Xss的含义" class="headerlink" title="JVM 三大性能调优参数-Xms -Xmx -Xss的含义"></a>JVM 三大性能调优参数-Xms -Xmx -Xss的含义</h6><ul>
+<li>-Xss: 规定了每个线程虚拟机栈(堆栈)的大小</li>
+<li>-Xms: 堆的初始值</li>
+<li>-Xmx: 堆能达到的最大值</li>
+</ul>
+<h6 id="Java的内存模型-堆和栈"><a href="#Java的内存模型-堆和栈" class="headerlink" title="Java的内存模型(堆和栈)"></a>Java的内存模型(堆和栈)</h6><p>Java内存模型中堆和栈的区别– 内存分配策略</p>
+<ul>
+<li>静态存储：编译时确定每个数据目标在运行时的存储空间需求</li>
+<li>栈式存储：数据区需求在编译时未知，运行时模块入口前确定</li>
+<li>堆式存储：编译时或运行时模块入口都无法确定，动态分配</li>
+</ul>
+<p>Java内存中堆和栈的区别</p>
+<ul>
+<li>联系：引用对象、数组时，栈里定义变量保存堆中目标的首地址</li>
+<li>管理方式: 栈自动释放，堆需要GC</li>
+<li>空间大小：栈比堆小</li>
+<li>碎片相关：栈产生的碎片远小于堆</li>
+<li>分配方式: 站支持静态和动态分配，而堆仅支持动态分配</li>
+<li>效率： 栈的效率比堆高</li>
+</ul>
+<p>元空间、堆、线程独占部分间的联系-内存角度</p>
+<ul>
+<li>元空间：方法</li>
+<li>堆： 对象</li>
+<li>栈： 执行过程</li>
+</ul>
+<p>不同JDK版本置键的intern()方法的区别-JDK6 VS JDK+</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="keyword">new</span> String (<span class="string">"a"</span>);</span><br><span class="line">s.intern();</span><br></pre></td></tr></table></figure>
+
+<p>JDK6:当调用 intern方法时,如果字符串常量池先前已创建出该字符串对象,则返回池中的该字符串的引用。<br>否则,将此字符串对象添加到字符串常量池中,并且返回该字符串对象的引用。</p>
+<p>JDK6+:当调用 intern方法时,如果字符串常量池先前已创建出该字符串对象,则返回池中的该字符串的引用。<br>否则,如果该字符串对象已经存在于Java堆中,则将堆中对此对象的引用添加到字符串常量池中,并且返回该引用;<br>如果堆中不存在,则在池中创建该字符串并返回其引用。</p>
+<h2 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h2><h3 id="Java垃圾回收机制"><a href="#Java垃圾回收机制" class="headerlink" title="Java垃圾回收机制"></a>Java垃圾回收机制</h3><h6 id="对象被判定为垃圾的标准"><a href="#对象被判定为垃圾的标准" class="headerlink" title="对象被判定为垃圾的标准"></a>对象被判定为垃圾的标准</h6><ul>
+<li>没有被其他对象引用</li>
+</ul>
+<h4 id="判断对象是否为垃圾的算法"><a href="#判断对象是否为垃圾的算法" class="headerlink" title="判断对象是否为垃圾的算法"></a>判断对象是否为垃圾的算法</h4><h5 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h5><p>做法</p>
+<ul>
+<li><p>通过判断对象的引用数量来决定对象是否可以被回收</p>
+</li>
+<li><p>每个对象实例都有一个引用计数器，被引用则+1，完成引用则-1</p>
+</li>
+<li><p>任何引用计数为0 的对象实例可以被当作垃圾收集</p>
+</li>
+<li><p>优点：执行效率高，程序执行受影响较小</p>
+</li>
+<li><p>缺点: 无法检测出循环引用的情况，导致内存泄露</p>
+</li>
+</ul>
+<h5 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h5><p>由离散数学的图论引入的  </p>
+<p>通过判断对象的引用链是否可达来决定对象是否可以被回收<br>选择一个GC Root对象</p>
+<ul>
+<li>虚拟机栈中引用的对象(栈帧中的本地变量表)</li>
+<li>方法区中的常量引用对象</li>
+<li>方法区中的类静态属性引用的对象</li>
+<li>本地方法栈中JNI(Native方法)的引用对象</li>
+<li>活跃线程的引用对象</li>
+</ul>
+<h4 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h4><h5 id="标记-清楚算法-Mark-and-Sweep"><a href="#标记-清楚算法-Mark-and-Sweep" class="headerlink" title="标记-清楚算法(Mark and Sweep)"></a>标记-清楚算法(Mark and Sweep)</h5><ul>
+<li>标记: 从根集合进行扫描，对存活的对象进行标记</li>
+<li>清楚: 对堆内存从头到尾进行线性遍历，回收不可达对象内存</li>
+</ul>
+<p>缺点<br>造成碎片化问题</p>
+<h5 id="复制算法-Copying"><a href="#复制算法-Copying" class="headerlink" title="复制算法(Copying)"></a>复制算法(Copying)</h5><ul>
+<li>分为对象面和空闲面</li>
+<li>对象在对象面上创建</li>
+<li>存货的对象被从对象面复制到空闲区</li>
+<li>将对象面所有对象内存清楚</li>
+</ul>
+<p>优点  </p>
+<ul>
+<li>解决碎片化问题</li>
+<li>顺序分配内存，简单高效</li>
+<li>适用于对象存活率低的场景</li>
+</ul>
+<p>适用于分代的年轻代</p>
+<h5 id="标记-整理算法-Compacting"><a href="#标记-整理算法-Compacting" class="headerlink" title="标记-整理算法(Compacting)"></a>标记-整理算法(Compacting)</h5><p>使用了标记清除算法的方式，加上了整理步骤</p>
+<ul>
+<li>避免内存的不连续行</li>
+<li>不用设置两块内存互换</li>
+<li>适用于存活率高的场景</li>
+</ul>
+<h5 id="分代收集算法-Generational-Collector"><a href="#分代收集算法-Generational-Collector" class="headerlink" title="分代收集算法(Generational Collector)"></a>分代收集算法(Generational Collector)</h5><p>组合拳  </p>
+<ul>
+<li>jdk6, jdk7 分为年轻代，老年代，永久代</li>
+<li>jdk8 以后永久代消失</li>
+</ul>
+<p>年轻代存活率低，使用复制算法，老年代存活率高，使用标记清除/整理算法  </p>
+<h5 id="GC-分类"><a href="#GC-分类" class="headerlink" title="GC 分类"></a>GC 分类</h5><ul>
+<li>Minor GC (年轻代)</li>
+<li>Full GC (老年代)</li>
+</ul>
+<h6 id="年轻代-1-3"><a href="#年轻代-1-3" class="headerlink" title="年轻代(1/3)"></a>年轻代(1/3)</h6><ul>
+<li>Eden区(伊甸) (大)</li>
+<li>两个Survivor区 (from/to) (小)</li>
+</ul>
+<p>如何判断进入老年代  </p>
+<ul>
+<li>经历一定Minor次数依然存活的对象</li>
+<li>Survivor区中存放不下的对象</li>
+<li>新生成的大对象</li>
+</ul>
+<p>常用调优参数</p>
+<ul>
+<li>-XX:SurvivorRatio: Eden 和 Survivor的比值，默认8:1</li>
+<li>-XX:NewRatio: 老年代和年轻代内存大小的比例</li>
+<li>-XX:MaxTenurinThreshold: 对象从年轻代晋升到老年代经过GC次数的最大阈值</li>
+</ul>
+<h6 id="老年代-2-3"><a href="#老年代-2-3" class="headerlink" title="老年代(2/3)"></a>老年代(2/3)</h6><ul>
+<li>标记-清理算法</li>
+<li>标记-整理算法</li>
+</ul>
+<p>老年代的GC会涉及新生代，Full GC就是全GC</p>
+<ul>
+<li>Full GC 和 Major GC</li>
+<li>Full GC 比Minor GC 慢(10倍左右)，但执行频率低</li>
+</ul>
+<p>触发Full GC的条件</p>
+<ul>
+<li>老年代空间不足</li>
+<li>永久代空间不足 (jdk6, 7)</li>
+<li>CMS GC时出现promotion failed, concurrent mode failure</li>
+<li>Minor GC晋级到老年代的平均大小大于老年代的剩余空间</li>
+<li>调用System.gc()</li>
+<li>使用RMI来进行RPC管理的JDK应用，每效时执行一次Full GC</li>
+</ul>
+<h6 id="Stop-the-World"><a href="#Stop-the-World" class="headerlink" title="Stop-the-World"></a>Stop-the-World</h6><ul>
+<li>JVM 由于要执行GC而停止了应用程序的执行</li>
+<li>任何一种GC算法中都会发生</li>
+<li>多数GC优化通过减少Stop-the-world发生的时间来提高程序性能(实现高吞吐)</li>
+</ul>
+<h6 id="Safepoint"><a href="#Safepoint" class="headerlink" title="Safepoint"></a>Safepoint</h6><ul>
+<li>分析过程中对象引用关系不会发生变化的点</li>
+<li>产生安全点的地方: 方法调用，循环跳转，异常跳转等</li>
+<li>安全点数量适中</li>
+</ul>
+<h4 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h4><p>JVM的运行模式</p>
+<ul>
+<li>Server</li>
+<li>Client</li>
+</ul>
+<h5 id="年轻代常见的垃圾收集器"><a href="#年轻代常见的垃圾收集器" class="headerlink" title="年轻代常见的垃圾收集器"></a>年轻代常见的垃圾收集器</h5><h6 id="Serial收集器-XX-UseSerialGC-复制算法"><a href="#Serial收集器-XX-UseSerialGC-复制算法" class="headerlink" title="Serial收集器(-XX: +UseSerialGC, 复制算法)"></a>Serial收集器(-XX: +UseSerialGC, 复制算法)</h6><ul>
+<li>单线程收集，进行垃圾收集时，必须暂停所有工作线程</li>
+<li>简单高效，Client模式下默认的年轻代收集器</li>
+</ul>
+<h6 id="ParNew收集器-XX-UseParNewGC-复制算法"><a href="#ParNew收集器-XX-UseParNewGC-复制算法" class="headerlink" title="ParNew收集器(-XX: +UseParNewGC, 复制算法)"></a>ParNew收集器(-XX: +UseParNewGC, 复制算法)</h6><ul>
+<li>多线程收集，其他行为同Serial</li>
+<li>单核执行效率不如Serial，多核下有优势</li>
+</ul>
+<h6 id="Parallel-Scavenge收集器-XX-UseParallelGC，复制算法"><a href="#Parallel-Scavenge收集器-XX-UseParallelGC，复制算法" class="headerlink" title="Parallel Scavenge收集器(-XX: +UseParallelGC，复制算法)"></a>Parallel Scavenge收集器(-XX: +UseParallelGC，复制算法)</h6><ul>
+<li>吞吐量=运行用户代码时间/(运行用户代码时间+垃圾收集时间)</li>
+<li>比起关注用户线程停顿时间，更关注系统的吞吐量</li>
+<li>在多核下执行才有优势，Server模式下默认的年轻代收集器</li>
+</ul>
+<h5 id="老年代垃圾收集器"><a href="#老年代垃圾收集器" class="headerlink" title="老年代垃圾收集器"></a>老年代垃圾收集器</h5><h6 id="Serial-Old收集器-XX-UseSerialOldGC-标记-整理算法"><a href="#Serial-Old收集器-XX-UseSerialOldGC-标记-整理算法" class="headerlink" title="Serial Old收集器(-XX: +UseSerialOldGC, 标记-整理算法)"></a>Serial Old收集器(-XX: +UseSerialOldGC, 标记-整理算法)</h6><p>其他特点同年轻代</p>
+<h6 id="Paraller-Old收集器-XX-UseParallelOldGC，标记-清理算法"><a href="#Paraller-Old收集器-XX-UseParallelOldGC，标记-清理算法" class="headerlink" title="Paraller Old收集器(-XX: +UseParallelOldGC，标记-清理算法)"></a>Paraller Old收集器(-XX: +UseParallelOldGC，标记-清理算法)</h6><ul>
+<li>多线程，吞吐量优先</li>
+</ul>
+<h6 id="CMS收集器-XX-UseConcMarkSweepGC，-标记-清理算法"><a href="#CMS收集器-XX-UseConcMarkSweepGC，-标记-清理算法" class="headerlink" title="CMS收集器(-XX: +UseConcMarkSweepGC， 标记-清理算法)"></a>CMS收集器(-XX: +UseConcMarkSweepGC， 标记-清理算法)</h6><ul>
+<li>初始标记: stop-the-world</li>
+<li>并发标记: 并发追溯标记，程序不会停顿</li>
+<li>并发预清理: 查找执行并发标记阶段从年轻代晋升到老年代的对象</li>
+<li>重新标记: 暂停虚拟机，扫面CMS堆中的剩余对象</li>
+<li>并发清理: 清理垃圾对象，程序不会停顿</li>
+<li>并发重置: 重置CMS收集器的数据结构</li>
+</ul>
+<h5 id="G1收集器-XX-UseG1GC，复制-标记-整理算法"><a href="#G1收集器-XX-UseG1GC，复制-标记-整理算法" class="headerlink" title="G1收集器(-XX: +UseG1GC，复制+标记-整理算法)"></a>G1收集器(-XX: +UseG1GC，复制+标记-整理算法)</h5><p>Garbage First收集器优点</p>
+<ul>
+<li>并发和并行</li>
+<li>分代收集</li>
+<li>空间整合</li>
+<li>可预测的停顿</li>
+</ul>
+<p>G1</p>
+<ul>
+<li>Java堆内存划分为多个大小相等的Region</li>
+<li>年轻代和老年代不再物理隔离</li>
+</ul>
+<h4 id="GC-的面试题"><a href="#GC-的面试题" class="headerlink" title="GC 的面试题"></a>GC 的面试题</h4><h5 id="Object的finalize-方法的作用是否与C-的析构函数作用相同"><a href="#Object的finalize-方法的作用是否与C-的析构函数作用相同" class="headerlink" title="Object的finalize()方法的作用是否与C++的析构函数作用相同"></a>Object的finalize()方法的作用是否与C++的析构函数作用相同</h5><ul>
+<li>与C++的析构函数不同，析构函数调用确定，而它是不确定的</li>
+<li>将未被引用的对象放置在F-Queue队列</li>
+<li>方法执行随时可能会被终止</li>
+<li>给予对象最后一次重生的机会</li>
+</ul>
+<h5 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h5><h6 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h6><ul>
+<li>最普通的引用: Object obj = new Object()</li>
+<li>抛出OutOfMemoryError 终止程序也不会回收具有强引用的对象</li>
+<li>通过将对象设置为null来弱化引用，使其被回收</li>
+</ul>
+<h6 id="软引用"><a href="#软引用" class="headerlink" title="软引用"></a>软引用</h6><ul>
+<li>对象处在有用但非必须的状态</li>
+<li>只有当内存空间不足时，GC会回收该引用的对象的内存</li>
+<li>可以用来实现高速缓存</li>
+</ul>
+<h6 id="弱引用"><a href="#弱引用" class="headerlink" title="弱引用"></a>弱引用</h6><ul>
+<li>非必须的对象，比软引用更弱</li>
+<li>GC时会被回收</li>
+<li>被回收的概率不大，因为GC线程优先级比较低</li>
+<li>适用于引用偶尔被使用且不影响垃圾收集的对象</li>
+</ul>
+<h6 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h6><ul>
+<li>不会决定对象的生命周期</li>
+<li>任何时候都可能被垃圾收集器回收</li>
+<li>跟踪对象被垃圾收集器回收的活动，起哨兵作用</li>
+<li>必须和引用队列ReferenceQueue联合使用 </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">引用类型</th>
+<th align="center">被垃圾回收时间</th>
+<th align="center">用途</th>
+<th align="center">生存时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">被强用</td>
+<td align="center">从来不会</td>
+<td align="center">对象的一般状态</td>
+<td align="center">JVM停止运行时终止</td>
+</tr>
+<tr>
+<td align="center">被软用</td>
+<td align="center">在内存不足时</td>
+<td align="center">对象缓存</td>
+<td align="center">内存不足时终止</td>
+</tr>
+<tr>
+<td align="center">弱引用</td>
+<td align="center">在垃圾回收时</td>
+<td align="center">对象缓存</td>
+<td align="center">gc运行后终止</td>
+</tr>
+<tr>
+<td align="center">虚引用</td>
+<td align="center">Unknown</td>
+<td align="center">标记、哨兵</td>
+<td align="center">Unknown</td>
+</tr>
+</tbody></table>
+<h6 id="引用队列-reference-queue"><a href="#引用队列-reference-queue" class="headerlink" title="引用队列(reference queue)"></a>引用队列(reference queue)</h6><ul>
+<li>无实际存储结构，存储逻辑依赖于内部节点之间的关系来表达</li>
+<li>存储关联的且被GC的软引用，弱引用以及虚引用</li>
+</ul>
+<h2 id="Java线程"><a href="#Java线程" class="headerlink" title="Java线程"></a>Java线程</h2><h3 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h3><h4 id="进程和线程的由来"><a href="#进程和线程的由来" class="headerlink" title="进程和线程的由来"></a>进程和线程的由来</h4><ul>
+<li>串行: 串行执行任务，需要长时间等待用户输入</li>
+<li>预处理:预先将用户指令集中成清单，批量串行处理用户指令，任无法并发执行</li>
+<li>进程: 进程独占内存空间。保存各自运行状态，相互不干扰且可切换，为并发处理任务提供了可能性</li>
+<li>线程: 共享进程的内存资源，相互切换更快速，支持更细粒度的任务控制，使进程内的子任务得以并发执行</li>
+</ul>
+<h4 id="区别-1"><a href="#区别-1" class="headerlink" title="区别"></a>区别</h4><p>进程是资源分配的最小单位，线程是CPU调度的最小单位</p>
+<ul>
+<li>所有与进程相关的资源都被记录在PCB中(进程控制块)</li>
+<li>进程是抢占处理机的调度单位，线程属于某个进程，共享其资源</li>
+<li>线程只由堆栈寄存器、程序计数器和TCB组成(线程控制块)</li>
+</ul>
+<p>区别:</p>
+<ul>
+<li>线程不是独立应用。而进程可以看做独立应用</li>
+<li>进程又独立的空间，相互不影响，县城只是进程不同的执行路径</li>
+<li>线程没有独立的地址空间，多进程的程序比多线程程序健壮</li>
+<li>进程的切换比线程的切换开销大</li>
+</ul>
+<h3 id="进程和线程的关系"><a href="#进程和线程的关系" class="headerlink" title="进程和线程的关系"></a>进程和线程的关系</h3><ul>
+<li>Java堆操作系统提供的功能进行封装，包括进程和线程</li>
+<li>运行一个程序会产生一个进程，进程包含至少一个线程</li>
+<li>每个进程对应一个JVM实例，多个线程共享JVM里的堆</li>
+<li>Java采用单线程编程模型，程序会自动创建主线程</li>
+<li>主线程可以创建子线程，原则上要晚于子线程结束</li>
+</ul>
+<h3 id="Thread中的start和run方法的区别"><a href="#Thread中的start和run方法的区别" class="headerlink" title="Thread中的start和run方法的区别"></a>Thread中的start和run方法的区别</h3><p>Thread#start() =&gt; JVM_StartThread =&gt; thread_entry =&gt; Thread#run()</p>
+<ul>
+<li>调用start()方法会创建一个新的子线程并启动</li>
+<li>run()方法只是Thread的一个普通方法的调用</li>
+</ul>
+<h3 id="Thread和Runnable是什么关系"><a href="#Thread和Runnable是什么关系" class="headerlink" title="Thread和Runnable是什么关系"></a>Thread和Runnable是什么关系</h3><p>Thread是类，Runnable是接口</p>
+<ul>
+<li>Thread是实现了Runnable接口的类，使得run支持多线程</li>
+<li>因类的单一继承原则，推荐多使用Runnable接口</li>
+</ul>
+<h3 id="如何给run-方法传参"><a href="#如何给run-方法传参" class="headerlink" title="如何给run()方法传参"></a>如何给run()方法传参</h3><ul>
+<li>构造函数传参</li>
+<li>成员变量传参</li>
+<li>回调函数传参</li>
+</ul>
+<h3 id="如何实现线程的返回值"><a href="#如何实现线程的返回值" class="headerlink" title="如何实现线程的返回值"></a>如何实现线程的返回值</h3><ul>
+<li>主线程等待</li>
+<li>Thread类的join方法</li>
+<li>Callable接口实现: 通过FutureTask or 线程池获取</li>
+</ul>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p>六个状态</p>
+<ul>
+<li>新建(New): 创建后尚未启动的线程的状态</li>
+<li>运行(Runnable):包含Running和Ready</li>
+<li>无限期等待(Waiting): 不会被分配CPU执行时间，需要显性被唤醒</li>
+<li>限期等待(Timed Waiting): 在一定时间后会由系统自动唤醒</li>
+<li>阻塞(Blocked): 等待获取排他锁</li>
+<li>结束(terminated): 已终止线程的状态，线程已经结束运行</li>
+</ul>
+<h3 id="sleep和wait"><a href="#sleep和wait" class="headerlink" title="sleep和wait"></a>sleep和wait</h3><ul>
+<li>sleep是Thread类的方法，wait是Object类中定义的方法</li>
+<li>Sleep()方法可以在任何地方使用</li>
+<li>wait()只能在synchronized方法或synchronized块中使用</li>
+</ul>
+<p>本质区别</p>
+<ul>
+<li>Thread.sleep只会让出CPU，不会导致锁行为改变</li>
+<li>Object.wait不仅让出CPU，还会释放已经占有的同步资源锁</li>
+</ul>
+<p>// TODO wait sleep</p>
+<h3 id="notify和notifyall-的区别"><a href="#notify和notifyall-的区别" class="headerlink" title="notify和notifyall 的区别"></a>notify和notifyall 的区别</h3><p>两个概念</p>
+<ul>
+<li><p>EntryList 锁池</p>
+</li>
+<li><p>WaitSet 等待池</p>
+</li>
+<li><p>notifyAll会让所有处于等待池的线程进入锁池中去竞争获取锁的机会</p>
+</li>
+<li><p>notify 只会随机选取一个处于等待池中的线程进入锁池去竞争</p>
+</li>
+</ul>
+<h3 id="yield"><a href="#yield" class="headerlink" title="yield"></a>yield</h3><p>Thread.yield()函数时，会给线程调度器一个当前线程愿意让出CPU使用的暗示，但是线程调度器可能会忽略这个暗示</p>
+<h3 id="如何中断线程"><a href="#如何中断线程" class="headerlink" title="如何中断线程"></a>如何中断线程</h3><ul>
+<li>通过调用stop()方法停止线程</li>
+<li>通过调用suspend(), resume)方法</li>
+</ul>
+<p>目前使用</p>
+<ul>
+<li>interrupt(),通知线程应该中断了<ul>
+<li>如果线程处于被阻塞状态,那么线程将立即退出被阻塞状态,并抛出一个 Interruptedexception异常。</li>
+<li>如果线程处于正常活动状态,那么会将该线程的中断标志设置为true。被设置中断的线程将继续正常运行,不受影响</li>
+</ul>
+</li>
+</ul>
+<p>Interrupt需要被调用的线程配合中断</p>
+<h3 id="sychronized"><a href="#sychronized" class="headerlink" title="sychronized"></a>sychronized</h3><p>// TODO</p>
+<h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><ul>
+<li>synchronized 是mark word ,lock调用unsafe的park方法</li>
+</ul>
+<h3 id="JMM-Java-Memory-Model-–-Java内存模式"><a href="#JMM-Java-Memory-Model-–-Java内存模式" class="headerlink" title="JMM (Java Memory Model) – Java内存模式"></a>JMM (Java Memory Model) – Java内存模式</h3><h4 id="JMM-主内存"><a href="#JMM-主内存" class="headerlink" title="JMM 主内存"></a>JMM 主内存</h4><ul>
+<li>存储Java实例对象</li>
+<li>包括有成员变量、类信息、常量、静态变量等</li>
+<li>属于数据共享的区域，多线程并发操作时会引发线程安全问题</li>
+</ul>
+<h4 id="JMM的工作内存"><a href="#JMM的工作内存" class="headerlink" title="JMM的工作内存"></a>JMM的工作内存</h4><ul>
+<li>存储当前方法的所有本地变量信息，本地变量对其他线程不可见</li>
+<li>字节码行号指示器、Native方法信息</li>
+<li>属于线程私有的数据区域，不存在线程安全问题</li>
+</ul>
+<h4 id="JMM与Java内存区域划分是不同的概念层次"><a href="#JMM与Java内存区域划分是不同的概念层次" class="headerlink" title="JMM与Java内存区域划分是不同的概念层次"></a>JMM与Java内存区域划分是不同的概念层次</h4><ul>
+<li>JMM描述的是一组规则，围绕原子性，有序性，可见性展开</li>
+<li>相似点: 存在共享区和私有区域</li>
+</ul>
+<h4 id="主内存与工作内存的数据存储类型以及操作方式归纳"><a href="#主内存与工作内存的数据存储类型以及操作方式归纳" class="headerlink" title="主内存与工作内存的数据存储类型以及操作方式归纳"></a>主内存与工作内存的数据存储类型以及操作方式归纳</h4><ul>
+<li>方法里的基本数据类型本地变量将直接存储在工作内存的栈帧结构中</li>
+<li>引用类型的本地变量: 引用存储在工作内存中，实例存储在主内存中</li>
+<li>成员变量、static变量、类信息均存储在主内存中</li>
+<li>主内存共享的方式是线程各拷贝一份数据到工作内存，操作完成后刷新主内存</li>
+</ul>
+<h4 id="JMM怎么实现可见性"><a href="#JMM怎么实现可见性" class="headerlink" title="JMM怎么实现可见性"></a>JMM怎么实现可见性</h4><h5 id="指令重排序需要满足条件"><a href="#指令重排序需要满足条件" class="headerlink" title="指令重排序需要满足条件"></a>指令重排序需要满足条件</h5><ul>
+<li>单线程环境下不能改变程序运行的结果</li>
+<li>存在数据以来关系的不允许重排序</li>
+</ul>
+<p>无法通过happens-before原则推导出来的，才能进行指令的重排序<br>A操作的结果需要对B操作可见，则A与B存在happens-before关系</p>
+<h5 id="happens-before八大原则"><a href="#happens-before八大原则" class="headerlink" title="happens-before八大原则"></a>happens-before八大原则</h5><ol>
+<li>程序次序规则:一个线程内,按照代码顺序,书写在前面的操作先行发生于肀写在后面的操作;</li>
+<li>锁定规则:一个 unlock操作先行发生于后面对同一个锁的lock操作;</li>
+<li>volatile变量规则:对一个变量的写操作先行发生于后面对这个变量的读操作 </li>
+<li>传递规则:如果操作A先行发生于操作B,而操作B又先行发生于操作C,则可以得出操作A先行发生于操作C;</li>
+<li>线程启动规则: Thread对象的 start(方法先行发生于此线程的每一个动作;</li>
+<li>线程中断规则:对线程 Interrupt0方法的调用先行发生于被中断线程的代码检测到中断事件的发生;</li>
+<li>线程终结规则:线程中所有的操作都先行发生于线程的终止检测,我们可以过 Thread join(方法结束、 Thread isalive0的返回值手段检测到线程已经终止执行;</li>
+<li>对象终结规则:一个对象的初始化完成先行发生于他的 Finalize0方法的开始</li>
+</ol>
+<h5 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h5><p>JVM提供的轻量级同步机制</p>
+<ul>
+<li>保证被volatile修饰的共享变量对所有线程总是可见的</li>
+<li>禁止指令重排序优化</li>
+</ul>
+<h6 id="volatile-的可见性"><a href="#volatile-的可见性" class="headerlink" title="volatile 的可见性"></a>volatile 的可见性</h6><p>如何实现?</p>
+<ul>
+<li>当写一个 volatile变量时,JMM会把该线程对应的工作内存中的共享变量值刷新到主内存中</li>
+<li>当读取个 volatile变量时,JM会把该线程对应的工作内存置为无效</li>
+</ul>
+<h6 id="如何禁止重排优化"><a href="#如何禁止重排优化" class="headerlink" title="如何禁止重排优化"></a>如何禁止重排优化</h6><p>内存屏障(memory barrier)</p>
+<ol>
+<li>保证特定操作的执行顺序</li>
+<li>保证某些变量的内存可见性</li>
+</ol>
+<p>通过内存屏障指令禁止在内存屏障前后的指令执行重新排序优化<br>强制刷出各种CPU的缓存数据,因此任何CPU上的线程都能读取到这些数据的最新版本</p>
+<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><p>sync是悲观锁，假定会并发冲突<br>乐观锁假定并发不冲突 CAS</p>
+<ul>
+<li>支持原子更新操作，适用于计算器，序列发生器等场景</li>
+<li>属于乐观锁机制，号称lock-free</li>
+<li>CAS操作失败时由开发者决定是继续尝试，还是执行别的操作</li>
+</ul>
+<h4 id="CAS思想"><a href="#CAS思想" class="headerlink" title="CAS思想"></a>CAS思想</h4><ul>
+<li>包含三个操作数– 内存位置(V)、预期原值(A)和新值(B)</li>
+</ul>
+<h2 id="Java集合框架"><a href="#Java集合框架" class="headerlink" title="Java集合框架"></a>Java集合框架</h2><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p>// TODO</p>
+<ul>
+<li>数组和链表的区别</li>
+<li>链表的操作，如反转，链表环路检测，双向链表，循环链表相关操作</li>
+<li>队列，栈的应用</li>
+<li>二叉树的遍历方式及其递归和非递归的实现</li>
+<li>红黑树的旋转</li>
+</ul>
+<h4 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h4><p><img src="Collection.png" alt="Collection"></p>
+<h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><p>HashMap(java8之前): 数组+链表<br>HashMap(java8之后): 数组+链表+红黑树</p>
+<h5 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h5><ul>
+<li>多线程环境下，调整大小存在条件竞争，容易造成死锁</li>
+<li>rehashing 是一个耗时的过程</li>
+</ul>
+<h4 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h4><p>sync</p>
+<h4 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h4><p>早期通过分段锁Segment</p>
+<p>采用了CAS + sync，数组链表红黑树</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>内部排序: 如递归排序，交换排序(冒泡排序、快排)、选择排序、插入排序</li>
+<li>外部排序: 应掌握如何利用有限的内存配合海量的外部存储来处理超大的数据集，写不出来也要有相关的思路</li>
+</ul>
+<p>哪些不稳定(堆，快)，稳定意味着什么<br>不同数据集，各种排序最好或最差的情况<br>如何优化算法</p>
+<h3 id="Java的IO机制"><a href="#Java的IO机制" class="headerlink" title="Java的IO机制"></a>Java的IO机制</h3><p>BIO、NIO、AIO的区别</p>
+<p>Block-IO: InputStream 和 OutputStream, Reader 和 Writer<br>NonBlock-IO: 构建多路复用的、同步非阻塞的IO操作</p>
+<h2 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h2><h3 id="你了解Spring-IOC吗"><a href="#你了解Spring-IOC吗" class="headerlink" title="你了解Spring IOC吗"></a>你了解Spring IOC吗</h3><p>IOC(Inversion of Control): 控制反转</p>
+<ul>
+<li>Spring Core最核心的部分</li>
+<li>需要先了解依赖注入(DI)</li>
+</ul>
+<h4 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h4><p>DI: 将底层类作为参数传递给上层类，实现上层对下层的”控制”</p>
+<p>IOC: DI和DL</p>
+<p>DL: 因为需要用户实现API所以被移除</p>
+<h4 id="注入的方式"><a href="#注入的方式" class="headerlink" title="注入的方式"></a>注入的方式</h4><ul>
+<li>Setter</li>
+<li>Interface</li>
+<li>Constructor</li>
+<li>Annotation</li>
+</ul>
+<p>IOC容器的优势</p>
+<ul>
+<li>避免在各处使用new来创建类，并且可以做到统一维护</li>
+<li>创建实例的时候不需要了解其中的细节</li>
+</ul>
+<h4 id="Spring-IOC支持的功能"><a href="#Spring-IOC支持的功能" class="headerlink" title="Spring IOC支持的功能"></a>Spring IOC支持的功能</h4><ul>
+<li>依赖注入</li>
+<li>依赖检查</li>
+<li>自动装配</li>
+<li>支持集合</li>
+<li>指定初始化方法和销毁方法</li>
+<li>支持回调方法</li>
+</ul>
+<h4 id="Spring-Bean"><a href="#Spring-Bean" class="headerlink" title="Spring Bean"></a>Spring Bean</h4><p>BeanDefinition: 主要用来描述Bean的<br>BeanDefinitionRegistry: 提供向IOC容器注册BeanDefinition对象的方法</p>
+<p>** BeanFactory **: Spring框架最核心的接口</p>
+<ul>
+<li>提供IOC的配置机制</li>
+<li>包含Bean的各种定义，便于实例化Bean</li>
+<li>建立Bean之间的依赖关系</li>
+<li>Bean生命周期的控制</li>
+</ul>
+<h5 id="BeanFactory与ApplicationContext的比较"><a href="#BeanFactory与ApplicationContext的比较" class="headerlink" title="BeanFactory与ApplicationContext的比较"></a>BeanFactory与ApplicationContext的比较</h5><ul>
+<li>BeanFactory是Spring框架的基础设施</li>
+<li>ApplicationContext面向Spring开发者</li>
+</ul>
+<p>继承多个接口</p>
+<ul>
+<li>BeanFactory: 能够管理、装配Bean</li>
+<li>ResourcePatternResolver: 能够加载资源文件</li>
+<li>MessageSource: 能够实现国际化等功能</li>
+<li>ApplicationEventPublisher: 能够注册监听器，实现监听机制</li>
+</ul>
+<h5 id="Spring-Bean-的作用域"><a href="#Spring-Bean-的作用域" class="headerlink" title="Spring Bean 的作用域"></a>Spring Bean 的作用域</h5><p>作用域</p>
+<ul>
+<li>singleton: Spring默认的作用域，容器里拥有唯一的Bean实例</li>
+<li>prototype: 针对每个getBean请求，容器都会创建一个bean实例</li>
+<li>request: 会为每个HTTP请求创建一个Bean</li>
+<li>session: 会为每个session创建一个Bean</li>
+<li>globalSession: 会为每个全局Http Session创建一个Bean实例，该作用域仅对Portlet有效</li>
+</ul>
+<h5 id="Spring-Bean-的生命周期"><a href="#Spring-Bean-的生命周期" class="headerlink" title="Spring Bean 的生命周期"></a>Spring Bean 的生命周期</h5><h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>关注点分离: 不同的问题交给不同的部分去解决</p>
+<ul>
+<li>面向切面编程AOP正是这种技术的体现</li>
+<li>通用化功能代码的实现，对应的就是所谓的切面(Aspect)</li>
+<li>业务功能和切面代码分开,架构将变得高内聚低耦合</li>
+<li>确保功能的完整性: 切面最终需要合并到业务中(Weave)</li>
+</ul>
+<h4 id="AOP的三种织入"><a href="#AOP的三种织入" class="headerlink" title="AOP的三种织入"></a>AOP的三种织入</h4><ul>
+<li>编译时织入: 需要特殊的Java编译器，如AspectJ</li>
+<li>类加载时织入: 需要特殊的Java编辑器，如AspectJ,AspectWerkz</li>
+<li>运行时织入: Spring采用的方式，通过动态代理的方式，实现简单</li>
+</ul>
 <h3 id="七个事务传播属性"><a href="#七个事务传播属性" class="headerlink" title="七个事务传播属性"></a>七个事务传播属性</h3><p>什么是事务传播属性<br>传播两个方法: 两个方法都带事务，但是事务设置不同。</p>
 <p>为什么要事务？<br>事务是为解决数据安全操作提出的，事务控制实际上就是控制数据的安全访问。</p>
 <table>
@@ -777,12 +1419,9 @@
 <p>JVM 解决不了分布式环境多任务对共享资源竞争的协同操作问题</p>
 <h4 id="分布式解决"><a href="#分布式解决" class="headerlink" title="分布式解决"></a>分布式解决</h4><p>分布式锁 三种实现方式</p>
 <ul>
-<li><p>数据库 (性能差)</p>
-</li>
-<li><p>redis (死锁)</p>
-</li>
-<li><p>zookeeper</p>
-<ul>
+<li>数据库 (性能差)</li>
+<li>redis (死锁)</li>
+<li>zookeeper<ul>
 <li>基于异常 (临时节点)</li>
 <li>基于相互监听 (性能比较高，占用资源，临时有序节点)</li>
 </ul>
@@ -792,7 +1431,7 @@
 <li>Zookeeper 数据结构类似Linux  </li>
 <li>每一个节点都有值  </li>
 </ul>
-</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/03/13/面试专题/">https://edxuanlen.tk/2020/03/13/面试专题/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/Java/">Java</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/03/16/Kubernetes/" class="pre">Kubernetes</a><a href="/2020/03/12/hashmap/" class="next">hashmap</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI七层协议"><span class="toc-text">OSI七层协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI的标准-TCP-IP"><span class="toc-text">OSI的标准:TCP/IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP三次握手"><span class="toc-text">TCP三次握手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-通信过程"><span class="toc-text">A =&gt; B 通信过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要三次握手"><span class="toc-text">为什么需要三次握手</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP的四次挥手"><span class="toc-text">TCP的四次挥手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-四次挥手"><span class="toc-text">A =&gt; B 四次挥手</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么又TIME-WAIT状态"><span class="toc-text">为什么又TIME_WAIT状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要四次握手才能断开连接"><span class="toc-text">为什么需要四次握手才能断开连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务器出现大量CLOSE-WAIT状态的原因"><span class="toc-text">服务器出现大量CLOSE_WAIT状态的原因</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP"><span class="toc-text">UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#UDP-特点"><span class="toc-text">UDP 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-和-UDP-的区别"><span class="toc-text">TCP 和 UDP 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-滑动窗口"><span class="toc-text">TCP 滑动窗口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#在浏览器地址栏键入一个URL，按下回车之后经历的流程"><span class="toc-text">在浏览器地址栏键入一个URL，按下回车之后经历的流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-状态码"><span class="toc-text">HTTP 状态码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GET-和-POST-请求的区别"><span class="toc-text">GET 和 POST 请求的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cookie-和-Session的区别"><span class="toc-text">Cookie 和 Session的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Cookie"><span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Session"><span class="toc-text">Session</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-和-HTTPS"><span class="toc-text">HTTP 和 HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL"><span class="toc-text">SSL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP和HTTPS的区别"><span class="toc-text">HTTP和HTTPS的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Socket"><span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Socket通信流程"><span class="toc-text">Socket通信流程</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何设计一个关系型数据库-RDBMS"><span class="toc-text">如何设计一个关系型数据库(RDBMS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引模块"><span class="toc-text">索引模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要使用索引"><span class="toc-text">为什么要使用索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么信息能成为索引"><span class="toc-text">什么信息能成为索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的数据结构"><span class="toc-text">索引的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree"><span class="toc-text">B Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree-1"><span class="toc-text">B+ Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash索引"><span class="toc-text">Hash索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#密集索引和稀疏索引的区别"><span class="toc-text">密集索引和稀疏索引的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB"><span class="toc-text">InnoDB</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引问答"><span class="toc-text">索引问答</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql"><span class="toc-text">mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何定位并优化慢查询sql"><span class="toc-text">如何定位并优化慢查询sql</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#联合索引的最左匹配原则"><span class="toc-text">联合索引的最左匹配原则</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引是建的越来越多好吗"><span class="toc-text">索引是建的越来越多好吗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#锁模块"><span class="toc-text">锁模块</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM与InnoDB关于锁方面的区别是什么"><span class="toc-text">MyISAM与InnoDB关于锁方面的区别是什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM适合的场景"><span class="toc-text">MyISAM适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB适合的场景"><span class="toc-text">InnoDB适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库锁的分类"><span class="toc-text">数据库锁的分类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库事务的四大特性"><span class="toc-text">数据库事务的四大特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务鼓励级别以及各级别下的并发访问问题"><span class="toc-text">事务鼓励级别以及各级别下的并发访问问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#脏读、不可重复读、幻象读概念说明"><span class="toc-text">脏读、不可重复读、幻象读概念说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何避免"><span class="toc-text">如何避免</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库操作事务隔离"><span class="toc-text">数据库操作事务隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读取未提交的事务里面的数据-脏读"><span class="toc-text">读取未提交的事务里面的数据(脏读)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB可重复读隔离级别下如何避免幻读"><span class="toc-text">InnoDB可重复读隔离级别下如何避免幻读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Group-By"><span class="toc-text">Group By</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Having"><span class="toc-text">Having</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存知识考点"><span class="toc-text">缓存知识考点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存中间件-Memcache-和-Redis-的区别"><span class="toc-text">缓存中间件-Memcache 和 Redis 的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么Redis能这么快"><span class="toc-text">为什么Redis能这么快</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#多路I-O复用"><span class="toc-text">多路I/O复用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#I-O复用模型"><span class="toc-text">I/O复用模型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-数据类型"><span class="toc-text">Redis 数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#底层数据类型基础"><span class="toc-text">底层数据类型基础</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从海量key里查询出某一固定前缀的key"><span class="toc-text">从海量key里查询出某一固定前缀的key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis实现分布式锁"><span class="toc-text">Redis实现分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SET"><span class="toc-text">SET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#大量的key同时过期的注意事项"><span class="toc-text">大量的key同时过期的注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Redis做异步队列"><span class="toc-text">使用Redis做异步队列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BLPOP"><span class="toc-text">BLPOP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pub-sub"><span class="toc-text">pub/sub</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化方法之-RDB"><span class="toc-text">持久化方法之 RDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化之-AOF"><span class="toc-text">持久化之 AOF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB和AOF"><span class="toc-text">RDB和AOF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB和AOF共存时的恢复流程"><span class="toc-text">RDB和AOF共存时的恢复流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB和AOF的优缺点"><span class="toc-text">RDB和AOF的优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB-AOF混合持久化方式"><span class="toc-text">RDB-AOF混合持久化方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pipeline-的好处"><span class="toc-text">pipeline 的好处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis的同步机制"><span class="toc-text">redis的同步机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#全同步过程"><span class="toc-text">全同步过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#增量同步过程"><span class="toc-text">增量同步过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-Sentinel"><span class="toc-text">Redis Sentinel</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流言协议Gossip"><span class="toc-text">流言协议Gossip</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-的集群原理"><span class="toc-text">Redis 的集群原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash环数据倾斜问题"><span class="toc-text">Hash环数据倾斜问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA"><span class="toc-text">JAVA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类加载机制和双亲委派模型"><span class="toc-text">类加载机制和双亲委派模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七个事务传播属性"><span class="toc-text">七个事务传播属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring中的事务隔离级别"><span class="toc-text">Spring中的事务隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高并发如何修改同一行数据"><span class="toc-text">高并发如何修改同一行数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jvm解决"><span class="toc-text">jvm解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式解决"><span class="toc-text">分布式解决</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Zookeerper-数据结构"><span class="toc-text">Zookeerper 数据结构</span></a></li></ol></li></ol></li></ol></li></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/JVM/">JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/09/Spring-IOC/">Spring-IOC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/08/Spring-AOP/">Spring-AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/自建SS服务/">自建SS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/Spring-boot第一个应用的开发/">Spring_boot第一个应用的开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Spring-boot入门/">Spring_boot入门</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/03/13/面试专题/">https://edxuanlen.tk/2020/03/13/面试专题/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/Java/">Java</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/03/16/Kubernetes/" class="pre">Kubernetes</a><a href="/2020/03/12/hashmap/" class="next">hashmap</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI七层协议"><span class="toc-text">OSI七层协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI的标准-TCP-IP"><span class="toc-text">OSI的标准:TCP/IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP三次握手"><span class="toc-text">TCP三次握手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-通信过程"><span class="toc-text">A =&gt; B 通信过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要三次握手"><span class="toc-text">为什么需要三次握手</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP的四次挥手"><span class="toc-text">TCP的四次挥手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-四次挥手"><span class="toc-text">A =&gt; B 四次挥手</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么又TIME-WAIT状态"><span class="toc-text">为什么又TIME_WAIT状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要四次握手才能断开连接"><span class="toc-text">为什么需要四次握手才能断开连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务器出现大量CLOSE-WAIT状态的原因"><span class="toc-text">服务器出现大量CLOSE_WAIT状态的原因</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP"><span class="toc-text">UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#UDP-特点"><span class="toc-text">UDP 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-和-UDP-的区别"><span class="toc-text">TCP 和 UDP 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-滑动窗口"><span class="toc-text">TCP 滑动窗口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#在浏览器地址栏键入一个URL，按下回车之后经历的流程"><span class="toc-text">在浏览器地址栏键入一个URL，按下回车之后经历的流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-状态码"><span class="toc-text">HTTP 状态码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GET-和-POST-请求的区别"><span class="toc-text">GET 和 POST 请求的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cookie-和-Session的区别"><span class="toc-text">Cookie 和 Session的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Cookie"><span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Session"><span class="toc-text">Session</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-和-HTTPS"><span class="toc-text">HTTP 和 HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL"><span class="toc-text">SSL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP和HTTPS的区别"><span class="toc-text">HTTP和HTTPS的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Socket"><span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Socket通信流程"><span class="toc-text">Socket通信流程</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何设计一个关系型数据库-RDBMS"><span class="toc-text">如何设计一个关系型数据库(RDBMS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引模块"><span class="toc-text">索引模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要使用索引"><span class="toc-text">为什么要使用索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么信息能成为索引"><span class="toc-text">什么信息能成为索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的数据结构"><span class="toc-text">索引的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree"><span class="toc-text">B Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree-1"><span class="toc-text">B+ Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash索引"><span class="toc-text">Hash索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#密集索引和稀疏索引的区别"><span class="toc-text">密集索引和稀疏索引的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB"><span class="toc-text">InnoDB</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引问答"><span class="toc-text">索引问答</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql"><span class="toc-text">mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何定位并优化慢查询sql"><span class="toc-text">如何定位并优化慢查询sql</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#联合索引的最左匹配原则"><span class="toc-text">联合索引的最左匹配原则</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引是建的越来越多好吗"><span class="toc-text">索引是建的越来越多好吗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#锁模块"><span class="toc-text">锁模块</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM与InnoDB关于锁方面的区别是什么"><span class="toc-text">MyISAM与InnoDB关于锁方面的区别是什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM适合的场景"><span class="toc-text">MyISAM适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB适合的场景"><span class="toc-text">InnoDB适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库锁的分类"><span class="toc-text">数据库锁的分类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库事务的四大特性"><span class="toc-text">数据库事务的四大特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务鼓励级别以及各级别下的并发访问问题"><span class="toc-text">事务鼓励级别以及各级别下的并发访问问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#脏读、不可重复读、幻象读概念说明"><span class="toc-text">脏读、不可重复读、幻象读概念说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何避免"><span class="toc-text">如何避免</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库操作事务隔离"><span class="toc-text">数据库操作事务隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读取未提交的事务里面的数据-脏读"><span class="toc-text">读取未提交的事务里面的数据(脏读)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB可重复读隔离级别下如何避免幻读"><span class="toc-text">InnoDB可重复读隔离级别下如何避免幻读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Group-By"><span class="toc-text">Group By</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Having"><span class="toc-text">Having</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存知识考点"><span class="toc-text">缓存知识考点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存中间件-Memcache-和-Redis-的区别"><span class="toc-text">缓存中间件-Memcache 和 Redis 的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么Redis能这么快"><span class="toc-text">为什么Redis能这么快</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#多路I-O复用"><span class="toc-text">多路I/O复用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#I-O复用模型"><span class="toc-text">I/O复用模型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-数据类型"><span class="toc-text">Redis 数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#底层数据类型基础"><span class="toc-text">底层数据类型基础</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从海量key里查询出某一固定前缀的key"><span class="toc-text">从海量key里查询出某一固定前缀的key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis实现分布式锁"><span class="toc-text">Redis实现分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SET"><span class="toc-text">SET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#大量的key同时过期的注意事项"><span class="toc-text">大量的key同时过期的注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Redis做异步队列"><span class="toc-text">使用Redis做异步队列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BLPOP"><span class="toc-text">BLPOP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pub-sub"><span class="toc-text">pub/sub</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化方法之-RDB"><span class="toc-text">持久化方法之 RDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化之-AOF"><span class="toc-text">持久化之 AOF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB和AOF"><span class="toc-text">RDB和AOF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB和AOF共存时的恢复流程"><span class="toc-text">RDB和AOF共存时的恢复流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB和AOF的优缺点"><span class="toc-text">RDB和AOF的优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB-AOF混合持久化方式"><span class="toc-text">RDB-AOF混合持久化方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pipeline-的好处"><span class="toc-text">pipeline 的好处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis的同步机制"><span class="toc-text">redis的同步机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#全同步过程"><span class="toc-text">全同步过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#增量同步过程"><span class="toc-text">增量同步过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-Sentinel-哨兵机制"><span class="toc-text">Redis Sentinel (哨兵机制)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流言协议Gossip"><span class="toc-text">流言协议Gossip</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-的集群原理"><span class="toc-text">Redis 的集群原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash环数据倾斜问题"><span class="toc-text">Hash环数据倾斜问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#find"><span class="toc-text">find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-text">grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#管道"><span class="toc-text">管道 |</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计"><span class="toc-text">统计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#awk"><span class="toc-text">awk</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#替换"><span class="toc-text">替换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sed"><span class="toc-text">sed</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM"><span class="toc-text">JVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#谈谈你对Java的理解"><span class="toc-text">谈谈你对Java的理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Compile-Once-Run-Anywhere如何实现"><span class="toc-text">Compile Once, Run Anywhere如何实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么JVM不直接将源码解析成机器码去执行"><span class="toc-text">为什么JVM不直接将源码解析成机器码去执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JVM如何加载-class文件"><span class="toc-text">JVM如何加载.class文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#谈谈反射"><span class="toc-text">谈谈反射</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#列举反射的例子"><span class="toc-text">列举反射的例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ClassLoader"><span class="toc-text">ClassLoader</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ClassLoader种类"><span class="toc-text">ClassLoader种类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如何组织类加载器"><span class="toc-text">如何组织类加载器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么使用双亲委派机制去加载类"><span class="toc-text">为什么使用双亲委派机制去加载类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#类的加载方式"><span class="toc-text">类的加载方式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#类的生命周期"><span class="toc-text">类的生命周期</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#loadClass-和-forNmae-的区别"><span class="toc-text">loadClass 和 forNmae 的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java的内存模型"><span class="toc-text">Java的内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#程序计数器-Program-Counter-Register"><span class="toc-text">程序计数器(Program Counter Register)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Java虚拟机栈-Stack"><span class="toc-text">Java虚拟机栈(Stack)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#递归为什么会引发java-lang-StackOVerflowError异常"><span class="toc-text">递归为什么会引发java.lang.StackOVerflowError异常</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#本地方法栈-Native-Stack"><span class="toc-text">本地方法栈(Native Stack)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#元空间-MetaSpace"><span class="toc-text">元空间(MetaSpace)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Java堆-Heap"><span class="toc-text">Java堆(Heap)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#常考问题"><span class="toc-text">常考问题</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#JVM-三大性能调优参数-Xms-Xmx-Xss的含义"><span class="toc-text">JVM 三大性能调优参数-Xms -Xmx -Xss的含义</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Java的内存模型-堆和栈"><span class="toc-text">Java的内存模型(堆和栈)</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GC"><span class="toc-text">GC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java垃圾回收机制"><span class="toc-text">Java垃圾回收机制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#对象被判定为垃圾的标准"><span class="toc-text">对象被判定为垃圾的标准</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断对象是否为垃圾的算法"><span class="toc-text">判断对象是否为垃圾的算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#引用计数算法"><span class="toc-text">引用计数算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可达性分析算法"><span class="toc-text">可达性分析算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收算法"><span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#标记-清楚算法-Mark-and-Sweep"><span class="toc-text">标记-清楚算法(Mark and Sweep)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#复制算法-Copying"><span class="toc-text">复制算法(Copying)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#标记-整理算法-Compacting"><span class="toc-text">标记-整理算法(Compacting)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分代收集算法-Generational-Collector"><span class="toc-text">分代收集算法(Generational Collector)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#GC-分类"><span class="toc-text">GC 分类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#年轻代-1-3"><span class="toc-text">年轻代(1/3)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#老年代-2-3"><span class="toc-text">老年代(2/3)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Stop-the-World"><span class="toc-text">Stop-the-World</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Safepoint"><span class="toc-text">Safepoint</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾收集器"><span class="toc-text">垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#年轻代常见的垃圾收集器"><span class="toc-text">年轻代常见的垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Serial收集器-XX-UseSerialGC-复制算法"><span class="toc-text">Serial收集器(-XX: +UseSerialGC, 复制算法)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#ParNew收集器-XX-UseParNewGC-复制算法"><span class="toc-text">ParNew收集器(-XX: +UseParNewGC, 复制算法)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Parallel-Scavenge收集器-XX-UseParallelGC，复制算法"><span class="toc-text">Parallel Scavenge收集器(-XX: +UseParallelGC，复制算法)</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#老年代垃圾收集器"><span class="toc-text">老年代垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Serial-Old收集器-XX-UseSerialOldGC-标记-整理算法"><span class="toc-text">Serial Old收集器(-XX: +UseSerialOldGC, 标记-整理算法)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Paraller-Old收集器-XX-UseParallelOldGC，标记-清理算法"><span class="toc-text">Paraller Old收集器(-XX: +UseParallelOldGC，标记-清理算法)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#CMS收集器-XX-UseConcMarkSweepGC，-标记-清理算法"><span class="toc-text">CMS收集器(-XX: +UseConcMarkSweepGC， 标记-清理算法)</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G1收集器-XX-UseG1GC，复制-标记-整理算法"><span class="toc-text">G1收集器(-XX: +UseG1GC，复制+标记-整理算法)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GC-的面试题"><span class="toc-text">GC 的面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Object的finalize-方法的作用是否与C-的析构函数作用相同"><span class="toc-text">Object的finalize()方法的作用是否与C++的析构函数作用相同</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#引用"><span class="toc-text">引用</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#强引用"><span class="toc-text">强引用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#软引用"><span class="toc-text">软引用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#弱引用"><span class="toc-text">弱引用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#虚引用"><span class="toc-text">虚引用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#引用队列-reference-queue"><span class="toc-text">引用队列(reference queue)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java线程"><span class="toc-text">Java线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的区别"><span class="toc-text">进程和线程的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程和线程的由来"><span class="toc-text">进程和线程的由来</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别-1"><span class="toc-text">区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的关系"><span class="toc-text">进程和线程的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread中的start和run方法的区别"><span class="toc-text">Thread中的start和run方法的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread和Runnable是什么关系"><span class="toc-text">Thread和Runnable是什么关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何给run-方法传参"><span class="toc-text">如何给run()方法传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现线程的返回值"><span class="toc-text">如何实现线程的返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的状态"><span class="toc-text">线程的状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep和wait"><span class="toc-text">sleep和wait</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#notify和notifyall-的区别"><span class="toc-text">notify和notifyall 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yield"><span class="toc-text">yield</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何中断线程"><span class="toc-text">如何中断线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sychronized"><span class="toc-text">sychronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantLock"><span class="toc-text">ReentrantLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JMM-Java-Memory-Model-–-Java内存模式"><span class="toc-text">JMM (Java Memory Model) – Java内存模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM-主内存"><span class="toc-text">JMM 主内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM的工作内存"><span class="toc-text">JMM的工作内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM与Java内存区域划分是不同的概念层次"><span class="toc-text">JMM与Java内存区域划分是不同的概念层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主内存与工作内存的数据存储类型以及操作方式归纳"><span class="toc-text">主内存与工作内存的数据存储类型以及操作方式归纳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM怎么实现可见性"><span class="toc-text">JMM怎么实现可见性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#指令重排序需要满足条件"><span class="toc-text">指令重排序需要满足条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#happens-before八大原则"><span class="toc-text">happens-before八大原则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#volatile"><span class="toc-text">volatile</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#volatile-的可见性"><span class="toc-text">volatile 的可见性</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#如何禁止重排优化"><span class="toc-text">如何禁止重排优化</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAS"><span class="toc-text">CAS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CAS思想"><span class="toc-text">CAS思想</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java集合框架"><span class="toc-text">Java集合框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据结构"><span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection"><span class="toc-text">Collection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HashMap"><span class="toc-text">HashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#扩容"><span class="toc-text">扩容</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HashTable"><span class="toc-text">HashTable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ConcurrentHashMap"><span class="toc-text">ConcurrentHashMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法"><span class="toc-text">算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java的IO机制"><span class="toc-text">Java的IO机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring"><span class="toc-text">Spring</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#你了解Spring-IOC吗"><span class="toc-text">你了解Spring IOC吗</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#依赖注入"><span class="toc-text">依赖注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注入的方式"><span class="toc-text">注入的方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-IOC支持的功能"><span class="toc-text">Spring IOC支持的功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-Bean"><span class="toc-text">Spring Bean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#BeanFactory与ApplicationContext的比较"><span class="toc-text">BeanFactory与ApplicationContext的比较</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-Bean-的作用域"><span class="toc-text">Spring Bean 的作用域</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-Bean-的生命周期"><span class="toc-text">Spring Bean 的生命周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP"><span class="toc-text">AOP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOP的三种织入"><span class="toc-text">AOP的三种织入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七个事务传播属性"><span class="toc-text">七个事务传播属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring中的事务隔离级别"><span class="toc-text">Spring中的事务隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高并发如何修改同一行数据"><span class="toc-text">高并发如何修改同一行数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jvm解决"><span class="toc-text">jvm解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式解决"><span class="toc-text">分布式解决</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Zookeerper-数据结构"><span class="toc-text">Zookeerper 数据结构</span></a></li></ol></li></ol></li></ol></li></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/JVM/">JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/09/Spring-IOC/">Spring-IOC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/08/Spring-AOP/">Spring-AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/自建SS服务/">自建SS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/Spring-boot第一个应用的开发/">Spring_boot第一个应用的开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Spring-boot入门/">Spring_boot入门</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
