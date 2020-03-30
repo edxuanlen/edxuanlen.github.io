@@ -118,6 +118,16 @@ docker exec -it mysql  env LANG=C.UTF-8 bash
 docker run -it -e "NODE_ENV=production" -u "node"  -m "300M" --memory-swap "1G" -w "/home/node/app" -v D:\coding\web\nodejs:/home/node/app --name "node" -d node
 ```
 
+### Ubuntu
+
+```bash
+
+```
+
+### redis 集群
+
+[redis集群配置](https://www.runoob.com/docker/docker-redis-cluster.html)
+
 ## 检查容器设置
 
 docker inspect

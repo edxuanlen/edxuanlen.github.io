@@ -20,7 +20,7 @@ description: JVM要点
 
 ### JVM的内存布局
 
-![JVM内存布局](JVM/JVM.png)
+![JVM内存布局](JVM.png)
 
 程序计数器: 记录程序的下一跳，像代码行号的指示器
 
