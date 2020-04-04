@@ -46,7 +46,7 @@
 <li>Thread类的join方法</li>
 <li>Callable接口实现: 通过FutureTask or 线程池获取</li>
 </ul>
-<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img src="http://q801pw19j.bkt.clouddn.com/2020-04-02-13-26-30.png" alt="线程状态间转换"></p>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img src="https://edxuanlen.oss-cn-hongkong.aliyuncs.com/2020-04-02-13-26-30.png?Expires=1585981821&OSSAccessKeyId=TMP.3KgbbEAA98vBn3gh1vQWZDjUcjEf74UwQDoUME4ficpHEP1rk6s6PsTRV8NV9yKCj2hMf6JGGyiNvfrW2QiGgGwNzAbEJS&Signature=hNSQo6vKOk8ce2Y4bHB4y1qpSoI%3D" alt="线程状态间转换"></p>
 <p>六个状态</p>
 <ul>
 <li>新建(New): 创建后尚未启动的线程的状态</li>
@@ -104,7 +104,7 @@
 <h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p>为每一个线程提供变量的副本<br>实现了线程隔离</p>
 <p>Spring 实现事务的时候使用了ThreadLocal</p>
 <h4 id="ThreadLocal内存泄漏"><a href="#ThreadLocal内存泄漏" class="headerlink" title="ThreadLocal内存泄漏"></a>ThreadLocal内存泄漏</h4><p>每个Thread 维护一个 ThreadLocalMap，这个映射表的 key 是 ThreadLocal实例本身，value 是真正需要存储的 Object，也就是说 ThreadLocal 本身并不存储值，它只是作为一个 key 来让线程从 ThreadLocalMap 获取 value。仔细观察ThreadLocalMap，这个map是使用 ThreadLocal 的弱引用作为 Key 的，弱引用的对象在 GC 时会被回收。</p>
-<p><img src="http://q801pw19j.bkt.clouddn.com/2020-04-03-22-49-10.png" alt="引用链"></p>
+<p><img src="https://edxuanlen.oss-cn-hongkong.aliyuncs.com/2020-04-03-22-49-10.png?Expires=1585981841&OSSAccessKeyId=TMP.3KgbbEAA98vBn3gh1vQWZDjUcjEf74UwQDoUME4ficpHEP1rk6s6PsTRV8NV9yKCj2hMf6JGGyiNvfrW2QiGgGwNzAbEJS&Signature=qiUM%2FJerkzIOESUbSXeWjA%2FivEA%3D" alt="引用链"></p>
 <p>虚线表示的是弱引用</p>
 <h4 id="错误使用ThreadLocal导致线程不安全"><a href="#错误使用ThreadLocal导致线程不安全" class="headerlink" title="错误使用ThreadLocal导致线程不安全"></a>错误使用ThreadLocal导致线程不安全</h4><p>错误的使用了同一个对象(static方法)</p>
 <h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><ul>
