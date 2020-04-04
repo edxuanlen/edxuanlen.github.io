@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><meta name="keywords" content="edxuanlen, ICPC, Ubuntu, 蓝桥杯"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script src="js/jquery-3.3.1.min.js"></script><script src="js/click.js"></script><title>并发 | edxuanlen's BLOG</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">并发</h1><a id="logo" href="/.">edxuanlen's BLOG</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">并发</h1><div class="post-meta"><a href="/2020/04/01/并发/#comments" class="comment-count"></a><p><span class="date">Apr 01, 2020</span><span><a href="/categories/Java/" class="category">Java</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h2><h3 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h3><h4 id="进程和线程的由来"><a href="#进程和线程的由来" class="headerlink" title="进程和线程的由来"></a>进程和线程的由来</h4><ul>
+<li>串行: 串行执行任务，需要长时间等待用户输入</li>
+<li>预处理:预先将用户指令集中成清单，批量串行处理用户指令，任无法并发执行</li>
+<li>进程: 进程独占内存空间。保存各自运行状态，相互不干扰且可切换，为并发处理任务提供了可能性</li>
+<li>线程: 共享进程的内存资源，相互切换更快速，支持更细粒度的任务控制，使进程内的子任务得以并发执行</li>
+</ul>
+<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>进程是资源分配的最小单位，线程是CPU调度的最小单位</p>
+<ul>
+<li>所有与进程相关的资源都被记录在PCB中(进程控制块)</li>
+<li>进程是抢占处理机的调度单位，线程属于某个进程，共享其资源</li>
+<li>线程只由堆栈寄存器、程序计数器和TCB组成(线程控制块)</li>
+</ul>
+<ul>
+<li>线程不是独立应用。而进程可以看做独立应用</li>
+<li>进程又独立的空间，相互不影响，县城只是进程不同的执行路径</li>
+<li>线程没有独立的地址空间，多进程的程序比多线程程序健壮</li>
+<li>进程的切换比线程的切换开销大</li>
+</ul>
+<h3 id="进程和线程的关系"><a href="#进程和线程的关系" class="headerlink" title="进程和线程的关系"></a>进程和线程的关系</h3><ul>
+<li>Java堆操作系统提供的功能进行封装，包括进程和线程</li>
+<li>运行一个程序会产生一个进程，进程包含至少一个线程</li>
+<li>每个进程对应一个JVM实例，多个线程共享JVM里的堆</li>
+<li>Java采用单线程编程模型，程序会自动创建主线程</li>
+<li>主线程可以创建子线程，原则上要晚于子线程结束</li>
+</ul>
+<h3 id="Thread有几种新启线程的方法"><a href="#Thread有几种新启线程的方法" class="headerlink" title="Thread有几种新启线程的方法"></a>Thread有几种新启线程的方法</h3><p>类Thread和接口Runnable</p>
+<h3 id="Thread和Runnable是什么关系"><a href="#Thread和Runnable是什么关系" class="headerlink" title="Thread和Runnable是什么关系"></a>Thread和Runnable是什么关系</h3><p>Thread是类，Runnable是接口<br>Thread是Java对线程的抽象<br>Runnable是对任务，对事务逻辑的抽象</p>
+<ul>
+<li>Thread是实现了Runnable接口的类，使得run支持多线程</li>
+<li>因类的单一继承原则，推荐多使用Runnable接口</li>
+</ul>
+<h3 id="如何让线程安全的停止工作"><a href="#如何让线程安全的停止工作" class="headerlink" title="如何让线程安全的停止工作"></a>如何让线程安全的停止工作</h3><p>stop interrupt isInterupted static方法interupted</p>
+<p>死锁状态不理会中断</p>
+<h3 id="Thread中的start和run方法的区别"><a href="#Thread中的start和run方法的区别" class="headerlink" title="Thread中的start和run方法的区别"></a>Thread中的start和run方法的区别</h3><p>Thread#start() =&gt; JVM_StartThread =&gt; thread_entry =&gt; Thread#run()</p>
+<ul>
+<li>调用start()方法会创建一个新的子线程并启动</li>
+<li>run() 方法只是Thread的一个普通方法的调用，线程是原来的线程</li>
+</ul>
+<h3 id="如何给run-方法传参"><a href="#如何给run-方法传参" class="headerlink" title="如何给run()方法传参"></a>如何给run()方法传参</h3><ul>
+<li>构造函数传参</li>
+<li>成员变量传参</li>
+<li>回调函数传参</li>
+</ul>
+<h3 id="如何实现线程的返回值"><a href="#如何实现线程的返回值" class="headerlink" title="如何实现线程的返回值"></a>如何实现线程的返回值</h3><ul>
+<li>主线程等待</li>
+<li>Thread类的join方法</li>
+<li>Callable接口实现: 通过FutureTask or 线程池获取</li>
+</ul>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img src="http://q801pw19j.bkt.clouddn.com/2020-04-02-13-26-30.png" alt="线程状态间转换"></p>
+<p>六个状态</p>
+<ul>
+<li>新建(New): 创建后尚未启动的线程的状态</li>
+<li>运行(Runnable):包含Running和Ready</li>
+<li>无限期等待(Waiting): 不会被分配CPU执行时间，需要显性被唤醒</li>
+<li>限期等待(Timed Waiting): 在一定时间后会由系统自动唤醒</li>
+<li>阻塞(Blocked): 等待获取排他锁</li>
+<li>结束(terminated): 已终止线程的状态，线程已经结束运行</li>
+</ul>
+<h3 id="如何让两个线程顺序执行–join-方法"><a href="#如何让两个线程顺序执行–join-方法" class="headerlink" title="如何让两个线程顺序执行–join 方法"></a>如何让两个线程顺序执行–join 方法</h3><p>使线程变成了串行执行</p>
+<h3 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">thread.setPriority(<span class="number">1</span>) <span class="comment">// 1~10 default 5</span></span><br></pre></td></tr></table></figure>
+
+<p>不一定时间片就会长，取决于处理器</p>
+<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><ul>
+<li>用户线程new Thread创建的线程都是非守护线程  </li>
+<li>thread.sleep  thread.interrupt 都是守护线程</li>
+</ul>
+<p>主线程结束，守护线程也结束</p>
+<h3 id="sleep和wait"><a href="#sleep和wait" class="headerlink" title="sleep和wait"></a>sleep和wait</h3><ul>
+<li>sleep是Thread类的方法，wait是Object类中定义的方法</li>
+<li>Sleep()方法可以在任何地方使用</li>
+<li>wait()只能在synchronized方法或synchronized块中使用</li>
+</ul>
+<p>本质区别</p>
+<ul>
+<li>Thread.sleep只会让出CPU，不会导致锁行为改变</li>
+<li>Object.wait不仅让出CPU，还会释放已经占有的同步资源锁</li>
+</ul>
+<p>// TODO wait sleep</p>
+<h3 id="notify和notifyall-的区别"><a href="#notify和notifyall-的区别" class="headerlink" title="notify和notifyall 的区别"></a>notify和notifyall 的区别</h3><p>两个概念</p>
+<ul>
+<li><p>EntryList 锁池</p>
+</li>
+<li><p>WaitSet 等待池</p>
+</li>
+<li><p>notifyAll会让所有处于等待池的线程进入锁池中去竞争获取锁的机会</p>
+</li>
+<li><p>notify 只会随机选取一个处于等待池中的线程进入锁池去竞争</p>
+</li>
+</ul>
+<h3 id="yield"><a href="#yield" class="headerlink" title="yield"></a>yield</h3><p>Thread.yield()函数时，会给线程调度器一个当前线程愿意让出CPU使用的暗示，但是线程调度器可能会忽略这个暗示</p>
+<h3 id="sychronized"><a href="#sychronized" class="headerlink" title="sychronized"></a>sychronized</h3><p>对象锁 //<br>类锁 // 本质是class 对象锁</p>
+<p>// TODO</p>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>JVM提供的轻量级同步机制</p>
+<ul>
+<li>保证被volatile修饰的共享变量对所有线程总是可见的</li>
+<li>禁止指令重排序优化</li>
+</ul>
+<p>可见，但不保证原子性<br>适用场景一写多读</p>
+<h4 id="volatile-的可见性"><a href="#volatile-的可见性" class="headerlink" title="volatile 的可见性"></a>volatile 的可见性</h4><p>如何实现?</p>
+<ul>
+<li>当写一个 volatile变量时,JMM会把该线程对应的工作内存中的共享变量值刷新到主内存中</li>
+<li>当读取个 volatile变量时,JM会把该线程对应的工作内存置为无效</li>
+</ul>
+<h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p>为每一个线程提供变量的副本<br>实现了线程隔离</p>
+<p>Spring 实现事务的时候使用了ThreadLocal</p>
+<h4 id="ThreadLocal内存泄漏"><a href="#ThreadLocal内存泄漏" class="headerlink" title="ThreadLocal内存泄漏"></a>ThreadLocal内存泄漏</h4><p>每个Thread 维护一个 ThreadLocalMap，这个映射表的 key 是 ThreadLocal实例本身，value 是真正需要存储的 Object，也就是说 ThreadLocal 本身并不存储值，它只是作为一个 key 来让线程从 ThreadLocalMap 获取 value。仔细观察ThreadLocalMap，这个map是使用 ThreadLocal 的弱引用作为 Key 的，弱引用的对象在 GC 时会被回收。</p>
+<p><img src="http://q801pw19j.bkt.clouddn.com/2020-04-03-22-49-10.png" alt="引用链"></p>
+<p>虚线表示的是弱引用</p>
+<h4 id="错误使用ThreadLocal导致线程不安全"><a href="#错误使用ThreadLocal导致线程不安全" class="headerlink" title="错误使用ThreadLocal导致线程不安全"></a>错误使用ThreadLocal导致线程不安全</h4><p>错误的使用了同一个对象(static方法)</p>
+<h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><ul>
+<li>synchronized 是mark word ,lock调用unsafe的park方法</li>
+</ul>
+<h3 id="Lock-和-synchronized"><a href="#Lock-和-synchronized" class="headerlink" title="Lock 和 synchronized"></a>Lock 和 synchronized</h3><p>Lock以及它的一个实现类ReentrantLock是jdk5新增加的， Lock也可以用于实现多线程的同步</p>
+<p>区别<br>synchronized既可以加在方法上，也可以加载特定代码块上，而lock需要显示地指定起始位置和终止位置；<br>synchronized是托管给JVM执行(底层使用mutex lock实现)，lock的锁定是通过代码实现的，它有比synchronized更精确的线程语义；<br>synchronized获取锁和释放锁的方式都是在块结构中，当获取多个锁时，必须以相反的顺序释放，并且是自动解锁。而Lock则需要开发人员手动释放，并且必须在finally中释放，否则会引起死锁；<br>性能上的区别：在Java1.5中，synchronize是性能低效的。因为这是一个重量级操作，需要调用操作接口，导致有可能加锁消耗的系统时间比加锁以外的操作还多。相比之下使用Java提供的Lock对象，性能更高一些。但是到了Java1.6，发生了变化。synchronize在语义上很清晰，可以进行很多优化，有适应自旋，锁消除，锁粗化，轻量级锁，偏向锁等等。导致在Java1.6上synchronize的性能并不比Lock差</p>
+<h3 id="JMM-Java-Memory-Model-–-Java内存模式"><a href="#JMM-Java-Memory-Model-–-Java内存模式" class="headerlink" title="JMM (Java Memory Model) – Java内存模式"></a>JMM (Java Memory Model) – Java内存模式</h3><h4 id="JMM-主内存"><a href="#JMM-主内存" class="headerlink" title="JMM 主内存"></a>JMM 主内存</h4><ul>
+<li>存储Java实例对象</li>
+<li>包括有成员变量、类信息、常量、静态变量等</li>
+<li>属于数据共享的区域，多线程并发操作时会引发线程安全问题</li>
+</ul>
+<h4 id="JMM的工作内存"><a href="#JMM的工作内存" class="headerlink" title="JMM的工作内存"></a>JMM的工作内存</h4><ul>
+<li>存储当前方法的所有本地变量信息，本地变量对其他线程不可见</li>
+<li>字节码行号指示器、Native方法信息</li>
+<li>属于线程私有的数据区域，不存在线程安全问题</li>
+</ul>
+<h4 id="JMM与Java内存区域划分是不同的概念层次"><a href="#JMM与Java内存区域划分是不同的概念层次" class="headerlink" title="JMM与Java内存区域划分是不同的概念层次"></a>JMM与Java内存区域划分是不同的概念层次</h4><ul>
+<li>JMM描述的是一组规则，围绕原子性，有序性，可见性展开</li>
+<li>相似点: 存在共享区和私有区域</li>
+</ul>
+<h4 id="主内存与工作内存的数据存储类型以及操作方式归纳"><a href="#主内存与工作内存的数据存储类型以及操作方式归纳" class="headerlink" title="主内存与工作内存的数据存储类型以及操作方式归纳"></a>主内存与工作内存的数据存储类型以及操作方式归纳</h4><ul>
+<li>方法里的基本数据类型本地变量将直接存储在工作内存的栈帧结构中</li>
+<li>引用类型的本地变量: 引用存储在工作内存中，实例存储在主内存中</li>
+<li>成员变量、static变量、类信息均存储在主内存中</li>
+<li>主内存共享的方式是线程各拷贝一份数据到工作内存，操作完成后刷新主内存</li>
+</ul>
+<h4 id="JMM怎么实现可见性"><a href="#JMM怎么实现可见性" class="headerlink" title="JMM怎么实现可见性"></a>JMM怎么实现可见性</h4><h5 id="指令重排序需要满足条件"><a href="#指令重排序需要满足条件" class="headerlink" title="指令重排序需要满足条件"></a>指令重排序需要满足条件</h5><ul>
+<li>单线程环境下不能改变程序运行的结果</li>
+<li>存在数据以来关系的不允许重排序</li>
+</ul>
+<p>无法通过happens-before原则推导出来的，才能进行指令的重排序<br>A操作的结果需要对B操作可见，则A与B存在happens-before关系</p>
+<h5 id="happens-before八大原则"><a href="#happens-before八大原则" class="headerlink" title="happens-before八大原则"></a>happens-before八大原则</h5><ol>
+<li>程序次序规则:一个线程内,按照代码顺序,书写在前面的操作先行发生于肀写在后面的操作;</li>
+<li>锁定规则:一个 unlock操作先行发生于后面对同一个锁的lock操作;</li>
+<li>volatile变量规则:对一个变量的写操作先行发生于后面对这个变量的读操作 </li>
+<li>传递规则:如果操作A先行发生于操作B,而操作B又先行发生于操作C,则可以得出操作A先行发生于操作C;</li>
+<li>线程启动规则: Thread对象的 start(方法先行发生于此线程的每一个动作;</li>
+<li>线程中断规则:对线程 Interrupt0方法的调用先行发生于被中断线程的代码检测到中断事件的发生;</li>
+<li>线程终结规则:线程中所有的操作都先行发生于线程的终止检测,我们可以过 Thread join(方法结束、 Thread isalive0的返回值手段检测到线程已经终止执行;</li>
+<li>对象终结规则:一个对象的初始化完成先行发生于他的 Finalize0方法的开始</li>
+</ol>
+<h6 id="如何禁止重排优化"><a href="#如何禁止重排优化" class="headerlink" title="如何禁止重排优化"></a>如何禁止重排优化</h6><p>内存屏障(memory barrier)</p>
+<ol>
+<li>保证特定操作的执行顺序</li>
+<li>保证某些变量的内存可见性</li>
+</ol>
+<p>通过内存屏障指令禁止在内存屏障前后的指令执行重新排序优化<br>强制刷出各种CPU的缓存数据,因此任何CPU上的线程都能读取到这些数据的最新版本</p>
+<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><p>sync是悲观锁，假定会并发冲突<br>乐观锁假定并发不冲突 CAS</p>
+<ul>
+<li>支持原子更新操作，适用于计算器，序列发生器等场景</li>
+<li>属于乐观锁机制，号称lock-free</li>
+<li>CAS操作失败时由开发者决定是继续尝试，还是执行别的操作</li>
+</ul>
+<h4 id="CAS思想"><a href="#CAS思想" class="headerlink" title="CAS思想"></a>CAS思想</h4><ul>
+<li>包含三个操作数– 内存位置(V)、预期原值(A)和新值(B)</li>
+</ul>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><ol>
+<li>newFixedThreadPool</li>
+</ol>
+</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/04/01/并发/">https://edxuanlen.tk/2020/04/01/并发/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/Java/">Java</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/03/17/Zookeeper/" class="next">Zookeeper</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程和进程"><span class="toc-text">线程和进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的区别"><span class="toc-text">进程和线程的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程和线程的由来"><span class="toc-text">进程和线程的由来</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的关系"><span class="toc-text">进程和线程的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread有几种新启线程的方法"><span class="toc-text">Thread有几种新启线程的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread和Runnable是什么关系"><span class="toc-text">Thread和Runnable是什么关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何让线程安全的停止工作"><span class="toc-text">如何让线程安全的停止工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread中的start和run方法的区别"><span class="toc-text">Thread中的start和run方法的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何给run-方法传参"><span class="toc-text">如何给run()方法传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现线程的返回值"><span class="toc-text">如何实现线程的返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的状态"><span class="toc-text">线程的状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何让两个线程顺序执行–join-方法"><span class="toc-text">如何让两个线程顺序执行–join 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程优先级"><span class="toc-text">线程优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#守护线程"><span class="toc-text">守护线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep和wait"><span class="toc-text">sleep和wait</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#notify和notifyall-的区别"><span class="toc-text">notify和notifyall 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yield"><span class="toc-text">yield</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sychronized"><span class="toc-text">sychronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile"><span class="toc-text">volatile</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile-的可见性"><span class="toc-text">volatile 的可见性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal"><span class="toc-text">ThreadLocal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ThreadLocal内存泄漏"><span class="toc-text">ThreadLocal内存泄漏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#错误使用ThreadLocal导致线程不安全"><span class="toc-text">错误使用ThreadLocal导致线程不安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantLock"><span class="toc-text">ReentrantLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lock-和-synchronized"><span class="toc-text">Lock 和 synchronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JMM-Java-Memory-Model-–-Java内存模式"><span class="toc-text">JMM (Java Memory Model) – Java内存模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM-主内存"><span class="toc-text">JMM 主内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM的工作内存"><span class="toc-text">JMM的工作内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM与Java内存区域划分是不同的概念层次"><span class="toc-text">JMM与Java内存区域划分是不同的概念层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主内存与工作内存的数据存储类型以及操作方式归纳"><span class="toc-text">主内存与工作内存的数据存储类型以及操作方式归纳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM怎么实现可见性"><span class="toc-text">JMM怎么实现可见性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#指令重排序需要满足条件"><span class="toc-text">指令重排序需要满足条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#happens-before八大原则"><span class="toc-text">happens-before八大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#如何禁止重排优化"><span class="toc-text">如何禁止重排优化</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAS"><span class="toc-text">CAS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CAS思想"><span class="toc-text">CAS思想</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池"><span class="toc-text">线程池</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/01/并发/">并发</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/JVM/">JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/09/Spring-IOC/">Spring-IOC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/08/Spring-AOP/">Spring-AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/自建SS服务/">自建SS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/Spring-boot第一个应用的开发/">Spring_boot第一个应用的开发</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":250,"height":600},"mobile":{"show":true},"log":false});</script></body></html><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.styl">
