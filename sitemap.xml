@@ -2,30 +2,65 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://edxuanlen.tk/2020/04/01/%E5%B9%B6%E5%8F%91/</loc>
+    <loc>https://edxuanlen.tk/2020/06/13/redis/</loc>
     
-    <lastmod>2020-04-04T06:27:37.073Z</lastmod>
+    <lastmod>2020-06-29T01:32:56.876Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://edxuanlen.tk/2020/06/24/Maven/</loc>
+    
+    <lastmod>2020-06-28T03:33:39.205Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://edxuanlen.tk/2020/06/13/MyBatis/</loc>
+    
+    <lastmod>2020-06-13T08:08:59.340Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://edxuanlen.tk/2020/03/13/%E9%9D%A2%E8%AF%95%E4%B8%93%E9%A2%98/</loc>
     
-    <lastmod>2020-04-04T06:25:14.378Z</lastmod>
+    <lastmod>2020-06-13T05:52:14.261Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://edxuanlen.tk/2020/03/09/Spring-IOC/</loc>
+    <loc>https://edxuanlen.tk/2020/04/01/%E5%B9%B6%E5%8F%91/</loc>
     
-    <lastmod>2020-04-04T04:19:18.568Z</lastmod>
+    <lastmod>2020-06-13T05:50:59.970Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://edxuanlen.tk/2020/04/04/%E9%9D%A2%E8%AF%95%E9%A2%98-%E5%B9%B6%E5%8F%91/</loc>
+    
+    <lastmod>2020-04-18T15:21:56.176Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://edxuanlen.tk/2020/03/08/Spring-AOP/</loc>
     
-    <lastmod>2020-04-04T04:19:07.978Z</lastmod>
+    <lastmod>2020-04-12T04:57:03.674Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://edxuanlen.tk/2020/04/06/docker-jupyterlab/</loc>
+    
+    <lastmod>2020-04-12T03:56:57.730Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://edxuanlen.tk/2020/03/09/Spring-IOC/</loc>
+    
+    <lastmod>2020-04-04T05:10:52.370Z</lastmod>
     
   </url>
   
@@ -93,6 +128,13 @@
   </url>
   
   <url>
+    <loc>https://edxuanlen.tk/2019/02/20/%E8%93%9D%E6%A1%A5%E6%9D%AF%E8%AF%95%E9%A2%98%E9%9B%86/</loc>
+    
+    <lastmod>2020-02-06T22:40:22.806Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://edxuanlen.tk/2018/09/03/%E8%A1%A5%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%9B%BD%E8%B5%9B/</loc>
     
     <lastmod>2020-02-06T22:40:22.806Z</lastmod>
@@ -100,9 +142,9 @@
   </url>
   
   <url>
-    <loc>https://edxuanlen.tk/2019/02/20/%E8%93%9D%E6%A1%A5%E6%9D%AF%E8%AF%95%E9%A2%98%E9%9B%86/</loc>
+    <loc>https://edxuanlen.tk/2019/02/20/%E8%93%9D%E6%A1%A5%E6%9D%AF%E8%AF%95%E9%A2%98%E9%9B%86-%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0/</loc>
     
-    <lastmod>2020-02-06T22:40:22.806Z</lastmod>
+    <lastmod>2020-02-06T22:40:22.805Z</lastmod>
     
   </url>
   
@@ -115,13 +157,6 @@
   
   <url>
     <loc>https://edxuanlen.tk/2019/02/20/%E8%93%9D%E6%A1%A5%E6%9D%AF%E8%AF%95%E9%A2%98%E9%9B%86-%E7%AE%97%E6%B3%95%E6%8F%90%E9%AB%98/</loc>
-    
-    <lastmod>2020-02-06T22:40:22.805Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://edxuanlen.tk/2019/02/20/%E8%93%9D%E6%A1%A5%E6%9D%AF%E8%AF%95%E9%A2%98%E9%9B%86-%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0/</loc>
     
     <lastmod>2020-02-06T22:40:22.805Z</lastmod>
     
@@ -156,14 +191,14 @@
   </url>
   
   <url>
-    <loc>https://edxuanlen.tk/2019/09/23/%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0live2d/</loc>
+    <loc>https://edxuanlen.tk/2019/09/23/%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%A8%A1%E6%9D%BF/</loc>
     
     <lastmod>2020-02-06T22:40:22.801Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://edxuanlen.tk/2019/09/23/%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%A8%A1%E6%9D%BF/</loc>
+    <loc>https://edxuanlen.tk/2019/09/23/%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0live2d/</loc>
     
     <lastmod>2020-02-06T22:40:22.801Z</lastmod>
     
@@ -261,13 +296,6 @@
   </url>
   
   <url>
-    <loc>https://edxuanlen.tk/2018/03/31/mysql/</loc>
-    
-    <lastmod>2020-02-06T22:40:22.776Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://edxuanlen.tk/2018/01/24/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
     
     <lastmod>2020-02-06T22:40:22.776Z</lastmod>
@@ -276,6 +304,13 @@
   
   <url>
     <loc>https://edxuanlen.tk/2019/09/23/hexo%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</loc>
+    
+    <lastmod>2020-02-06T22:40:22.776Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://edxuanlen.tk/2018/03/31/mysql/</loc>
     
     <lastmod>2020-02-06T22:40:22.776Z</lastmod>
     
@@ -408,14 +443,14 @@
   </url>
   
   <url>
-    <loc>https://edxuanlen.tk/2018/03/23/HTML/</loc>
+    <loc>https://edxuanlen.tk/2018/04/27/JS/</loc>
     
     <lastmod>2020-02-06T22:40:22.752Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://edxuanlen.tk/2018/04/27/JS/</loc>
+    <loc>https://edxuanlen.tk/2018/03/23/HTML/</loc>
     
     <lastmod>2020-02-06T22:40:22.752Z</lastmod>
     

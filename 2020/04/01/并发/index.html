@@ -6,15 +6,20 @@
 </ul>
 <h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>进程是资源分配的最小单位，线程是CPU调度的最小单位</p>
 <ul>
-<li>所有与进程相关的资源都被记录在PCB中(进程控制块)</li>
-<li>进程是抢占处理机的调度单位，线程属于某个进程，共享其资源</li>
-<li>线程只由堆栈寄存器、程序计数器和TCB组成(线程控制块)</li>
-</ul>
-<ul>
-<li>线程不是独立应用。而进程可以看做独立应用</li>
-<li>进程又独立的空间，相互不影响，县城只是进程不同的执行路径</li>
-<li>线程没有独立的地址空间，多进程的程序比多线程程序健壮</li>
-<li>进程的切换比线程的切换开销大</li>
+<li><p>所有与进程相关的资源都被记录在PCB中(进程控制块)</p>
+</li>
+<li><p>进程是抢占处理机的调度单位，线程属于某个进程，共享其资源</p>
+</li>
+<li><p>线程只由堆栈寄存器、程序计数器和TCB组成(线程控制块)</p>
+</li>
+<li><p>线程不是独立应用。而进程可以看做独立应用</p>
+</li>
+<li><p>进程又独立的空间，相互不影响，县城只是进程不同的执行路径</p>
+</li>
+<li><p>线程没有独立的地址空间，多进程的程序比多线程程序健壮</p>
+</li>
+<li><p>进程的切换比线程的切换开销大</p>
+</li>
 </ul>
 <h3 id="进程和线程的关系"><a href="#进程和线程的关系" class="headerlink" title="进程和线程的关系"></a>进程和线程的关系</h3><ul>
 <li>Java堆操作系统提供的功能进行封装，包括进程和线程</li>
@@ -46,7 +51,7 @@
 <li>Thread类的join方法</li>
 <li>Callable接口实现: 通过FutureTask or 线程池获取</li>
 </ul>
-<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img src="https://edxuanlen.oss-cn-hongkong.aliyuncs.com/2020-04-02-13-26-30.png?Expires=1585981821&OSSAccessKeyId=TMP.3KgbbEAA98vBn3gh1vQWZDjUcjEf74UwQDoUME4ficpHEP1rk6s6PsTRV8NV9yKCj2hMf6JGGyiNvfrW2QiGgGwNzAbEJS&Signature=hNSQo6vKOk8ce2Y4bHB4y1qpSoI%3D" alt="线程状态间转换"></p>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p><img src="http://www.edxuanlen.cn/2020-04-02-13-26-30.png" alt="线程状态间转换"></p>
 <p>六个状态</p>
 <ul>
 <li>新建(New): 创建后尚未启动的线程的状态</li>
@@ -65,29 +70,6 @@
 <li>thread.sleep  thread.interrupt 都是守护线程</li>
 </ul>
 <p>主线程结束，守护线程也结束</p>
-<h3 id="sleep和wait"><a href="#sleep和wait" class="headerlink" title="sleep和wait"></a>sleep和wait</h3><ul>
-<li>sleep是Thread类的方法，wait是Object类中定义的方法</li>
-<li>Sleep()方法可以在任何地方使用</li>
-<li>wait()只能在synchronized方法或synchronized块中使用</li>
-</ul>
-<p>本质区别</p>
-<ul>
-<li>Thread.sleep只会让出CPU，不会导致锁行为改变</li>
-<li>Object.wait不仅让出CPU，还会释放已经占有的同步资源锁</li>
-</ul>
-<p>// TODO wait sleep</p>
-<h3 id="notify和notifyall-的区别"><a href="#notify和notifyall-的区别" class="headerlink" title="notify和notifyall 的区别"></a>notify和notifyall 的区别</h3><p>两个概念</p>
-<ul>
-<li><p>EntryList 锁池</p>
-</li>
-<li><p>WaitSet 等待池</p>
-</li>
-<li><p>notifyAll会让所有处于等待池的线程进入锁池中去竞争获取锁的机会</p>
-</li>
-<li><p>notify 只会随机选取一个处于等待池中的线程进入锁池去竞争</p>
-</li>
-</ul>
-<h3 id="yield"><a href="#yield" class="headerlink" title="yield"></a>yield</h3><p>Thread.yield()函数时，会给线程调度器一个当前线程愿意让出CPU使用的暗示，但是线程调度器可能会忽略这个暗示</p>
 <h3 id="sychronized"><a href="#sychronized" class="headerlink" title="sychronized"></a>sychronized</h3><p>对象锁 //<br>类锁 // 本质是class 对象锁</p>
 <p>// TODO</p>
 <h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>JVM提供的轻量级同步机制</p>
@@ -104,68 +86,189 @@
 <h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p>为每一个线程提供变量的副本<br>实现了线程隔离</p>
 <p>Spring 实现事务的时候使用了ThreadLocal</p>
 <h4 id="ThreadLocal内存泄漏"><a href="#ThreadLocal内存泄漏" class="headerlink" title="ThreadLocal内存泄漏"></a>ThreadLocal内存泄漏</h4><p>每个Thread 维护一个 ThreadLocalMap，这个映射表的 key 是 ThreadLocal实例本身，value 是真正需要存储的 Object，也就是说 ThreadLocal 本身并不存储值，它只是作为一个 key 来让线程从 ThreadLocalMap 获取 value。仔细观察ThreadLocalMap，这个map是使用 ThreadLocal 的弱引用作为 Key 的，弱引用的对象在 GC 时会被回收。</p>
-<p><img src="https://edxuanlen.oss-cn-hongkong.aliyuncs.com/2020-04-03-22-49-10.png?Expires=1585981841&OSSAccessKeyId=TMP.3KgbbEAA98vBn3gh1vQWZDjUcjEf74UwQDoUME4ficpHEP1rk6s6PsTRV8NV9yKCj2hMf6JGGyiNvfrW2QiGgGwNzAbEJS&Signature=qiUM%2FJerkzIOESUbSXeWjA%2FivEA%3D" alt="引用链"></p>
+<p><img src="http://www.edxuanlen.cn/2020-04-03-22-49-10.png" alt="引用链"></p>
 <p>虚线表示的是弱引用</p>
 <h4 id="错误使用ThreadLocal导致线程不安全"><a href="#错误使用ThreadLocal导致线程不安全" class="headerlink" title="错误使用ThreadLocal导致线程不安全"></a>错误使用ThreadLocal导致线程不安全</h4><p>错误的使用了同一个对象(static方法)</p>
-<h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><ul>
-<li>synchronized 是mark word ,lock调用unsafe的park方法</li>
+<h3 id="线程间的协作"><a href="#线程间的协作" class="headerlink" title="线程间的协作"></a>线程间的协作</h3><h4 id="等待-通知机制"><a href="#等待-通知机制" class="headerlink" title="等待/通知机制"></a>等待/通知机制</h4><h5 id="sleep和wait"><a href="#sleep和wait" class="headerlink" title="sleep和wait"></a>sleep和wait</h5><ul>
+<li>sleep是Thread类的方法，wait是Object类中定义的方法</li>
+<li>Sleep()方法可以在任何地方使用</li>
+<li>wait()只能在synchronized方法或synchronized块中使用</li>
 </ul>
-<h3 id="Lock-和-synchronized"><a href="#Lock-和-synchronized" class="headerlink" title="Lock 和 synchronized"></a>Lock 和 synchronized</h3><p>Lock以及它的一个实现类ReentrantLock是jdk5新增加的， Lock也可以用于实现多线程的同步</p>
-<p>区别<br>synchronized既可以加在方法上，也可以加载特定代码块上，而lock需要显示地指定起始位置和终止位置；<br>synchronized是托管给JVM执行(底层使用mutex lock实现)，lock的锁定是通过代码实现的，它有比synchronized更精确的线程语义；<br>synchronized获取锁和释放锁的方式都是在块结构中，当获取多个锁时，必须以相反的顺序释放，并且是自动解锁。而Lock则需要开发人员手动释放，并且必须在finally中释放，否则会引起死锁；<br>性能上的区别：在Java1.5中，synchronize是性能低效的。因为这是一个重量级操作，需要调用操作接口，导致有可能加锁消耗的系统时间比加锁以外的操作还多。相比之下使用Java提供的Lock对象，性能更高一些。但是到了Java1.6，发生了变化。synchronize在语义上很清晰，可以进行很多优化，有适应自旋，锁消除，锁粗化，轻量级锁，偏向锁等等。导致在Java1.6上synchronize的性能并不比Lock差</p>
-<h3 id="JMM-Java-Memory-Model-–-Java内存模式"><a href="#JMM-Java-Memory-Model-–-Java内存模式" class="headerlink" title="JMM (Java Memory Model) – Java内存模式"></a>JMM (Java Memory Model) – Java内存模式</h3><h4 id="JMM-主内存"><a href="#JMM-主内存" class="headerlink" title="JMM 主内存"></a>JMM 主内存</h4><ul>
-<li>存储Java实例对象</li>
-<li>包括有成员变量、类信息、常量、静态变量等</li>
-<li>属于数据共享的区域，多线程并发操作时会引发线程安全问题</li>
-</ul>
-<h4 id="JMM的工作内存"><a href="#JMM的工作内存" class="headerlink" title="JMM的工作内存"></a>JMM的工作内存</h4><ul>
-<li>存储当前方法的所有本地变量信息，本地变量对其他线程不可见</li>
-<li>字节码行号指示器、Native方法信息</li>
-<li>属于线程私有的数据区域，不存在线程安全问题</li>
-</ul>
-<h4 id="JMM与Java内存区域划分是不同的概念层次"><a href="#JMM与Java内存区域划分是不同的概念层次" class="headerlink" title="JMM与Java内存区域划分是不同的概念层次"></a>JMM与Java内存区域划分是不同的概念层次</h4><ul>
-<li>JMM描述的是一组规则，围绕原子性，有序性，可见性展开</li>
-<li>相似点: 存在共享区和私有区域</li>
-</ul>
-<h4 id="主内存与工作内存的数据存储类型以及操作方式归纳"><a href="#主内存与工作内存的数据存储类型以及操作方式归纳" class="headerlink" title="主内存与工作内存的数据存储类型以及操作方式归纳"></a>主内存与工作内存的数据存储类型以及操作方式归纳</h4><ul>
-<li>方法里的基本数据类型本地变量将直接存储在工作内存的栈帧结构中</li>
-<li>引用类型的本地变量: 引用存储在工作内存中，实例存储在主内存中</li>
-<li>成员变量、static变量、类信息均存储在主内存中</li>
-<li>主内存共享的方式是线程各拷贝一份数据到工作内存，操作完成后刷新主内存</li>
-</ul>
-<h4 id="JMM怎么实现可见性"><a href="#JMM怎么实现可见性" class="headerlink" title="JMM怎么实现可见性"></a>JMM怎么实现可见性</h4><h5 id="指令重排序需要满足条件"><a href="#指令重排序需要满足条件" class="headerlink" title="指令重排序需要满足条件"></a>指令重排序需要满足条件</h5><ul>
-<li>单线程环境下不能改变程序运行的结果</li>
-<li>存在数据以来关系的不允许重排序</li>
-</ul>
-<p>无法通过happens-before原则推导出来的，才能进行指令的重排序<br>A操作的结果需要对B操作可见，则A与B存在happens-before关系</p>
-<h5 id="happens-before八大原则"><a href="#happens-before八大原则" class="headerlink" title="happens-before八大原则"></a>happens-before八大原则</h5><ol>
-<li>程序次序规则:一个线程内,按照代码顺序,书写在前面的操作先行发生于肀写在后面的操作;</li>
-<li>锁定规则:一个 unlock操作先行发生于后面对同一个锁的lock操作;</li>
-<li>volatile变量规则:对一个变量的写操作先行发生于后面对这个变量的读操作 </li>
-<li>传递规则:如果操作A先行发生于操作B,而操作B又先行发生于操作C,则可以得出操作A先行发生于操作C;</li>
-<li>线程启动规则: Thread对象的 start(方法先行发生于此线程的每一个动作;</li>
-<li>线程中断规则:对线程 Interrupt0方法的调用先行发生于被中断线程的代码检测到中断事件的发生;</li>
-<li>线程终结规则:线程中所有的操作都先行发生于线程的终止检测,我们可以过 Thread join(方法结束、 Thread isalive0的返回值手段检测到线程已经终止执行;</li>
-<li>对象终结规则:一个对象的初始化完成先行发生于他的 Finalize0方法的开始</li>
-</ol>
-<h6 id="如何禁止重排优化"><a href="#如何禁止重排优化" class="headerlink" title="如何禁止重排优化"></a>如何禁止重排优化</h6><p>内存屏障(memory barrier)</p>
-<ol>
-<li>保证特定操作的执行顺序</li>
-<li>保证某些变量的内存可见性</li>
-</ol>
-<p>通过内存屏障指令禁止在内存屏障前后的指令执行重新排序优化<br>强制刷出各种CPU的缓存数据,因此任何CPU上的线程都能读取到这些数据的最新版本</p>
-<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><p>sync是悲观锁，假定会并发冲突<br>乐观锁假定并发不冲突 CAS</p>
+<p>本质区别</p>
 <ul>
-<li>支持原子更新操作，适用于计算器，序列发生器等场景</li>
-<li>属于乐观锁机制，号称lock-free</li>
-<li>CAS操作失败时由开发者决定是继续尝试，还是执行别的操作</li>
+<li>Thread.sleep只会让出CPU，不会导致锁行为改变</li>
+<li>Object.wait不仅让出CPU，还会释放已经占有的同步资源锁</li>
 </ul>
-<h4 id="CAS思想"><a href="#CAS思想" class="headerlink" title="CAS思想"></a>CAS思想</h4><ul>
-<li>包含三个操作数– 内存位置(V)、预期原值(A)和新值(B)</li>
+<h5 id="notify和notifyall-的区别"><a href="#notify和notifyall-的区别" class="headerlink" title="notify和notifyall 的区别"></a>notify和notifyall 的区别</h5><p>两个概念</p>
+<ul>
+<li><p>EntryList 锁池</p>
+</li>
+<li><p>WaitSet 等待池</p>
+</li>
+<li><p>notifyAll会让所有处于等待池的线程进入锁池中去竞争获取锁的机会</p>
+</li>
+<li><p>notify 只会随机选取一个处于等待池中的线程进入锁池去竞争</p>
+</li>
 </ul>
-<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><ol>
-<li>newFixedThreadPool</li>
+<h3 id="yield"><a href="#yield" class="headerlink" title="yield"></a>yield</h3><p>Thread.yield()函数时，会给线程调度器一个当前线程愿意让出CPU使用的暗示，但是线程调度器可能会忽略这个暗示</p>
+<h2 id="线程的并发工具类"><a href="#线程的并发工具类" class="headerlink" title="线程的并发工具类"></a>线程的并发工具类</h2><h3 id="Fork-Join"><a href="#Fork-Join" class="headerlink" title="Fork-Join"></a>Fork-Join</h3><p>分治思想， 拆分成若干小任务，最后将小任务运算的结果进行join汇总</p>
+<h4 id="工作密取"><a href="#工作密取" class="headerlink" title="工作密取"></a>工作密取</h4><p>即当前线程的Task已经全被执行完毕，则自动取到其他线程的Task池中取出Task继续执行。<br>ForkJoinPool中维护着多个线程（一般为CPU核数）在不断地执行Task，每个线程除了执行自己职务内的Task之外，还会根据自己工作线程的闲置情况去获取其他繁忙的工作线程的Task，如此一来就能能够减少线程阻塞或是闲置的时间，提高CPU利用率。</p>
+<h4 id="Fork-Join使用的标准范式"><a href="#Fork-Join使用的标准范式" class="headerlink" title="Fork/Join使用的标准范式"></a>Fork/Join使用的标准范式</h4><p>我们要使用ForkJoin框架，必须首先创建一个ForkJoin任务。它提供在任务中执行fork和join的操作机制，通常我们不直接继承ForkjoinTask类，只需要直接继承其子类。</p>
+<ol>
+<li>RecursiveAction，用于没有返回结果的任务</li>
+<li>RecursiveTask，用于有返回值的任务</li>
 </ol>
-</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/04/01/并发/">https://edxuanlen.tk/2020/04/01/并发/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/Java/">Java</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/03/17/Zookeeper/" class="next">Zookeeper</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程和进程"><span class="toc-text">线程和进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的区别"><span class="toc-text">进程和线程的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程和线程的由来"><span class="toc-text">进程和线程的由来</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的关系"><span class="toc-text">进程和线程的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread有几种新启线程的方法"><span class="toc-text">Thread有几种新启线程的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread和Runnable是什么关系"><span class="toc-text">Thread和Runnable是什么关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何让线程安全的停止工作"><span class="toc-text">如何让线程安全的停止工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread中的start和run方法的区别"><span class="toc-text">Thread中的start和run方法的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何给run-方法传参"><span class="toc-text">如何给run()方法传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现线程的返回值"><span class="toc-text">如何实现线程的返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的状态"><span class="toc-text">线程的状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何让两个线程顺序执行–join-方法"><span class="toc-text">如何让两个线程顺序执行–join 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程优先级"><span class="toc-text">线程优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#守护线程"><span class="toc-text">守护线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep和wait"><span class="toc-text">sleep和wait</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#notify和notifyall-的区别"><span class="toc-text">notify和notifyall 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yield"><span class="toc-text">yield</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sychronized"><span class="toc-text">sychronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile"><span class="toc-text">volatile</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile-的可见性"><span class="toc-text">volatile 的可见性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal"><span class="toc-text">ThreadLocal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ThreadLocal内存泄漏"><span class="toc-text">ThreadLocal内存泄漏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#错误使用ThreadLocal导致线程不安全"><span class="toc-text">错误使用ThreadLocal导致线程不安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantLock"><span class="toc-text">ReentrantLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lock-和-synchronized"><span class="toc-text">Lock 和 synchronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JMM-Java-Memory-Model-–-Java内存模式"><span class="toc-text">JMM (Java Memory Model) – Java内存模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM-主内存"><span class="toc-text">JMM 主内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM的工作内存"><span class="toc-text">JMM的工作内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM与Java内存区域划分是不同的概念层次"><span class="toc-text">JMM与Java内存区域划分是不同的概念层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主内存与工作内存的数据存储类型以及操作方式归纳"><span class="toc-text">主内存与工作内存的数据存储类型以及操作方式归纳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JMM怎么实现可见性"><span class="toc-text">JMM怎么实现可见性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#指令重排序需要满足条件"><span class="toc-text">指令重排序需要满足条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#happens-before八大原则"><span class="toc-text">happens-before八大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#如何禁止重排优化"><span class="toc-text">如何禁止重排优化</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAS"><span class="toc-text">CAS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CAS思想"><span class="toc-text">CAS思想</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池"><span class="toc-text">线程池</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/01/并发/">并发</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/JVM/">JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/09/Spring-IOC/">Spring-IOC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/08/Spring-AOP/">Spring-AOP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/自建SS服务/">自建SS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/Spring-boot第一个应用的开发/">Spring_boot第一个应用的开发</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+<p>task要通过ForkJoinPool来执行，使用submit 或 invoke 提交，两者的区别是：invoke是同步执行，调用之后需要等待任务完成，才能执行后面的代码；submit是异步执行。<br>join()和get方法当任务完成的时候返回计算结果。</p>
+<p><img src="http://www.edxuanlen.cn/%E5%B9%B6%E5%8F%91-1" alt="compute"></p>
+<p>在我们自己实现的compute方法里，首先需要判断任务是否足够小，如果足够小就直接执行任务。如果不足够小，就必须分割成两个子任务，每个子任务在调用invokeAll方法时，又会进入compute方法，看看当前子任务是否需要继续分割成孙任务，如果不需要继续分割，则执行当前子任务并返回结果。使用join方法会等待子任务执行完并得到其结果。</p>
+<h3 id="CountDownLatch-和-Cyclic-Barrier"><a href="#CountDownLatch-和-Cyclic-Barrier" class="headerlink" title="CountDownLatch 和 Cyclic Barrier"></a>CountDownLatch 和 Cyclic Barrier</h3><p>CountDownLatch的计数器只能使用一次，而CyclicBarrier的计数器可以反复使用。<br>CountDownLatch.await一般阻塞工作线程，所有的进行预备工作的线程执行countDown，而CyclicBarrier通过工作线程调用await从而自行阻塞，直到所有工作线程达到指定屏障，再大家一起往下走。<br>在控制多个线程同时运行上，CountDownLatch可以不限线程数量，而CyclicBarrier是固定线程数。<br>同时，CyclicBarrier还可以提供一个barrierAction，合并多线程计算结果。</p>
+<h3 id="semaphore"><a href="#semaphore" class="headerlink" title="semaphore"></a>semaphore</h3><p>semaphore 限流，实现数据库连接池</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DBPoolSemaphore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> POOL_SIZE = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//    private Semaphore semaphore;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Semaphore useful, useless;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LinkedList&lt;Connection&gt; pool = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; POOL_SIZE; i ++)&#123;</span><br><span class="line">            pool.addLast(SqlConnectImpl.fetchConnection());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DBPoolSemaphore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.useful = <span class="keyword">new</span> Semaphore(POOL_SIZE);</span><br><span class="line">        <span class="keyword">this</span>.useless = <span class="keyword">new</span> Semaphore(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">fetchConnect</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        useful.acquire();</span><br><span class="line">        Connection connection;</span><br><span class="line">        <span class="keyword">synchronized</span> (pool)&#123;</span><br><span class="line">            connection = pool.removeFirst();</span><br><span class="line">        &#125;</span><br><span class="line">        useless.release();</span><br><span class="line">        <span class="keyword">return</span> connection;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">releaseConnect</span><span class="params">(Connection connection)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (connection != <span class="keyword">null</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"当前有"</span> + useful.getQueueLength() + <span class="string">"个线程等待数据库连接"</span></span><br><span class="line">                + <span class="string">"\n 可用连接数为: "</span> + useful.availablePermits());</span><br><span class="line">            useless.acquire();</span><br><span class="line">            <span class="keyword">synchronized</span> (pool)&#123;</span><br><span class="line">                pool.addLast(connection);</span><br><span class="line">            &#125;</span><br><span class="line">            useful.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Exchange"><a href="#Exchange" class="headerlink" title="Exchange"></a>Exchange</h3><p>两个线程之间的交互，数据交换</p>
+<h3 id="Future-FutureTask-Callable"><a href="#Future-FutureTask-Callable" class="headerlink" title="Future, FutureTask, Callable"></a>Future, FutureTask, Callable</h3><p>Runnable是一个接口，在它里面只声明了一个run()方法，由于run()方法返回值为void类型，所以在执行完任务之后无法返回任何结果。<br>Callable位于java.util.concurrent包下，它也是一个接口，在它里面也只声明了一个方法，只不过这个方法叫做call()，这是一个泛型接口，call()函数返回的类型就是传递进来的V类型。<br>Future就是对于具体的Runnable或者Callable任务的执行结果进行取消、查询是否完成、获取结果。必要时可以通过get方法获取执行结果，该方法会阻塞直到任务返回结果。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">UseCallable useCallable = <span class="keyword">new</span> UseCallable();</span><br><span class="line">FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;&gt;(useCallable);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Thread(futureTask).start();</span><br><span class="line"></span><br><span class="line">Random r = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">Thread.sleep(<span class="number">10</span>);</span><br><span class="line"><span class="keyword">if</span> (r.nextInt(<span class="number">100</span>) &gt; <span class="number">50</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">"Get UseCallable result = "</span> + futureTask.get());</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">"cancel...."</span>);</span><br><span class="line">    futureTask.cancel(<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="原子操作-CAS"><a href="#原子操作-CAS" class="headerlink" title="原子操作 CAS"></a>原子操作 CAS</h2><h3 id="什么是原子操作"><a href="#什么是原子操作" class="headerlink" title="什么是原子操作"></a>什么是原子操作</h3><p>假定有两个操作A和B，如果从执行A的线程来看，当另一个线程执行B时，要么将B全部执行完，要么完全不执行B，那么A和B对彼此来说是原子的。</p>
+<h3 id="如何实现原子操作"><a href="#如何实现原子操作" class="headerlink" title="如何实现原子操作"></a>如何实现原子操作</h3><ul>
+<li>实现原子操作可以使用锁，锁机制。  </li>
+</ul>
+<p>但是如果被阻塞的线程优先级很高很重要怎么办？其次，如果获得锁的线程一直不释放锁怎么办？（这种情况是非常糟糕的）。还有一种情况，如果有大量的线程来竞争资源，那CPU将会花费大量的时间和资源来处理这些竞争，同时，还有可能出现一些例如死锁之类的情况。  </p>
+<ul>
+<li>实现原子操作还可以使用当前的处理器基本都支持CAS()的指令，每一个CAS操作过程都包含三个运算符：一个内存地址V，一个期望的值A和一个新值B，操作的时候如果这个地址上存放的值等于这个期望的值A，则将地址上的值赋为新值B，否则不做任何操作。<br>  循环CAS就是在一个循环里不断的做cas操作，直到成功为止。<br>  语言层面不做处理，我们将其交给硬件—CPU和内存，利用CPU的多处理能力，实现硬件层面的阻塞，再加上volatile变量的特性即可实现基于原子操作的线程安全。</li>
+</ul>
+<p><img src="http://www.edxuanlen.cn/2020-04-20-01-07-58.png" alt="CAS自旋"></p>
+<h3 id="CAS-实现原子操作的三大问题"><a href="#CAS-实现原子操作的三大问题" class="headerlink" title="CAS 实现原子操作的三大问题"></a>CAS 实现原子操作的三大问题</h3><h4 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h4><p>因为CAS需要在操作值的时候，检查值有没有发生变化，如果没有发生变化则更新，但是如果一个值原来是A，变成了B，又变成了A，那么使用CAS进行检查时会发现它的值没有发生变化，但是实际上却变化了。  </p>
+<p>解决： 追加版本号</p>
+<h4 id="循环时间长开销大"><a href="#循环时间长开销大" class="headerlink" title="循环时间长开销大"></a>循环时间长开销大</h4><p>自旋CAS如果长时间不成功，会给CPU带来非常大的执行开销</p>
+<h4 id="只能保证一个共享变量的原子操作"><a href="#只能保证一个共享变量的原子操作" class="headerlink" title="只能保证一个共享变量的原子操作"></a>只能保证一个共享变量的原子操作</h4><p>当对一个共享变量执行操作时，我们可以使用循环CAS的方式来保证原子操作，但是对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁。<br>从Java 1.5开始，JDK提供了AtomicReference类来保证引用对象之间的原子性，就可以把多个变量放在一个对象里来进行CAS操作。</p>
+<h3 id="jdk中相关原子操作类"><a href="#jdk中相关原子操作类" class="headerlink" title="jdk中相关原子操作类"></a>jdk中相关原子操作类</h3><h4 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a>AtomicInteger</h4><ul>
+<li>int addAndGet（int delta）：以原子方式将输入的数值与实例中的值（AtomicInteger里的value）相加，并返回结果。</li>
+<li>boolean compareAndSet（int expect，int update）：如果输入的数值等于预期值，则以原子方式将该值设置为输入的值。</li>
+<li>int getAndIncrement()：以原子方式将当前值加1，注意，这里返回的是自增前的值。</li>
+<li>int getAndSet（int newValue）：以原子方式设置为newValue的值，并返回旧值。</li>
+</ul>
+<h4 id="AtomicIntegerArray"><a href="#AtomicIntegerArray" class="headerlink" title="AtomicIntegerArray"></a>AtomicIntegerArray</h4><p>主要是提供原子的方式更新数组里的整型，其常用方法如下。</p>
+<ul>
+<li>int addAndGet（int i，int delta）：以原子方式将输入值与数组中索引i的元素相加。  </li>
+<li>boolean compareAndSet（int i，int expect，int update）：如果当前值等于预期值，则以原子方式将数组位置i的元素设置成update值。</li>
+</ul>
+<h3 id="更新引用类型"><a href="#更新引用类型" class="headerlink" title="更新引用类型"></a>更新引用类型</h3><p>原子更新基本类型的AtomicInteger只能更新一个变量，更新多个则需要使用原子更新引用类型提供的类。</p>
+<h4 id="AtomicReference"><a href="#AtomicReference" class="headerlink" title="AtomicReference"></a>AtomicReference</h4><p>原子更新引用类型。</p>
+<h4 id="AtomicStampedReference"><a href="#AtomicStampedReference" class="headerlink" title="AtomicStampedReference"></a>AtomicStampedReference</h4><p>利用版本戳的形式记录了每次改变以后的版本号，这样的话就不会存在ABA问题了。</p>
+<h4 id="AtomicMarkableReference"><a href="#AtomicMarkableReference" class="headerlink" title="AtomicMarkableReference"></a>AtomicMarkableReference</h4><p>原子更新带有标记位的引用类型。可以原子更新一个布尔类型的标记位和引用类型。</p>
+<h2 id="显示锁和AQS"><a href="#显示锁和AQS" class="headerlink" title="显示锁和AQS"></a>显示锁和AQS</h2><p>AbstractQueuedSynchronizer</p>
+<h3 id="显式锁"><a href="#显式锁" class="headerlink" title="显式锁"></a>显式锁</h3><p>有了内置锁 synchronized 为什么还要Lock?<br>Java程序是靠synchronized 关键字实现锁功能的，使用synchronized 关键字将会隐式地获取锁，但是它将锁的获取和释放固定化了，也就是先获取再释放。</p>
+<h3 id="Lock的标准用法"><a href="#Lock的标准用法" class="headerlink" title="Lock的标准用法"></a>Lock的标准用法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lock.lock();</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    count ++;</span><br><span class="line">&#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在finally块中释放锁，目的是保证在获取到锁之后，最终能够被释放。<br>不要将获取锁的过程写在try块中，因为如果在获取锁（自定义锁的实现）时发生了异常，异常抛出的同时，也会导致锁无故释放。</p>
+<h3 id="Lock常用API"><a href="#Lock常用API" class="headerlink" title="Lock常用API"></a>Lock常用API</h3><p><img src="http://www.edxuanlen.cn/2020-05-20-16-14-35.png" alt="2020-05-20-16-14-35"></p>
+<h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><h4 id="锁的可重入"><a href="#锁的可重入" class="headerlink" title="锁的可重入"></a>锁的可重入</h4><p>简单地讲就是：“同一个线程对于已经获得到的锁，可以多次继续申请到该锁的使用权”。而synchronized关键字隐式的支持重进入，比如一个synchronized修饰的递归方法，在方法执行时，执行线程在获取了锁之后仍能连续多次地获得该锁。ReentrantLock在调用lock()方法时，已经获取到锁的线程，能够再次调用lock()方法获取锁而不被阻塞。</p>
+<h4 id="公平和非公平锁"><a href="#公平和非公平锁" class="headerlink" title="公平和非公平锁"></a>公平和非公平锁</h4><p>如果在时间上，先对锁进行获取的请求一定先被满足，那么这个锁是公平的，反之，是不公平的。公平的获取锁，也就是等待时间最长的线程最优先获取锁，也可以说锁获取是顺序的。事实上，公平的锁机制往往没有非公平的效率高。<br>在恢复一个被挂起的线程与该线程真正开始运行之间存在着严重的延迟。</p>
+<h4 id="读写锁ReentrantReadWriteLock"><a href="#读写锁ReentrantReadWriteLock" class="headerlink" title="读写锁ReentrantReadWriteLock"></a>读写锁ReentrantReadWriteLock</h4><p>锁（如Mutex和ReentrantLock）基本都是排他锁，这些锁在同一时刻只允许一个线程进行访问，而读写锁在同一时刻可以允许多个读线程访问，但是在写线程访问时，所有的读线程和其他写线程均被阻塞。</p>
+<p>一般情况下，读写锁的性能都会比排它锁好，因为大多数场景读是多于写的。在读多于写的情况下，读写锁能够提供比排它锁更好的并发性和吞吐量<br>ReentrantReadWriteLock其实实现的是ReadWriteLock接口</p>
+<h3 id="Condition-接口"><a href="#Condition-接口" class="headerlink" title="Condition 接口"></a>Condition 接口</h3><p>实现一组类似监视器的方法，与Lock配合可以实现等待/通知模式。</p>
+<h3 id="LockSupport"><a href="#LockSupport" class="headerlink" title="LockSupport"></a>LockSupport</h3><p>LockSupport 定义了一组公共静态方法，这些方法提供了最基本的线程阻塞喝唤醒功能，而LockSupport也成为构建同步组件的基础工具。<br>LockSupport定义了一组以park开头的方法用来阻塞当前线程，以及unpark(Thread thread)方法来唤醒一个被阻塞的线程。LockSupport增加了park(Object blocker)、parkNanos(Object blocker,long nanos)和parkUntil(Object blocker,long deadline)3个方法，用于实现阻塞当前线程的功能，其中参数blocker是用来标识当前线程在等待的对象（以下称为阻塞对象），该对象主要用于问题排查和系统监控。</p>
+<h3 id="CLH队列锁"><a href="#CLH队列锁" class="headerlink" title="CLH队列锁"></a>CLH队列锁</h3><p>CLH队列锁也是一种基于链表的可扩展、高性能、公平的自旋锁，申请线程仅仅在本地变量上自旋，它不断轮询前驱的状态，假设发现前驱释放了锁就结束自旋。  </p>
+<p>CLH队列锁的优点是空间复杂度低（如果有n个线程，L个锁，每个线程每次只获取一个锁，那么需要的存储空间是O（L+n），n个线程有n个myNode，L个锁有L个tail）。CLH队列锁常用在SMP体系结构下。  </p>
+<h3 id="AQS-中的数据结构-节点和同步队列"><a href="#AQS-中的数据结构-节点和同步队列" class="headerlink" title="AQS 中的数据结构-节点和同步队列"></a>AQS 中的数据结构-节点和同步队列</h3><p>AQS是CLH队列锁的一种变体实现，节点数据结构应该考虑哪些信息？  </p>
+<p>1、线程信息，肯定要知道我是哪个线程<br>2、队列中线程状态<br>3、前驱和后继线程</p>
+<h3 id="学习AQS的必要性"><a href="#学习AQS的必要性" class="headerlink" title="学习AQS的必要性"></a>学习AQS的必要性</h3><p>队列同步器AbstractQueuedSynchronizer（以下简称同步器或AQS），是用来构建锁或者其他同步组件的基础框架，它使用了一个int成员变量表示同步状态，通过内置的FIFO队列来完成资源获取线程的排队工作。</p>
+<h3 id="AQS-使用方式和设计模式"><a href="#AQS-使用方式和设计模式" class="headerlink" title="AQS 使用方式和设计模式"></a>AQS 使用方式和设计模式</h3><p>AQS的主要使用方式是继承，子类通过继承AQS并实现它的抽象方法来管理同步状态，在AQS里由一个int型的state来代表这个状态，在抽象方法的实现过程中免不了要对同步状态进行 更改，这时就需要使用同步器提供的3个方法（getState()、setState(int newState)和compareAndSetState(int expect,int update)）来进行操作，因为它们能够保证状态的改变是安全的。</p>
+<h2 id="并发容器"><a href="#并发容器" class="headerlink" title="并发容器"></a>并发容器</h2><!--
+### ReentrantLock
+
+- synchronized 是mark word ,lock调用unsafe的park方法
+
+### Lock 和 synchronized
+
+Lock以及它的一个实现类ReentrantLock是jdk5新增加的， Lock也可以用于实现多线程的同步
+
+区别
+synchronized既可以加在方法上，也可以加载特定代码块上，而lock需要显示地指定起始位置和终止位置；
+synchronized是托管给JVM执行(底层使用mutex lock实现)，lock的锁定是通过代码实现的，它有比synchronized更精确的线程语义；
+synchronized获取锁和释放锁的方式都是在块结构中，当获取多个锁时，必须以相反的顺序释放，并且是自动解锁。而Lock则需要开发人员手动释放，并且必须在finally中释放，否则会引起死锁；
+性能上的区别：在Java1.5中，synchronize是性能低效的。因为这是一个重量级操作，需要调用操作接口，导致有可能加锁消耗的系统时间比加锁以外的操作还多。相比之下使用Java提供的Lock对象，性能更高一些。但是到了Java1.6，发生了变化。synchronize在语义上很清晰，可以进行很多优化，有适应自旋，锁消除，锁粗化，轻量级锁，偏向锁等等。导致在Java1.6上synchronize的性能并不比Lock差
+
+
+
+### JMM (Java Memory Model) -- Java内存模式
+
+#### JMM 主内存
+
+- 存储Java实例对象
+- 包括有成员变量、类信息、常量、静态变量等
+- 属于数据共享的区域，多线程并发操作时会引发线程安全问题
+
+#### JMM的工作内存
+
+- 存储当前方法的所有本地变量信息，本地变量对其他线程不可见
+- 字节码行号指示器、Native方法信息
+- 属于线程私有的数据区域，不存在线程安全问题
+
+#### JMM与Java内存区域划分是不同的概念层次
+
+- JMM描述的是一组规则，围绕原子性，有序性，可见性展开
+- 相似点: 存在共享区和私有区域
+
+#### 主内存与工作内存的数据存储类型以及操作方式归纳
+
+- 方法里的基本数据类型本地变量将直接存储在工作内存的栈帧结构中
+- 引用类型的本地变量: 引用存储在工作内存中，实例存储在主内存中
+- 成员变量、static变量、类信息均存储在主内存中
+- 主内存共享的方式是线程各拷贝一份数据到工作内存，操作完成后刷新主内存
+
+#### JMM怎么实现可见性
+
+##### 指令重排序需要满足条件
+
+- 单线程环境下不能改变程序运行的结果
+- 存在数据以来关系的不允许重排序
+
+无法通过happens-before原则推导出来的，才能进行指令的重排序
+A操作的结果需要对B操作可见，则A与B存在happens-before关系
+
+##### happens-before八大原则
+
+1. 程序次序规则:一个线程内,按照代码顺序,书写在前面的操作先行发生于肀写在后面的操作;
+2. 锁定规则:一个 unlock操作先行发生于后面对同一个锁的lock操作;
+3. volatile变量规则:对一个变量的写操作先行发生于后面对这个变量的读操作 
+4. 传递规则:如果操作A先行发生于操作B,而操作B又先行发生于操作C,则可以得出操作A先行发生于操作C;
+5. 线程启动规则: Thread对象的 start(方法先行发生于此线程的每一个动作;
+6. 线程中断规则:对线程 Interrupt0方法的调用先行发生于被中断线程的代码检测到中断事件的发生;
+7. 线程终结规则:线程中所有的操作都先行发生于线程的终止检测,我们可以过 Thread join(方法结束、 Thread isalive0的返回值手段检测到线程已经终止执行;
+8. 对象终结规则:一个对象的初始化完成先行发生于他的 Finalize0方法的开始
+
+
+
+###### 如何禁止重排优化
+
+内存屏障(memory barrier)
+
+1. 保证特定操作的执行顺序
+2. 保证某些变量的内存可见性
+
+通过内存屏障指令禁止在内存屏障前后的指令执行重新排序优化  
+强制刷出各种CPU的缓存数据,因此任何CPU上的线程都能读取到这些数据的最新版本
+
+### CAS
+
+sync是悲观锁，假定会并发冲突
+乐观锁假定并发不冲突 CAS
+
+- 支持原子更新操作，适用于计算器，序列发生器等场景
+- 属于乐观锁机制，号称lock-free
+- CAS操作失败时由开发者决定是继续尝试，还是执行别的操作
+
+#### CAS思想
+
+- 包含三个操作数-- 内存位置(V)、预期原值(A)和新值(B)
+
+### 线程池
+
+1. newFixedThreadPool -->
+
+</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/04/01/并发/">https://edxuanlen.tk/2020/04/01/并发/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/Java/">Java</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/04/04/面试题-并发/" class="pre">面试题--并发</a><a href="/2020/03/17/Zookeeper/" class="next">Zookeeper</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程和进程"><span class="toc-text">线程和进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的区别"><span class="toc-text">进程和线程的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程和线程的由来"><span class="toc-text">进程和线程的由来</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的关系"><span class="toc-text">进程和线程的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread有几种新启线程的方法"><span class="toc-text">Thread有几种新启线程的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread和Runnable是什么关系"><span class="toc-text">Thread和Runnable是什么关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何让线程安全的停止工作"><span class="toc-text">如何让线程安全的停止工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread中的start和run方法的区别"><span class="toc-text">Thread中的start和run方法的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何给run-方法传参"><span class="toc-text">如何给run()方法传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现线程的返回值"><span class="toc-text">如何实现线程的返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的状态"><span class="toc-text">线程的状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何让两个线程顺序执行–join-方法"><span class="toc-text">如何让两个线程顺序执行–join 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程优先级"><span class="toc-text">线程优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#守护线程"><span class="toc-text">守护线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sychronized"><span class="toc-text">sychronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile"><span class="toc-text">volatile</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile-的可见性"><span class="toc-text">volatile 的可见性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal"><span class="toc-text">ThreadLocal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ThreadLocal内存泄漏"><span class="toc-text">ThreadLocal内存泄漏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#错误使用ThreadLocal导致线程不安全"><span class="toc-text">错误使用ThreadLocal导致线程不安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程间的协作"><span class="toc-text">线程间的协作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#等待-通知机制"><span class="toc-text">等待/通知机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#sleep和wait"><span class="toc-text">sleep和wait</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#notify和notifyall-的区别"><span class="toc-text">notify和notifyall 的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yield"><span class="toc-text">yield</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程的并发工具类"><span class="toc-text">线程的并发工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fork-Join"><span class="toc-text">Fork-Join</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#工作密取"><span class="toc-text">工作密取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fork-Join使用的标准范式"><span class="toc-text">Fork/Join使用的标准范式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CountDownLatch-和-Cyclic-Barrier"><span class="toc-text">CountDownLatch 和 Cyclic Barrier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#semaphore"><span class="toc-text">semaphore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exchange"><span class="toc-text">Exchange</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Future-FutureTask-Callable"><span class="toc-text">Future, FutureTask, Callable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作-CAS"><span class="toc-text">原子操作 CAS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是原子操作"><span class="toc-text">什么是原子操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现原子操作"><span class="toc-text">如何实现原子操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAS-实现原子操作的三大问题"><span class="toc-text">CAS 实现原子操作的三大问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ABA问题"><span class="toc-text">ABA问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#循环时间长开销大"><span class="toc-text">循环时间长开销大</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#只能保证一个共享变量的原子操作"><span class="toc-text">只能保证一个共享变量的原子操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jdk中相关原子操作类"><span class="toc-text">jdk中相关原子操作类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AtomicInteger"><span class="toc-text">AtomicInteger</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AtomicIntegerArray"><span class="toc-text">AtomicIntegerArray</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新引用类型"><span class="toc-text">更新引用类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AtomicReference"><span class="toc-text">AtomicReference</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AtomicStampedReference"><span class="toc-text">AtomicStampedReference</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AtomicMarkableReference"><span class="toc-text">AtomicMarkableReference</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显示锁和AQS"><span class="toc-text">显示锁和AQS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#显式锁"><span class="toc-text">显式锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lock的标准用法"><span class="toc-text">Lock的标准用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lock常用API"><span class="toc-text">Lock常用API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantLock"><span class="toc-text">ReentrantLock</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#锁的可重入"><span class="toc-text">锁的可重入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#公平和非公平锁"><span class="toc-text">公平和非公平锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读写锁ReentrantReadWriteLock"><span class="toc-text">读写锁ReentrantReadWriteLock</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Condition-接口"><span class="toc-text">Condition 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LockSupport"><span class="toc-text">LockSupport</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CLH队列锁"><span class="toc-text">CLH队列锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AQS-中的数据结构-节点和同步队列"><span class="toc-text">AQS 中的数据结构-节点和同步队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习AQS的必要性"><span class="toc-text">学习AQS的必要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AQS-使用方式和设计模式"><span class="toc-text">AQS 使用方式和设计模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#并发容器"><span class="toc-text">并发容器</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/06/24/Maven/">Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/13/MyBatis/">MyBatis</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/13/redis/">redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/06/docker-jupyterlab/">docker jupyterlab</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/面试题-并发/">面试题--并发</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/01/并发/">并发</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/17/Zookeeper/">Zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/Kubernetes/">Kubernetes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/面试专题/">面试专题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/12/hashmap/">hashmap</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Interview/">Interview</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
