@@ -12,7 +12,9 @@ password:
 summary:
 
 tags:
+    - Maven
 categories:
+    - Maven
 
 description: Maven的配置以及使用。
 ---
@@ -46,19 +48,17 @@ maven setting.xml
     <version>3.0.2</version>
 </plugin>
 ```
-/bin	用于存放命令文件，系统中所有用户都可以使用
-/sbin	用于存放命令文件，大多数命令只能由管理员root用户使用
 
-1. 命令文件； 所有用户； 管理员root用户；
-2. 存放个人数据；普通用户；管理员root用户；
-3. /etc
-4. /usr/share/man
-5. /proc; /sys
-6. /media
-7. /etc
-8. /
+### Maven 问题
 
+#### Maven 拉取包失败
 
+本地存在jar包，但是一直会去远程仓库拉取导致失败。  
 
+私服id配置应该不能被镜像MirrorOf拦截到，如:  
 
- 
+- 私服id central, MirrorOf central
+- 私服id repo1, MirrorOf *
+
+这样都会导致私服失效。  
+
