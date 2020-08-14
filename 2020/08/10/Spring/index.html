@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><meta name="keywords" content="edxuanlen, ICPC, Ubuntu, 蓝桥杯"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script src="js/jquery-3.3.1.min.js"></script><script src="js/click.js"></script><title>Spring | edxuanlen's BLOG</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Spring</h1><a id="logo" href="/.">edxuanlen's BLOG</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Spring</h1><div class="post-meta"><a href="/2020/08/10/Spring/#comments" class="comment-count"></a><p><span class="date">Aug 10, 2020</span><span><a href="/categories/Java/" class="category">Java</a><a href="/categories/Java/Spring/" class="category">Spring</a><a href="/categories/Java/Spring/Interview/" class="category">Interview</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h2><h3 id="你了解Spring-IOC吗"><a href="#你了解Spring-IOC吗" class="headerlink" title="你了解Spring IOC吗"></a>你了解Spring IOC吗</h3><p>IOC(Inversion of Control): 控制反转</p>
+<ul>
+<li>Spring Core最核心的部分</li>
+<li>需要先了解依赖注入(DI)</li>
+</ul>
+<h4 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h4><p>DI: 将底层类作为参数传递给上层类，实现上层对下层的”控制”</p>
+<p>IOC: DI和DL</p>
+<p>DL: 因为需要用户实现API所以被移除</p>
+<h4 id="注入的方式"><a href="#注入的方式" class="headerlink" title="注入的方式"></a>注入的方式</h4><ul>
+<li>Setter</li>
+<li>Interface</li>
+<li>Constructor</li>
+<li>Annotation</li>
+</ul>
+<p>IOC容器的优势</p>
+<ul>
+<li>避免在各处使用new来创建类，并且可以做到统一维护</li>
+<li>创建实例的时候不需要了解其中的细节</li>
+</ul>
+<h4 id="Spring-IOC支持的功能"><a href="#Spring-IOC支持的功能" class="headerlink" title="Spring IOC支持的功能"></a>Spring IOC支持的功能</h4><ul>
+<li>依赖注入</li>
+<li>依赖检查</li>
+<li>自动装配</li>
+<li>支持集合</li>
+<li>指定初始化方法和销毁方法</li>
+<li>支持回调方法</li>
+</ul>
+<h4 id="Spring-Bean"><a href="#Spring-Bean" class="headerlink" title="Spring Bean"></a>Spring Bean</h4><p>BeanDefinition: 主要用来描述Bean的<br>BeanDefinitionRegistry: 提供向IOC容器注册BeanDefinition对象的方法</p>
+<p>** BeanFactory **: Spring框架最核心的接口</p>
+<ul>
+<li>提供IOC的配置机制</li>
+<li>包含Bean的各种定义，便于实例化Bean</li>
+<li>建立Bean之间的依赖关系</li>
+<li>Bean生命周期的控制</li>
+</ul>
+<h5 id="BeanFactory与ApplicationContext的比较"><a href="#BeanFactory与ApplicationContext的比较" class="headerlink" title="BeanFactory与ApplicationContext的比较"></a>BeanFactory与ApplicationContext的比较</h5><ul>
+<li>BeanFactory是Spring框架的基础设施</li>
+<li>ApplicationContext面向Spring开发者</li>
+</ul>
+<p>继承多个接口</p>
+<ul>
+<li>BeanFactory: 能够管理、装配Bean</li>
+<li>ResourcePatternResolver: 能够加载资源文件</li>
+<li>MessageSource: 能够实现国际化等功能</li>
+<li>ApplicationEventPublisher: 能够注册监听器，实现监听机制</li>
+</ul>
+<h5 id="Spring-Bean-的作用域"><a href="#Spring-Bean-的作用域" class="headerlink" title="Spring Bean 的作用域"></a>Spring Bean 的作用域</h5><p>作用域</p>
+<ul>
+<li>singleton: Spring默认的作用域，容器里拥有唯一的Bean实例</li>
+<li>prototype: 针对每个getBean请求，容器都会创建一个bean实例</li>
+<li>request: 会为每个HTTP请求创建一个Bean</li>
+<li>session: 会为每个session创建一个Bean</li>
+<li>globalSession: 会为每个全局Http Session创建一个Bean实例，该作用域仅对Portlet有效</li>
+</ul>
+<h5 id="Spring-Bean-的生命周期"><a href="#Spring-Bean-的生命周期" class="headerlink" title="Spring Bean 的生命周期"></a>Spring Bean 的生命周期</h5><h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>关注点分离: 不同的问题交给不同的部分去解决</p>
+<ul>
+<li>面向切面编程AOP正是这种技术的体现</li>
+<li>通用化功能代码的实现，对应的就是所谓的切面(Aspect)</li>
+<li>业务功能和切面代码分开,架构将变得高内聚低耦合</li>
+<li>确保功能的完整性: 切面最终需要合并到业务中(Weave)</li>
+</ul>
+<h4 id="AOP的三种织入"><a href="#AOP的三种织入" class="headerlink" title="AOP的三种织入"></a>AOP的三种织入</h4><ul>
+<li>编译时织入: 需要特殊的Java编译器，如AspectJ</li>
+<li>类加载时织入: 需要特殊的Java编辑器，如AspectJ,AspectWerkz</li>
+<li>运行时织入: Spring采用的方式，通过动态代理的方式，实现简单</li>
+</ul>
+<h3 id="七个事务传播属性"><a href="#七个事务传播属性" class="headerlink" title="七个事务传播属性"></a>七个事务传播属性</h3><p>什么是事务传播属性<br>传播两个方法: 两个方法都带事务，但是事务设置不同。</p>
+<p>为什么要事务？<br>事务是为解决数据安全操作提出的，事务控制实际上就是控制数据的安全访问。</p>
+<table>
+<thead>
+<tr>
+<th align="center">传播行为</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">propagation_required（xml文件中为required)</td>
+<td align="center">表示当前方法必须在一个具有事务的上下文中运行，如有客户端有事务在进行，那么被调用端将在该事务中运行，否则的话重新开启一个事务。（如果被调用端发生异常，那么调用端和被调用端事务都将回滚）</td>
+</tr>
+<tr>
+<td align="center">propagation_supports(xml文件中为supports)</td>
+<td align="center">表示当前方法不必需要具有一个事务上下文，但是如果有一个事务的话，它也可以在这个事务中运行</td>
+</tr>
+<tr>
+<td align="center">propagation_mandatory(xml文件中为mandatory)</td>
+<td align="center">表示当前方法必须在一个事务中运行，如果没有事务，将抛出异常</td>
+</tr>
+<tr>
+<td align="center">propagation_nested(xml文件中为nested)</td>
+<td align="center">表示如果当前方法正有一个事务在运行中，则该方法应该运行在一个嵌套事务中，被嵌套的事务可以独立于被封装的事务中进行提交或者回滚。如果封装事务存在，并且外层事务抛出异常回滚，那么内层事务必须回滚，反之，内层事务并不影响外层事务。如果封装事务不存在，则同propagation_required的一样</td>
+</tr>
+<tr>
+<td align="center">propagation_never（xml文件中为never)</td>
+<td align="center">表示当方法务不应该在一个事务中运行，如果存在一个事务，则抛出异常</td>
+</tr>
+<tr>
+<td align="center">propagation_requires_new(xml文件中为requires_new)</td>
+<td align="center">表示当前方法必须运行在它自己的事务中。一个新的事务将启动，而且如果有一个现有的事务在运行的话，则这个方法将在运行期被挂起，直到新的事务提交或者回滚才恢复执行。</td>
+</tr>
+<tr>
+<td align="center">propagation_not_supported（xml文件中为not_supported)</td>
+<td align="center">表示该方法不应该在一个事务中运行。如果有一个事务正在运行，他将在运行期被挂起，直到这个事务提交或者回滚才恢复执行</td>
+</tr>
+</tbody></table>
+<h3 id="Spring中的事务隔离级别"><a href="#Spring中的事务隔离级别" class="headerlink" title="Spring中的事务隔离级别"></a>Spring中的事务隔离级别</h3><table>
+<thead>
+<tr>
+<th align="center">隔离级别</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">isolation_default</td>
+<td align="center">使用数据库默认的事务隔离级别</td>
+</tr>
+<tr>
+<td align="center">isolation_read_uncommitted</td>
+<td align="center">允许读取尚未提交的修改，可能导致脏读、幻读和不可重复读</td>
+</tr>
+<tr>
+<td align="center">isolation_read_committed</td>
+<td align="center">允许从已经提交的事务读取，可防止脏读、但幻读，不可重复读仍然有可能发生</td>
+</tr>
+<tr>
+<td align="center">isolation_repeatable_read</td>
+<td align="center">对相同字段的多次读取的结果是一致的，除非数据被当前事务自生修改。可防止脏读和不可重复读，但幻读仍有可能发生</td>
+</tr>
+<tr>
+<td align="center">isolation_serializable</td>
+<td align="center">完全服从acid隔离原则，确保不发生脏读、不可重复读、和幻读，但执行效率最低。</td>
+</tr>
+</tbody></table>
+<p>除了default另外四个与JDBC的隔离级别相对应。</p>
+<h3 id="高并发如何修改同一行数据"><a href="#高并发如何修改同一行数据" class="headerlink" title="高并发如何修改同一行数据"></a>高并发如何修改同一行数据</h3><h4 id="jvm解决"><a href="#jvm解决" class="headerlink" title="jvm解决"></a>jvm解决</h4><ol>
+<li>jvm 下用synchronized锁。</li>
+</ol>
+<ol start="2">
+<li>lock 锁</li>
+</ol>
+<p>try lock finally unlock</p>
+<p>JVM 解决不了分布式环境多任务对共享资源竞争的协同操作问题</p>
+<h4 id="分布式解决"><a href="#分布式解决" class="headerlink" title="分布式解决"></a>分布式解决</h4><p>分布式锁 三种实现方式</p>
+<ul>
+<li>数据库 (性能差)</li>
+<li>redis (死锁)</li>
+<li>zookeeper<ul>
+<li>基于异常 (临时节点)</li>
+<li>基于相互监听 (性能比较高，占用资源，临时有序节点)</li>
+</ul>
+</li>
+</ul>
+<h5 id="Zookeerper-数据结构"><a href="#Zookeerper-数据结构" class="headerlink" title="Zookeerper 数据结构"></a>Zookeerper 数据结构</h5><ul>
+<li>Zookeeper 数据结构类似Linux  </li>
+<li>每一个节点都有值  </li>
+</ul>
+</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/08/10/Spring/">https://edxuanlen.tk/2020/08/10/Spring/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><script type="text/javascript" src="/js/jquery-3.3.1.min.js?v=2.0.4" async></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=2.0.4" async></script><script type="text/javascript" src="/js/wrapImage.js?v=2.0.4" async></script><div class="tags"><a href="/tags/Java/">Java</a><a href="/tags/Interview/">Interview</a><a href="/tags/Spring/">Spring</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/08/13/ArrayList和LinkedList/" class="pre"></a><a href="/2020/08/10/数据库相关/" class="next">数据库相关</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring"><span class="toc-text">Spring</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#你了解Spring-IOC吗"><span class="toc-text">你了解Spring IOC吗</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#依赖注入"><span class="toc-text">依赖注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注入的方式"><span class="toc-text">注入的方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-IOC支持的功能"><span class="toc-text">Spring IOC支持的功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-Bean"><span class="toc-text">Spring Bean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#BeanFactory与ApplicationContext的比较"><span class="toc-text">BeanFactory与ApplicationContext的比较</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-Bean-的作用域"><span class="toc-text">Spring Bean 的作用域</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-Bean-的生命周期"><span class="toc-text">Spring Bean 的生命周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP"><span class="toc-text">AOP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOP的三种织入"><span class="toc-text">AOP的三种织入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七个事务传播属性"><span class="toc-text">七个事务传播属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring中的事务隔离级别"><span class="toc-text">Spring中的事务隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高并发如何修改同一行数据"><span class="toc-text">高并发如何修改同一行数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jvm解决"><span class="toc-text">jvm解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式解决"><span class="toc-text">分布式解决</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Zookeerper-数据结构"><span class="toc-text">Zookeerper 数据结构</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/ThreadLocal/">ThreadLocal</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/Reference和ReferenceQueue/">Reference和ReferenceQueue</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/ArrayList和LinkedList/">ArrayList和LinkedList</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/Spring/">Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/数据库相关/">数据库相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/计算机网络相关/">计算机网络相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/操作系统相关/">操作系统相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/String相关/">String相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/编码相关问题/">编码相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/JAVA-IO流/">JAVA IO流</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/">Interview</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/数据库/">数据库</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Interview/">Interview</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/OS/">OS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring/">Spring</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring/Interview/">Interview</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/数据结构/">数据结构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Interview/">Interview</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring-MVC</a> <a href="/tags/String/" style="font-size: 15px;">String</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/Thread/" style="font-size: 15px;">Thread</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/OS/" style="font-size: 15px;">OS</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/encode/" style="font-size: 15px;">encode</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a> <a href="/tags/计网/" style="font-size: 15px;">计网</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/jquery-3.3.1.min.js?v=2.0.4" async></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=2.0.4" async></script><script type="text/javascript" src="/js/wrapImage.js?v=2.0.4" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":250,"height":600},"mobile":{"show":true},"log":false});</script></body></html><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css">

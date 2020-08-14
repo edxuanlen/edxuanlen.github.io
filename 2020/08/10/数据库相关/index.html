@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><meta name="keywords" content="edxuanlen, ICPC, Ubuntu, 蓝桥杯"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script src="js/jquery-3.3.1.min.js"></script><script src="js/click.js"></script><title>数据库相关 | edxuanlen's BLOG</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">数据库相关</h1><a id="logo" href="/.">edxuanlen's BLOG</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">数据库相关</h1><div class="post-meta"><a href="/2020/08/10/数据库相关/#comments" class="comment-count"></a><p><span class="date">Aug 10, 2020</span><span><a href="/categories/Interview/" class="category">Interview</a><a href="/categories/Interview/数据库/" class="category">数据库</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="如何设计一个关系型数据库-RDBMS"><a href="#如何设计一个关系型数据库-RDBMS" class="headerlink" title="如何设计一个关系型数据库(RDBMS)"></a>如何设计一个关系型数据库(RDBMS)</h3><ol>
+<li><p>程序实例  </p>
+<ul>
+<li>存储管理</li>
+<li>缓存机制</li>
+<li>SQL 解析</li>
+<li>日志管理</li>
+<li>权限划分</li>
+<li>容灾机制</li>
+<li>索引管理</li>
+<li>锁管理</li>
+</ul>
+</li>
+<li><p>存储(文件系统)</p>
+</li>
+</ol>
+<h3 id="索引模块"><a href="#索引模块" class="headerlink" title="索引模块"></a>索引模块</h3><h4 id="为什么要使用索引"><a href="#为什么要使用索引" class="headerlink" title="为什么要使用索引"></a>为什么要使用索引</h4><p>快速查询数据</p>
+<h4 id="什么信息能成为索引"><a href="#什么信息能成为索引" class="headerlink" title="什么信息能成为索引"></a>什么信息能成为索引</h4><p>主键，唯一键以及普通键</p>
+<h4 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h4><p>生成索引，建立二叉查找树进行二分查找<br>生成索引，建立B-Tree 结构进行查找<br>生成索引，建立B+Tree 结构进行查找<br>生成索引，建立Hash结构进行查找</p>
+<p><img src="http://image.edxuanlen.cn/2020-08-10-11-26-37.png" alt="2020-08-10-11-26-37"></p>
+<h4 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B Tree"></a>B Tree</h4><p>定义</p>
+<ul>
+<li>根节点至少包括两个孩子</li>
+<li>书中每个节点最多含有m铬孩子( m&gt;= 2)</li>
+<li>除根节点和叶节点外，其他每个节点至少有ceil(m/2)个孩子</li>
+<li>所有叶子节点都位于同一层</li>
+<li>假设每个非终端节点中包含有n个关键字信息，其中：<ol>
+<li>Ki(i=1…n)为关键字，且关键字按顺序升序排序K(i-1) &lt; Ki</li>
+<li>关键是个数满足: [ceil(m / 2) - 1] &lt;= n &lt;= m - 1</li>
+<li>非叶子节点的指针:P[1],P[2],… P[M], P[1]指向的关键字小于K[1]的子树，<br> P[M]指向关键字大于P[M -1] 的子树，其他P[i]指向关键字属于(K[i-1], K[i])的子树</li>
+</ol>
+</li>
+</ul>
+<h4 id="B-Tree-1"><a href="#B-Tree-1" class="headerlink" title="B+ Tree"></a>B+ Tree</h4><p>B+ 树是B树的变体，其定义基本与B树相同，除了：<br>    - 非叶子节点的子树指针与关键字个数相同<br>    - 非叶子节点的子树指针P[i],指向关键字值([K[i],K[i+1])<br>    - 非叶子节点仅用来索引，数据都保存在叶子节点中<br>    - 所有叶子节点均有一个链指针指向下一个叶子节点</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>B+ Tree更适合用来做存储索引<br>    - B+ Tree 的磁盘读写代价更低<br>    - B+ Tree 的查询效率更加稳定<br>    - B+ Tree 更加有利于对数据库的扫描</p>
+<h4 id="Hash索引"><a href="#Hash索引" class="headerlink" title="Hash索引"></a>Hash索引</h4><p>优点 查询速度O(1)<br>缺点:</p>
+<ul>
+<li>仅仅能够满足’=’,’IN’, 不能使用范围查询</li>
+<li>无法被用来避免数据的排序操作</li>
+<li>不能利用部分索引键查询</li>
+<li>不能避免表扫描</li>
+<li>遇到大量Hash值相等的情况后性能并不一定会比B Tree索引高</li>
+</ul>
+<h4 id="密集索引和稀疏索引的区别"><a href="#密集索引和稀疏索引的区别" class="headerlink" title="密集索引和稀疏索引的区别"></a>密集索引和稀疏索引的区别</h4><ul>
+<li>密集索引文件中的每个搜索码值都对应一个索引值</li>
+<li>稀疏索引只为某些值建立索引项</li>
+</ul>
+<h5 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h5><ul>
+<li>若一个主键被定义，该主键则作为密集索引</li>
+<li>若没有主键被定义，该表的第一个唯一非空索引则作为密集索引</li>
+<li>若不满足以上条件，innodb内部会生成一个隐藏主键(密集索引)</li>
+<li>非主键索引存储相关键位和其对于的主键值，包含两次查找</li>
+</ul>
+<p>myISAM索引和DB是分开的，InnoDB索引和DB是存放在一起的</p>
+<h3 id="索引问答"><a href="#索引问答" class="headerlink" title="索引问答"></a>索引问答</h3><p>Q: 为什么要用索引<br>A: 避免全表扫描数据，提升检索效率</p>
+<p>Q: 什么样的信息能成为索引<br>A: 主键、唯一键等有区分性的数据</p>
+<p>Q: 索引的数据结构<br>A: 主流是B+ Tree，以及hash结构 ， bitMap 等，mysql不支持bitmap，基于innoDB以及myISAM的mysql不显示支持hash</p>
+<p>Q: 密集索引和稀疏索引的区别<br>A: 密集索引文件中的每个搜索码值都对应一个索引值，稀疏索引只为某些值建立索引项</p>
+<h4 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h4><h5 id="如何定位并优化慢查询sql"><a href="#如何定位并优化慢查询sql" class="headerlink" title="如何定位并优化慢查询sql"></a>如何定位并优化慢查询sql</h5><ul>
+<li><p>根据慢日志定位慢查询sql</p>
+</li>
+<li><p>使用explain等工具分析Sql</p>
+<ul>
+<li>type<ul>
+<li>表示: 找到数据行的方式</li>
+<li>index 索引查询 / ALL 证明是全局查找(需要优化)</li>
+</ul>
+</li>
+<li>extra<ul>
+<li>出现以下两项意味着MYSQL根本不能使用索引，效率会受到重大影响，应尽可能对此进行优化</li>
+<li>Using filesort —— 无法利用索引排序</li>
+<li>Using temporary  —— 使用了临时表，order by 或者分组查询 group by</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>修改sql 或者让sql尽量走索引  </p>
+<ul>
+<li>使用有索引的字段代替</li>
+<li>添加索引 alter table tb_name add index idx_name(name);</li>
+</ul>
+</li>
+</ul>
+<h5 id="联合索引的最左匹配原则"><a href="#联合索引的最左匹配原则" class="headerlink" title="联合索引的最左匹配原则"></a>联合索引的最左匹配原则</h5><h4 id="索引是建的越来越多好吗"><a href="#索引是建的越来越多好吗" class="headerlink" title="索引是建的越来越多好吗"></a>索引是建的越来越多好吗</h4><ul>
+<li>数据量小的表不需要建立索引，建立会增加额外的索引开销</li>
+<li>数据变更需要维护索引，因此更多的索引意味着更大的维护成本</li>
+<li>更多的索引意味着需要更多的空间</li>
+</ul>
+<h4 id="锁模块"><a href="#锁模块" class="headerlink" title="锁模块"></a>锁模块</h4><h5 id="MyISAM与InnoDB关于锁方面的区别是什么"><a href="#MyISAM与InnoDB关于锁方面的区别是什么" class="headerlink" title="MyISAM与InnoDB关于锁方面的区别是什么"></a>MyISAM与InnoDB关于锁方面的区别是什么</h5><ul>
+<li>MyISAM 默认使用的是表级锁，不支持行级锁</li>
+<li>InnoDB 默认用的是行级锁，也支持表级锁</li>
+</ul>
+<p>共享锁和排斥锁的兼容性</p>
+<!-- Share && exclude
+
+|   | X    | S    |
+|---|------|------|
+| X | 冲突 | 冲突 |
+| S | 冲突 | 兼容 | -->
+
+<p>行级锁不一定比表级锁好，锁的粒度越细，带价越高，需要扫描表到对应的对其上锁，代价是比较大的。  </p>
+<p>InnoDB 相比 MyISAM 带来了更大的开销。</p>
+<h5 id="MyISAM适合的场景"><a href="#MyISAM适合的场景" class="headerlink" title="MyISAM适合的场景"></a>MyISAM适合的场景</h5><ul>
+<li>频繁执行全表count 语句</li>
+<li>对数据进行增删改的频率不高，查询非常频繁</li>
+<li>没有事务</li>
+</ul>
+<h5 id="InnoDB适合的场景"><a href="#InnoDB适合的场景" class="headerlink" title="InnoDB适合的场景"></a>InnoDB适合的场景</h5><ul>
+<li>数据增删改查都相当频繁</li>
+<li>可靠性要求比较高，要求支持事务</li>
+</ul>
+<h5 id="数据库锁的分类"><a href="#数据库锁的分类" class="headerlink" title="数据库锁的分类"></a>数据库锁的分类</h5><ul>
+<li>按锁的粒度划分可以分为：表级锁，行级锁，页级锁</li>
+<li>按锁级别划分，可分为共享锁和排他锁</li>
+<li>按加锁方式划分，可分为自动锁，显示锁</li>
+<li>按操作划分可分为DML锁，DDL锁</li>
+<li>按使用方式划分，可分为乐观锁、悲观锁</li>
+</ul>
+<h3 id="数据库事务的四大特性"><a href="#数据库事务的四大特性" class="headerlink" title="数据库事务的四大特性"></a>数据库事务的四大特性</h3><p>ACID</p>
+<blockquote>
+<ul>
+<li>A:原子性,Atomicity</li>
+<li>C:一致性,Consistency</li>
+<li>I:隔离性,Isolation</li>
+<li>D:持久性,Durability</li>
+</ul>
+</blockquote>
+<h3 id="事务鼓励级别以及各级别下的并发访问问题"><a href="#事务鼓励级别以及各级别下的并发访问问题" class="headerlink" title="事务鼓励级别以及各级别下的并发访问问题"></a>事务鼓励级别以及各级别下的并发访问问题</h3><p>并发访问引起的问题和如何避免</p>
+<ul>
+<li>更新丢失– mysql 所有事务隔离级别在数据库层面上均可避免</li>
+<li>脏读– READ-COMMITTED事务隔离级别以上可避免</li>
+<li>不可重复读– REPEATABLE-READ 事务隔离级别以上可避免</li>
+<li>幻读– SERIABLIZABLE事务隔离级别可避免</li>
+</ul>
+<h4 id="脏读、不可重复读、幻象读概念说明"><a href="#脏读、不可重复读、幻象读概念说明" class="headerlink" title="脏读、不可重复读、幻象读概念说明"></a>脏读、不可重复读、幻象读概念说明</h4><ol>
+<li>脏读：指当一个事务正字访问数据，并且对数据进行了修改，而这种数据还没有提交到数据库中，这时，另外一个事务也访问这个数据，然后使用了这个数据。因为这个数据还没有提交那么另外一个事务读取到的这个数据我们称之为脏数据。依据脏数据所做的操作肯能是不正确的。  </li>
+<li>不可重复读：指在一个事务内，多次读同一数据。在这个事务还没有执行结束，另外一个事务也访问该同一数据，那么在第一个事务中的两次读取数据之间，由于第二个事务的修改第一个事务两次读到的数据可能是不一样的，这样就发生了在一个事物内两次连续读到的数据是不一样的，这种情况被称为是不可重复读。</li>
+<li>幻象读：一个事务先后读取一个范围的记录，但两次读取的纪录数不同，我们称之为幻象读（两次执行同一条 select 语句会出现不同的结果，第二次读会增加一数据行，并没有说这两次执行是在同一个事务中）  </li>
+</ol>
+<h4 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h4><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>更新丢失</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未提交读</td>
+<td>避免</td>
+<td>发生</td>
+<td>发生</td>
+<td>发生</td>
+</tr>
+<tr>
+<td>已提交读</td>
+<td>避免</td>
+<td>避免</td>
+<td>发生</td>
+<td>发生</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td>避免</td>
+<td>避免</td>
+<td>避免</td>
+<td>发生</td>
+</tr>
+<tr>
+<td>串行化</td>
+<td>避免</td>
+<td>避免</td>
+<td>避免</td>
+<td>避免</td>
+</tr>
+</tbody></table>
+<p>在mysql中的innodb引擎,原子性,一致性,隔离性通过redo和undo实现,redo 就是ib_logfile物理文件,而undo默认在共享表空间ibdata里面,通过设置参数可以独立出来.</p>
+<h4 id="数据库操作事务隔离"><a href="#数据库操作事务隔离" class="headerlink" title="数据库操作事务隔离"></a>数据库操作事务隔离</h4><h5 id="读取未提交的事务里面的数据-脏读"><a href="#读取未提交的事务里面的数据-脏读" class="headerlink" title="读取未提交的事务里面的数据(脏读)"></a>读取未提交的事务里面的数据(脏读)</h5><p>设置隔离级别方法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br></pre></td></tr></table></figure>
+
+<p>开始事务</p>
+<!-- show variables like '%tx_isolation%'; -->
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"></span><br><span class="line">begain</span><br><span class="line"><span class="keyword">update</span> propagation <span class="keyword">set</span> <span class="keyword">count</span> = <span class="keyword">count</span> + <span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">rollback</span> (回滚操作)</span><br></pre></td></tr></table></figure>
+
+<p>另外开一个session 进行查询，可看到并不还没有更改数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> propagation</span><br></pre></td></tr></table></figure>
+
+<p>begain中执行的操作  被第二个进程读到了，导致脏读，一但事务回滚，第二个进程保存的是之前的结果。</p>
+<h4 id="InnoDB可重复读隔离级别下如何避免幻读"><a href="#InnoDB可重复读隔离级别下如何避免幻读" class="headerlink" title="InnoDB可重复读隔离级别下如何避免幻读"></a>InnoDB可重复读隔离级别下如何避免幻读</h4><ul>
+<li>表象: 快照读(非阻塞读) – 伪<ul>
+<li>当前读是上了锁的增删改查， update,delete,insert</li>
+<li>快照读: 不加锁的非阻塞读,select </li>
+</ul>
+</li>
+</ul>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>关键语法</p>
+<ul>
+<li>Group By</li>
+<li>Having</li>
+<li>Count, Sum, Max, Min, Avg</li>
+</ul>
+<h4 id="Group-By"><a href="#Group-By" class="headerlink" title="Group By"></a>Group By</h4><ul>
+<li>满足 “select 自居的列名必须为分组列或列函数</li>
+<li>列函数对于 group by 子句定义的每个组各返回一个结果</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询所有同学学号、姓名、选课数、总成绩</span></span><br><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	s.student_id,</span><br><span class="line">	stu.name,</span><br><span class="line">	<span class="keyword">COUNT</span>( course_id ),</span><br><span class="line">	<span class="keyword">SUM</span>( score ) </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">	score s,</span><br><span class="line">	student stu</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	s.student_id = stu.student_id</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">	student_id</span><br></pre></td></tr></table></figure>
+
+<h4 id="Having"><a href="#Having" class="headerlink" title="Having"></a>Having</h4><ul>
+<li>通常与Group By 子句一起使用</li>
+<li>WHERE 过滤行，Having过滤组</li>
+<li>出现在同一sql的顺序: WHERE &gt; GROUP BY &gt; HAVING</li>
+</ul>
+<h3 id="Mysql-InnoDB-如何处理死锁"><a href="#Mysql-InnoDB-如何处理死锁" class="headerlink" title="Mysql(InnoDB)如何处理死锁"></a>Mysql(InnoDB)如何处理死锁</h3><h4 id="为什么会出现锁"><a href="#为什么会出现锁" class="headerlink" title="为什么会出现锁"></a>为什么会出现锁</h4><p>MySQL的并发控制有两种方式，一个是 MVCC，一个是两阶段锁协议。<br>为了提高并发性能并且要求如同多个用户的请求过来之后如同串行执行的一样（可串行化调度）。</p>
+<h5 id="二阶段锁协议（2PL）"><a href="#二阶段锁协议（2PL）" class="headerlink" title="二阶段锁协议（2PL）"></a>二阶段锁协议（2PL）</h5><p>两阶段锁协议是指所有事务必须分两个阶段对数据加锁和解锁，在对任何数据进行读、写操作之前，事务首先要获得对该数据的封锁；在释放一个封锁之后，事务不再申请和获得任何其他封锁。</p>
+<p>对应到 MySQL 上分为两个阶段：</p>
+<p>扩展阶段（事务开始后，commit 之前）：获取锁<br>收缩阶段（commit 之后）：释放锁<br>就是说呢，只有遵循两段锁协议，才能实现 可串行化调度。</p>
+<p>但是两阶段锁协议不要求事务必须一次将所有需要使用的数据加锁，并且在加锁阶段没有顺序要求，所以这种并发控制方式会形成死锁。</p>
+<h4 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h4><ol>
+<li>等待，直到超时（innodb_lock_wait_timeout=50s）。</li>
+<li>发起死锁检测，主动回滚一条事务，让其他事务继续执行（innodb_deadlock_detect=on）。<br>由于性能原因，一般都是使用死锁检测来进行处理死锁。</li>
+</ol>
+<p>死锁检测的原理是构建一个以事务为顶点、锁为边的有向图，判断有向图是否存在环，存在即有死锁。</p>
+<p>检测到死锁之后，选择插入更新或者删除的行数最少的事务回滚，基于 INFORMATION_SCHEMA.INNODB_TRX 表中的 trx_weight 字段来判断。</p>
+<h4 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h4><h5 id="收集死锁信息"><a href="#收集死锁信息" class="headerlink" title="收集死锁信息"></a>收集死锁信息</h5><ol>
+<li>利用命令 SHOW ENGINE INNODB STATUS查看死锁原因。</li>
+<li>调试阶段开启 innodb_print_all_deadlocks，收集所有死锁日志。</li>
+</ol>
+<h5 id="减少死锁"><a href="#减少死锁" class="headerlink" title="减少死锁"></a>减少死锁</h5><ol>
+<li>使用事务，不使用 lock tables 。</li>
+<li>保证没有长事务。</li>
+<li>操作完之后立即提交事务，特别是在交互式命令行中。</li>
+<li>如果在用 (SELECT … FOR UPDATE or SELECT … LOCK IN SHARE MODE)，尝试降低隔离级别。</li>
+<li>修改多个表或者多个行的时候，将修改的顺序保持一致。</li>
+<li>创建索引，可以使创建的锁更少。</li>
+<li>最好不要用 (SELECT … FOR UPDATE or SELECT … LOCK IN SHARE MODE)。</li>
+<li>如果上述都无法解决问题，那么尝试使用 lock tables t1, t2, t3 锁多张表</li>
+</ol>
+</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/08/10/数据库相关/">https://edxuanlen.tk/2020/08/10/数据库相关/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><script type="text/javascript" src="/js/jquery-3.3.1.min.js?v=2.0.4" async></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=2.0.4" async></script><script type="text/javascript" src="/js/wrapImage.js?v=2.0.4" async></script><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/数据库/">数据库</a><a href="/tags/MySQL/">MySQL</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/08/10/Spring/" class="pre">Spring</a><a href="/2020/08/10/计算机网络相关/" class="next">计算机网络相关</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何设计一个关系型数据库-RDBMS"><span class="toc-text">如何设计一个关系型数据库(RDBMS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引模块"><span class="toc-text">索引模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要使用索引"><span class="toc-text">为什么要使用索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么信息能成为索引"><span class="toc-text">什么信息能成为索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的数据结构"><span class="toc-text">索引的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree"><span class="toc-text">B Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-Tree-1"><span class="toc-text">B+ Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash索引"><span class="toc-text">Hash索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#密集索引和稀疏索引的区别"><span class="toc-text">密集索引和稀疏索引的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB"><span class="toc-text">InnoDB</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引问答"><span class="toc-text">索引问答</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql"><span class="toc-text">mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何定位并优化慢查询sql"><span class="toc-text">如何定位并优化慢查询sql</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#联合索引的最左匹配原则"><span class="toc-text">联合索引的最左匹配原则</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引是建的越来越多好吗"><span class="toc-text">索引是建的越来越多好吗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#锁模块"><span class="toc-text">锁模块</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM与InnoDB关于锁方面的区别是什么"><span class="toc-text">MyISAM与InnoDB关于锁方面的区别是什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MyISAM适合的场景"><span class="toc-text">MyISAM适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB适合的场景"><span class="toc-text">InnoDB适合的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库锁的分类"><span class="toc-text">数据库锁的分类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库事务的四大特性"><span class="toc-text">数据库事务的四大特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务鼓励级别以及各级别下的并发访问问题"><span class="toc-text">事务鼓励级别以及各级别下的并发访问问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#脏读、不可重复读、幻象读概念说明"><span class="toc-text">脏读、不可重复读、幻象读概念说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何避免"><span class="toc-text">如何避免</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库操作事务隔离"><span class="toc-text">数据库操作事务隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读取未提交的事务里面的数据-脏读"><span class="toc-text">读取未提交的事务里面的数据(脏读)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB可重复读隔离级别下如何避免幻读"><span class="toc-text">InnoDB可重复读隔离级别下如何避免幻读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Group-By"><span class="toc-text">Group By</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Having"><span class="toc-text">Having</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mysql-InnoDB-如何处理死锁"><span class="toc-text">Mysql(InnoDB)如何处理死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么会出现锁"><span class="toc-text">为什么会出现锁</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#二阶段锁协议（2PL）"><span class="toc-text">二阶段锁协议（2PL）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何解决"><span class="toc-text">如何解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#避免死锁"><span class="toc-text">避免死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#收集死锁信息"><span class="toc-text">收集死锁信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#减少死锁"><span class="toc-text">减少死锁</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/ThreadLocal/">ThreadLocal</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/Reference和ReferenceQueue/">Reference和ReferenceQueue</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/ArrayList和LinkedList/">ArrayList和LinkedList</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/Spring/">Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/数据库相关/">数据库相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/计算机网络相关/">计算机网络相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/操作系统相关/">操作系统相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/String相关/">String相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/编码相关问题/">编码相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/JAVA-IO流/">JAVA IO流</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/">Interview</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/数据库/">数据库</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Interview/">Interview</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/OS/">OS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring/">Spring</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring/Interview/">Interview</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/数据结构/">数据结构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Interview/">Interview</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring-MVC</a> <a href="/tags/String/" style="font-size: 15px;">String</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/Thread/" style="font-size: 15px;">Thread</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/OS/" style="font-size: 15px;">OS</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/encode/" style="font-size: 15px;">encode</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a> <a href="/tags/计网/" style="font-size: 15px;">计网</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/jquery-3.3.1.min.js?v=2.0.4" async></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=2.0.4" async></script><script type="text/javascript" src="/js/wrapImage.js?v=2.0.4" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":250,"height":600},"mobile":{"show":true},"log":false});</script></body></html><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css">

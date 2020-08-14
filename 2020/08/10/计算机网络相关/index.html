@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><meta name="keywords" content="edxuanlen, ICPC, Ubuntu, 蓝桥杯"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script src="js/jquery-3.3.1.min.js"></script><script src="js/click.js"></script><title>计算机网络相关 | edxuanlen's BLOG</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">计算机网络相关</h1><a id="logo" href="/.">edxuanlen's BLOG</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">计算机网络相关</h1><div class="post-meta"><a href="/2020/08/10/计算机网络相关/#comments" class="comment-count"></a><p><span class="date">Aug 10, 2020</span><span><a href="/categories/Interview/" class="category">Interview</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><h3 id="OSI七层协议"><a href="#OSI七层协议" class="headerlink" title="OSI七层协议"></a>OSI七层协议</h3><p>OSI 并不是一个标准，只是一个概念型框架</p>
+<p><img src="http://image.edxuanlen.cn/2020-08-10-10-51-20.png" alt="七层"></p>
+<ul>
+<li><p>物理层  </p>
+<ul>
+<li>传输比特流  </li>
+<li>定义了物理设备的标准(网线类型，光纤接口等)</li>
+<li>单位比特</li>
+<li>网卡也在这一层工作</li>
+</ul>
+</li>
+<li><p>数据链路层</p>
+<ul>
+<li>定义了如何格式化数据进行传输，控制物理介质的访问</li>
+<li>错误检测，纠正</li>
+<li>将比特数据组成帧，交换机在这层，对帧解码并发送到正确的接收方</li>
+</ul>
+</li>
+<li><p>网络层</p>
+<ul>
+<li>把网络地址翻译为物理地址</li>
+<li>决定数据如何从发送方路由到接收方</li>
+<li>路由器属于网络层</li>
+<li>数据包</li>
+<li>协议: <strong>IP</strong></li>
+</ul>
+</li>
+<li><p>传输层</p>
+<ul>
+<li>解决主机间的数据传输</li>
+<li>OSI中最主要的一层</li>
+<li>传输协议同时进行流量控制</li>
+<li>将数据包强行分割(分割成数据片并给予序列号)</li>
+<li>TCP协议和UDP协议</li>
+</ul>
+</li>
+<li><p>会话层</p>
+<ul>
+<li>自动收发，自动寻址</li>
+<li>建立和管理应用程序之间的通信</li>
+<li>解决不同系统之间的通信语法的问题</li>
+</ul>
+</li>
+<li><p>表示层</p>
+<ul>
+<li>网络协议，需要固定长度，组成的消息头</li>
+<li>更方便接收方了解接收的包</li>
+</ul>
+</li>
+<li><p>应用层</p>
+<ul>
+<li>更方便的应用接收到的数据</li>
+<li>HTTP协议</li>
+</ul>
+</li>
+</ul>
+<p>先自上(应用层)而下添加数据头，后自下而上处理数据头部</p>
+<p><img src="http://image.edxuanlen.cn/2020-08-10-11-11-16.png" alt="2020-08-10-11-11-16"></p>
+<h3 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP/IP"></a>TCP/IP</h3><p><img src="http://image.edxuanlen.cn/2020-08-10-10-54-30.png" alt="2020-08-10-10-54-30"></p>
+<h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><p>基于字节流，将应用层的数据流分割成报文段并发送给目标节点的TCP层<br>数据包都有序号，对方收到则发送确认ACK确认，未收到则重传。<br>使用校验和来校验的数据在传输过程中是否有误。  </p>
+<p><img src="http://image.edxuanlen.cn/2020-08-10-11-10-55.png" alt="2020-08-10-11-10-55"></p>
+<p>标志位中的 TCP Flags:</p>
+<ul>
+<li>URG: 紧急指针标志 urgent</li>
+<li>ACK: 确认序号标志 acknowledgment</li>
+<li>PSH: push 标志</li>
+<li>RST: 重置连接标志 Reset</li>
+<li>SYN: 同步序号，用于建立连接过程</li>
+<li>FIN: finish标志，释放连接</li>
+</ul>
+<p>SYN = 1， ACK = 0 请求链接</p>
+<h4 id="A-gt-B-通信过程"><a href="#A-gt-B-通信过程" class="headerlink" title="A =&gt; B 通信过程"></a>A =&gt; B 通信过程</h4><p>A 打开 发送SYN = 1, seq = x,进入SYN_SEND状态，等待服务器确认</p>
+<p>B 被动打开 发送 SYN = 1, ACK = 1, seq = y, ack = x + 1，此时服务器进入SYN_RECV状态</p>
+<p>A 接收后发送 ACK = 1, seq = x + 1, ack = y + 1 ，双方进入ESTABLISHED状态</p>
+<p><img src="http://image.edxuanlen.cn/2020-08-10-11-12-14.png" alt="2020-08-10-11-12-14"></p>
+<h4 id="为什么需要三次握手"><a href="#为什么需要三次握手" class="headerlink" title="为什么需要三次握手"></a>为什么需要三次握手</h4><p>为了初始化Sequence Number 的初始值</p>
+<p>起因:</p>
+<blockquote>
+<p>Server接收到Client的SYN，回复SYN-ACK的时候未收到ACK<br>Server不断重试直至超时，Linux默认等待63秒才断开连接</p>
+</blockquote>
+<p>针对SYN Flood的防护措施</p>
+<h4 id="为什么不是两次或四次"><a href="#为什么不是两次或四次" class="headerlink" title="为什么不是两次或四次"></a>为什么不是两次或四次</h4><p>TCP作为一种可靠传输控制协议，其核心思想：既要保证数据可靠传输，又要提高传输的效率，而用三次恰恰可以满足以上两方面的需求！</p>
+<p>若是两次握手：A与B的初始序列号达成了一致。但是B无法明确知道A是否已经收到了自己的同步信号，如果这个信号丢失，双发序列号将无法达成一致。所以需要第三次握手，回应一个ACK</p>
+<h3 id="TCP的四次挥手"><a href="#TCP的四次挥手" class="headerlink" title="TCP的四次挥手"></a>TCP的四次挥手</h3><h4 id="A-gt-B-四次挥手"><a href="#A-gt-B-四次挥手" class="headerlink" title="A =&gt; B 四次挥手"></a>A =&gt; B 四次挥手</h4><p>A: FIN = 1, seq = u, FIN_WAIT_1<br>B: ACK = 1, seq = v, ack = u + 1  ,进入CLOSE_WAIT状态(半关闭状态)， 客户端进入 FIN_WAIT_2<br>B: FIN = 1, ACK = 1, seq = w, ack = u + 1, LAST_ACK<br>A: ACK = 1, seq = u + 1m, ack = w + 1, TIMEWAIT (2 * MSL)</p>
+<h4 id="为什么TIME-WAIT状态"><a href="#为什么TIME-WAIT状态" class="headerlink" title="为什么TIME_WAIT状态"></a>为什么TIME_WAIT状态</h4><p>(2MSL) 两倍最大报文段传输时间</p>
+<p>原因:</p>
+<ul>
+<li>确保有足够的时间让对方收到ACK包  </li>
+<li>避免新旧连接混淆</li>
+</ul>
+<h4 id="为什么需要四次握手才能断开连接"><a href="#为什么需要四次握手才能断开连接" class="headerlink" title="为什么需要四次握手才能断开连接"></a>为什么需要四次握手才能断开连接</h4><p>因为全双工，发送方和接收方都需要FIN报文和ACK报文</p>
+<h4 id="服务器出现大量CLOSE-WAIT状态的原因"><a href="#服务器出现大量CLOSE-WAIT状态的原因" class="headerlink" title="服务器出现大量CLOSE_WAIT状态的原因"></a>服务器出现大量CLOSE_WAIT状态的原因</h4><p>对方关闭socket连接，我方忙于读写，没有及时关闭连接</p>
+<ul>
+<li>检查代码，特别是释放资源的代码</li>
+<li>检查配置，特别是处理请求的线程配置  </li>
+</ul>
+<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><h4 id="UDP-特点"><a href="#UDP-特点" class="headerlink" title="UDP 特点"></a>UDP 特点</h4><ul>
+<li>面向非连接</li>
+<li>不维护连接状态。支持同时向多个客户端传输相同的消息</li>
+<li>数据包报头只有8字节，额外开销小</li>
+<li>吞吐量只受限于数据生成速率、传输速率以及机器性能</li>
+<li>尽量交付，不需要维护复杂的状态表</li>
+</ul>
+<h4 id="TCP-和-UDP-的区别"><a href="#TCP-和-UDP-的区别" class="headerlink" title="TCP 和 UDP 的区别"></a>TCP 和 UDP 的区别</h4><ul>
+<li>面向链接 vs 无连接</li>
+<li>可靠 vs 不可靠</li>
+<li>有序性 vs 无序性</li>
+<li>速度慢 vs 速度快</li>
+<li>重量级(20) vs 轻量级(8)</li>
+</ul>
+<h4 id="TCP-滑动窗口"><a href="#TCP-滑动窗口" class="headerlink" title="TCP 滑动窗口"></a>TCP 滑动窗口</h4><ul>
+<li>RTT: 发送数据包到收到对应ACK</li>
+<li>RTO: 重传时间间隔</li>
+</ul>
+<p>RTO 由 RTT 计算</p>
+<p>滑动窗口: 流量控制和乱序重排</p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>超文本传输协议</p>
+<ul>
+<li>支持客户/服务器模式 (Client - Server)</li>
+<li>简单快速 (get/post)</li>
+<li>灵活</li>
+</ul>
+<p>HTTP 请求步骤</p>
+<ul>
+<li>客户端连接到web服务器</li>
+<li>发送HTTP请求</li>
+<li>服务器接受并返回HTTP响应</li>
+<li>释放连接TCP连接</li>
+<li>客户端浏览器解析HTML内容</li>
+</ul>
+<h5 id="在浏览器地址栏键入一个URL，按下回车之后经历的流程"><a href="#在浏览器地址栏键入一个URL，按下回车之后经历的流程" class="headerlink" title="在浏览器地址栏键入一个URL，按下回车之后经历的流程"></a>在浏览器地址栏键入一个URL，按下回车之后经历的流程</h5><ul>
+<li>逐层DNS解析</li>
+<li>TCP连接(3次)</li>
+<li>发送HTTP请求</li>
+<li>服务器处理请求并返回HTTP报文</li>
+<li>浏览器解析渲染</li>
+<li>连接结束(4次挥手)</li>
+</ul>
+<h4 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h4><p>五种可能的取值</p>
+<ul>
+<li>1XX: 指示信息–表示请求已经接收，继续处理</li>
+<li>2xx: 成功– 表示请求已被成功接收、理解、接受</li>
+<li>3xx: 重定向–要完成请求必须进行进一步操作</li>
+<li>4xx: 客户端错误–请求有语法错误或请求无法实现</li>
+<li>5xx: 服务器端错误–服务器未能实现合法的请求</li>
+</ul>
+<p>常见状态码</p>
+<ul>
+<li>200 OK: 正常返回</li>
+<li>400 Bad Request:客户端请求有语法错误，无法被服务器理解</li>
+<li>401 Unauthorized: 请求未经授权，这个状态代码必须和WWW-Authenticate 报头域一起使用</li>
+<li>403 Forbidden: 服务器收到请求，但是拒绝提供服务</li>
+<li>404 Not Found: 请求资源不存在 (例如输入了错误的URL)</li>
+<li>500 Internal Server Error: 服务器发生了不可预期的错误</li>
+<li>503 Server Unavailable: 服务器当前不能处理客户端的请求，一段时间后可能恢复正常。  </li>
+</ul>
+<h4 id="GET-和-POST-请求的区别"><a href="#GET-和-POST-请求的区别" class="headerlink" title="GET 和 POST 请求的区别"></a>GET 和 POST 请求的区别</h4><p>从三个层面来解答</p>
+<ul>
+<li>HTTP报文层面，GET将请求信息放在URL，POST放在报文体中</li>
+<li>数据库层次: GET符合幂等性和安全性，POST不符合</li>
+<li>其他层面: GET可以被缓存、被存储，而POST不行</li>
+</ul>
+<h4 id="Cookie-和-Session的区别"><a href="#Cookie-和-Session的区别" class="headerlink" title="Cookie 和 Session的区别"></a>Cookie 和 Session的区别</h4><h5 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h5><ul>
+<li>是由服务器发给客户端的特殊信息，以文本的形式存放在客户端</li>
+<li>客户端再次请求的时候，会把Cookie回发 </li>
+<li>服务器接收到后，会解析Cookie生成与客户端相对应的内容</li>
+</ul>
+<p>发送过程</p>
+<ul>
+<li>Client =&gt; HTTP req Server</li>
+<li>Client &lt;= HTTP resp + set-Cookie Server</li>
+<li>Client =&gt; HTTP req + Cookie Server</li>
+<li>Client &lt;= HTTP resp Server</li>
+</ul>
+<h5 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h5><ul>
+<li>服务器端的机制，在服务器上保存的信息</li>
+<li>解析客户端请求并操作session id ，按需保存状态信息</li>
+</ul>
+<p>实现方式</p>
+<ol>
+<li>Cookie 来实现</li>
+<li>URL来回写实现(如果Cookie被禁用)</li>
+</ol>
+<ul>
+<li>Client =&gt; req Server</li>
+<li>Client &lt;= resp + set-Cookie:JSESSIONID=xxx Server</li>
+<li>Client =&gt; req + Cookie:JSESSIONID=xxx Server</li>
+<li>Client &lt;= resp server</li>
+</ul>
+<h5 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h5><ol>
+<li>Cookie 数据存放在客户的浏览器，Session数据存放在服务器上</li>
+<li>Session相对于Cookie 更安全</li>
+<li>若考虑减轻服务器负担，应当使用Cookie</li>
+</ol>
+<h3 id="HTTP-和-HTTPS"><a href="#HTTP-和-HTTPS" class="headerlink" title="HTTP 和 HTTPS"></a>HTTP 和 HTTPS</h3><p>HTTP TCP IP<br>HTTPS SSL/TLS TCP IP</p>
+<p>保护交换数据隐私，安全版的HTTP</p>
+<h4 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h4><p>(security sockets layer, 安全套接层)</p>
+<ul>
+<li>为网络通信提供安全及数据完整性的一种安全协议</li>
+<li>是操作系统对外的API，SSL3.0后更名为TLS</li>
+<li>采用身份验证和数据加密保证网络通信的安全和数据的完整性</li>
+</ul>
+<p>HTTPS 数据传输流程</p>
+<ul>
+<li>浏览器将支持的加密算法信息发送给服务器</li>
+<li>服务器选择一套浏览器支持的加密算法，以证书的形式发回给浏览器(CA机构，有效期，公钥，所有者)</li>
+<li>浏览器验证证书的合法性，并结合证书公钥加密信息发送给服务器</li>
+<li>服务器使用私钥解密信息，验证哈希，加密相应信息回发浏览器</li>
+<li>浏览器解密响应消息，并对消息进行验证，之后进行加密交互数据</li>
+</ul>
+<h4 id="HTTP和HTTPS的区别"><a href="#HTTP和HTTPS的区别" class="headerlink" title="HTTP和HTTPS的区别"></a>HTTP和HTTPS的区别</h4><ul>
+<li>HTTPS需要到CA申请证书，HTTP不需要</li>
+<li>HTTPS密文传输，HTTP明文传输</li>
+<li>连接方式不同，HTTPS默认使用443端口，HTTP使用80端口</li>
+<li>HTTPS= HTTP+加密+认证+完整新保护，比HTTP更安全</li>
+</ul>
+<p>HTTP =&gt; HTTPS 301跳转也可能被劫持，因此要用HSTS优化</p>
+<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><p>Socket是对TOC/IP的抽象，是操作系统对外开放的接口</p>
+<h4 id="Socket通信流程"><a href="#Socket通信流程" class="headerlink" title="Socket通信流程"></a>Socket通信流程</h4><p><img src="http://image.edxuanlen.cn/2020-08-10-11-24-44.png" alt="2020-08-10-11-24-44"></p>
+<p>编写一个网络应用程序,有客户端与服务器端,客户端向服务器发送一个字符串,服务器收到该字符串后将其打印到命令行上,<br>然后向客户端返回该字符串的长度,最后,客户端输出服务器端返回的该字符串的长度,分别用TCP和UDP两种方式去实现  </p>
+</div><div class="post-copyright"><blockquote><p>原文作者: edxuanlen</p><p>原文链接: <a href="https://edxuanlen.tk/2020/08/10/计算机网络相关/">https://edxuanlen.tk/2020/08/10/计算机网络相关/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><script type="text/javascript" src="/js/jquery-3.3.1.min.js?v=2.0.4" async></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=2.0.4" async></script><script type="text/javascript" src="/js/wrapImage.js?v=2.0.4" async></script><div class="tags"><a href="/tags/Interview/">Interview</a><a href="/tags/计网/">计网</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/08/10/数据库相关/" class="pre">数据库相关</a><a href="/2020/08/10/操作系统相关/" class="next">操作系统相关</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU2OS8xMDEyNA=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI七层协议"><span class="toc-text">OSI七层协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-IP"><span class="toc-text">TCP/IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP三次握手"><span class="toc-text">TCP三次握手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-通信过程"><span class="toc-text">A =&gt; B 通信过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要三次握手"><span class="toc-text">为什么需要三次握手</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么不是两次或四次"><span class="toc-text">为什么不是两次或四次</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP的四次挥手"><span class="toc-text">TCP的四次挥手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-gt-B-四次挥手"><span class="toc-text">A =&gt; B 四次挥手</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么TIME-WAIT状态"><span class="toc-text">为什么TIME_WAIT状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要四次握手才能断开连接"><span class="toc-text">为什么需要四次握手才能断开连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务器出现大量CLOSE-WAIT状态的原因"><span class="toc-text">服务器出现大量CLOSE_WAIT状态的原因</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP"><span class="toc-text">UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#UDP-特点"><span class="toc-text">UDP 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-和-UDP-的区别"><span class="toc-text">TCP 和 UDP 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-滑动窗口"><span class="toc-text">TCP 滑动窗口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#在浏览器地址栏键入一个URL，按下回车之后经历的流程"><span class="toc-text">在浏览器地址栏键入一个URL，按下回车之后经历的流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-状态码"><span class="toc-text">HTTP 状态码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GET-和-POST-请求的区别"><span class="toc-text">GET 和 POST 请求的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cookie-和-Session的区别"><span class="toc-text">Cookie 和 Session的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Cookie"><span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Session"><span class="toc-text">Session</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-和-HTTPS"><span class="toc-text">HTTP 和 HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL"><span class="toc-text">SSL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP和HTTPS的区别"><span class="toc-text">HTTP和HTTPS的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Socket"><span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Socket通信流程"><span class="toc-text">Socket通信流程</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/ThreadLocal/">ThreadLocal</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/Reference和ReferenceQueue/">Reference和ReferenceQueue</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/ArrayList和LinkedList/">ArrayList和LinkedList</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/Spring/">Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/数据库相关/">数据库相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/计算机网络相关/">计算机网络相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/10/操作系统相关/">操作系统相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/String相关/">String相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/编码相关问题/">编码相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/JAVA-IO流/">JAVA IO流</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/">Interview</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Interview/数据库/">数据库</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Interview/">Interview</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/OS/">OS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring/">Spring</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring/Interview/">Interview</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/数据结构/">数据结构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Interview/">Interview</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python3/">Python3</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/应用/">应用</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网站/">网站</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/模板/" style="font-size: 15px;">模板</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/HTML/" style="font-size: 15px;">HTML</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/Interview/" style="font-size: 15px;">Interview</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/python3小练手/" style="font-size: 15px;">python3小练手</a> <a href="/tags/栈/" style="font-size: 15px;">栈</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring-MVC</a> <a href="/tags/String/" style="font-size: 15px;">String</a> <a href="/tags/Ubuntu/" style="font-size: 15px;">Ubuntu</a> <a href="/tags/应用/" style="font-size: 15px;">应用</a> <a href="/tags/Thread/" style="font-size: 15px;">Thread</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python3项目/" style="font-size: 15px;">python3项目</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/网站/" style="font-size: 15px;">网站</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/递归/" style="font-size: 15px;">递归</a> <a href="/tags/OS/" style="font-size: 15px;">OS</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/C-C-题目/" style="font-size: 15px;">C/C++题目</a> <a href="/tags/经历/" style="font-size: 15px;">经历</a> <a href="/tags/encode/" style="font-size: 15px;">encode</a> <a href="/tags/蓝桥杯/" style="font-size: 15px;">蓝桥杯</a> <a href="/tags/计网/" style="font-size: 15px;">计网</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://blog.csdn.net/edxuanlen" title="CSDN博客" target="_blank">CSDN博客</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">edxuanlen.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d7b0af3134a41dde3fd07398a3caf231";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/jquery-3.3.1.min.js?v=2.0.4" async></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=2.0.4" async></script><script type="text/javascript" src="/js/wrapImage.js?v=2.0.4" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":250,"height":600},"mobile":{"show":true},"log":false});</script></body></html><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css">
