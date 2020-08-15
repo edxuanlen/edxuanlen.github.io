@@ -5,7 +5,7 @@ tags:
     - Spring
 
 categories:
-    - JAVA
+    - Java
 
 description: Sprint_boot入门的一些简述和安装以及简单的例子。
 top: true

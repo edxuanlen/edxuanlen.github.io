@@ -11,8 +11,13 @@ coverImg:
 password:
 summary:
 tags:
+    - Java
+    - 数据结构
 categories:
-description:
+    - Java
+    - 数据结构
+
+description: 阻塞队列 ArrayBlockingQueue，LinkedBlockingQueue的区别和使用
 ---
 
 

@@ -11,10 +11,12 @@ coverImg:
 password:
 summary:
 tags: 
-    - JAVA
+    - Java
     - 操作系统
 categories:
-description:
+    - Java
+    - OS
+description: Java的IO 和 Linux中的几种IO
 ---
 
 ## 分类方法

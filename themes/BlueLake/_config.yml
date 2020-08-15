@@ -61,8 +61,6 @@ Plugins:
 #   path: atom.xml
 #   limit: 20
 
-fancybox: 
-  enabled: true
 # Mermaid tag
 mermaid:
   enable: true
@@ -158,6 +156,9 @@ about:
 # - label: facebook
 #   url:
 #   title:
+
+fancybox:
+  enabled: true
 
 # Links widget. Empty links will hide widget.
 links:

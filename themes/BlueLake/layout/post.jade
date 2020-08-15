@@ -30,6 +30,12 @@ block content
           p= __("copyright_link") + ": " 
             a(href=url_for(config.url +'/'+ page.path))= config.url +'/'+ page.path
           p!= __("copyright_notice") + ": " + (theme.copyright.describe ? theme.copyright.describe : __("copyright_details"))
+    
+    if theme.fancybox.enabled
+      script(type='text/javascript', src=url_for(theme.js) + '/jquery-3.3.1.min.js' + '?v=' + theme.version, async)
+      script(type='text/javascript', src=url_for(theme.js) + '/jquery.fancybox.js' + '?v=' + theme.version, async)
+      script(type='text/javascript', src=url_for(theme.js) + '/wrapImage.js' + '?v=' + theme.version, async)
+      
     include _partial/tag
     .post-share
       include _partial/share
@@ -50,8 +56,3 @@ block pageOnly
   else 
     script(type='text/javascript', src=url_for(theme.js) + '/totop.js' + '?v=' + theme.version, async)
   include _partial/comments_js
-
-if theme.fancybox.enabled
-      script(type='text/javascript', src=url_for(theme.js) + '/jquery-3.3.1.min.js' + '?v=' + theme.version, async)
-      script(type='text/javascript', src=url_for(theme.js) + '/jquery.fancybox.mini.js' + '?v=' + theme.version, async)
-      script(type='text/javascript', src=url_for(theme.js) + '/wrapImage.js' + '?v=' + theme.version, async)

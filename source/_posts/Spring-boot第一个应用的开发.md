@@ -5,7 +5,7 @@ tags:
     - Spring
 
 categories:
-    - JAVA
+    - Java
 description: Spring_boot 的第一个应用
 top:
 ---

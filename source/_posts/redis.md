@@ -11,9 +11,16 @@ coverImg:
 password:
 summary:
 tags:
+    - Interview
+    - redis
 categories:
-description: redis 存储
+    - Interview
+    - redis
+description: 
 ---
+
+
+## Redis
 
 
 ### 缓存知识考点
@@ -214,7 +221,7 @@ AOF (Append-Only-File) 持久化：保存写状态
 
 #### RDB和AOF共存时的恢复流程 
 
-![2020-06-13-13-56-17](http://www.edxuanlen.cn/2020-06-13-13-56-17.png)
+![2020-06-13-13-56-17](http://image.edxuanlen.cn/2020-06-13-13-56-17.png)
 
 #### RDB和AOF的优缺点
 
@@ -287,17 +294,16 @@ default RDB-AOF
  
 数据存储节点如下，若Node C宕机，则会存储到D节点上
 
-![2020-06-13-13-57-13](http://www.edxuanlen.cn/2020-06-13-13-57-13.png)
+![2020-06-13-13-57-13](http://image.edxuanlen.cn/2020-06-13-13-57-13.png)
  
 新增Node X服务器，则在B到X之间的数据(object c)更改存储位置到X的位置上
 
-![Node-X](http://www.edxuanlen.cn/2020-06-13-13-55-16.png)
+![Node-X](http://image.edxuanlen.cn/2020-06-13-13-55-16.png)
 
 
-1. groupadd tom; useradd -g tom tom; echo "tom" | passwd  --stdin tom
-2. useradd -G tom jack;
-3. useradd admin; usermod -aG sudo tom;
-4. groupadd redhat ; usermod -aG redhat tom; usermod -aG redhat jack;
-5. useradd guestuser -s /sbin/nologin;
-6. usermod -u 5005 tom;
-7. userdel -rf jack;
+### Hash环数据倾斜问题
+
+引入虚拟节点解决数据倾斜问题
+
+![2020-08-10-11-29-06](http://image.edxuanlen.cn/2020-08-10-11-29-06.png)
+

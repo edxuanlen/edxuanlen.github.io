@@ -22,6 +22,12 @@ if theme.baidu_analytics
 if theme.local_search == true
   script(type='text/javascript', src=url_for(theme.js) + '/search.json.js' + '?v=' + theme.version)
 
+
+if theme.fancybox.enabled
+  script(type='text/javascript', src=url_for(theme.js) + '/jquery-3.3.1.min.js' + '?v=' + theme.version, async)
+  script(type='text/javascript', src=url_for(theme.js) + '/jquery.fancybox.js' + '?v=' + theme.version, async)
+  script(type='text/javascript', src=url_for(theme.js) + '/wrapImage.js' + '?v=' + theme.version, async)
+
 if theme.mathjax.enable
   script(type='text/x-mathjax-config').
     MathJax.Hub.Config({
