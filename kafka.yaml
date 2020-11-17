@@ -1,0 +1,92 @@
+version: "3.3"
+services:
+    zk1:
+        image: zookeeper
+        restart: always
+        container_name: zk1
+        ports:
+            - "2181:2181"
+        expose:
+            - "2181"
+        environment:
+            - ZOO_MY_ID=1
+        volumes:
+            - "~/zk/zoo1/data:/data"
+            - "~/zk/zoo1/datalog:/datalog"
+    zk2:
+        image: zookeeper
+        restart: always
+        container_name: zk2
+        ports:
+            - "2182:2181"
+        expose:
+            - "2181"
+        environment:
+            - ZOO_MY_ID=2
+        volumes:
+            - "~/zk/zoo2/data:/data"
+            - "~/zk/zoo2/datalog:/datalog"
+    zk3:
+        image: zookeeper
+        restart: always
+        container_name: zk3
+        ports:
+            - "2183:2181"
+        expose:
+            - "2181"
+        environment:
+            - ZOO_MY_ID=3
+        volumes:
+            - "~/zk/zoo3/data:/data"
+            - "~/zk/zoo3/datalog:/datalog"
+    kafka1:
+        image: wurstmeister/kafka
+        restart: always
+        container_name: kafka1
+        environment:
+            - KAFKA_BROKER_ID=1
+            - KAFKA_LISTENERS=PLAINTEXT://kafka1:9092
+            - KAFKA_ZOOKEEPER_CONNECT=zk1:2181,zk2:2181,zk3:2181
+            - KAFKA_MESSAGE_MAX_BYTES=2000000
+        ports:
+            - "9092:9092"
+        volumes:
+            - ~/kafka/kafka1/logs:/kafka
+        depends_on:
+            - zk1
+            - zk2
+            - zk3
+    kafka2:
+        image: wurstmeister/kafka
+        restart: always
+        container_name: kafka2
+        environment:
+            - KAFKA_BROKER_ID=2
+            - KAFKA_LISTENERS=PLAINTEXT://kafka2:9092
+            - KAFKA_ZOOKEEPER_CONNECT=zk1:2181,zk2:2181,zk3:2181
+            - KAFKA_MESSAGE_MAX_BYTES=2000000
+        ports:
+            - "9093:9092"
+        volumes:
+            - ~/kafka/kafka2/logs:/kafka
+        depends_on:
+            - zk1
+            - zk2
+            - zk3
+    kafka3:
+        image: wurstmeister/kafka
+        restart: always
+        container_name: kafka3
+        environment:
+            - KAFKA_BROKER_ID=3
+            - KAFKA_LISTENERS=PLAINTEXT://kafka3:9092
+            - KAFKA_ZOOKEEPER_CONNECT=zk1:2181,zk2:2181,zk3:2181
+            - KAFKA_MESSAGE_MAX_BYTES=2000000
+        ports:
+            - "9094:9092"
+        volumes:
+            - ~/kafka/kafka3/logs:/kafka
+        depends_on:
+            - zk1
+            - zk2
+            - zk3

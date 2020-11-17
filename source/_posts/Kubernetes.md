@@ -18,36 +18,23 @@ description:
 ### 安装
 
 
-kubectl
-
-```bash
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/windows/amd64/kubectl.exe
+```sh
+apt-get update && apt-get install -y apt-transport-https curl # http + https
+curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add # 签名密钥 与阿里demo略有不同，2020年5月，Ubuntu 16.04 Xenial Xerus 是当前最新的 Kubernetes 存储库
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+EOF  
+apt-get update  
+apt-get install -y kubelet kubeadm kubectl kubernetes-cni # 比阿里多 kubernetes-cni
 ```
 
+#### 禁止交换内存
 
-minikube  
+sudo swapoff -a
 
-```bash
-https://github.com/kubernetes/minikube/releases
+```sh
+# 永久禁用
+sudo vim /etc/fstab
+# 注释掉/swapfile
 ```
-
-or
-
-```bash
-choco install minikube
-```
-
-在 Kubernetes 上使用 Kubernetes 命令行工具 kubectl 部署和管理应用程序。使用 kubectl，您可以检查集群资源；创建、删除和更新组件；查看您的新集群；并启动实例应用程序。
-
-Minikube 是一种可以让您在本地轻松运行 Kubernetes 的工具。Minikube 在笔记本电脑上的虚拟机（VM）中运行单节点 Kubernetes 集群，供那些希望尝试 Kubernetes 或进行日常开发的用户使用。
-
-Minikube 支持以下 Kubernetes 功能：
-
-- DNS
-- NodePorts
-- ConfigMaps 和 Secrets
-- Dashboards
-- 容器运行时: Docker、CRI-O 以及 containerd
-- 启用 CNI （容器网络接口）
-- Ingress
 

@@ -7,6 +7,21 @@ categories: 应用
 description: docker容器技术，换源和dockerfile的简介，包括一些自己的配置。
 ---
 
+## 安装
+
+```sh
+# step 1: 安装必要的一些系统工具
+sudo apt-get update
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+# step 2: 安装GPG证书
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+# Step 3: 写入软件源信息
+sudo add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+# Step 4: 更新并安装Docker-CE
+sudo apt-get -y update
+sudo apt-get -y install docker-ce
+```
+
 ## 换源
 
 1. settings -> daemon
@@ -85,11 +100,6 @@ CMD ["python", "app.py"]
 ## 常用镜像
 
 ### mysql
-
-```shell
-docker run --name some-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
-
-```
 
 官方文档:[官方文档](https://hub.docker.com/_/mysql)
 

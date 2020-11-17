@@ -94,9 +94,4 @@ System.out.println(rq.poll() == pr);
 
 这里输出的时null false true
 
-但是有个点要注意，如果str 赋值方式换成 String str = "hello"，他将得到 false false。。。。
-
-个人感觉就是**字符串常量池**和**堆内存**的一些小区别，但是基于一个想法，GC正常情况下不会清理字符串常量池
-
-String str = new String("hello")的时候  字符串常量池中有就直接复制一个副本到堆中，指向的是对的位置，引用堆中的。
-如果str = null 然后 GC  的时候能被监听到堆内存的hello 副本被GC，就会加入引用队列中，但是其实字符串常量池中的hello 还是存在的
+调用System.gc的时候只是
